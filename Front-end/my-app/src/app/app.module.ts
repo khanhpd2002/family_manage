@@ -11,9 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule } from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -66,6 +67,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     MatInputModule,
     MatCheckboxModule,
     FlexLayoutModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
