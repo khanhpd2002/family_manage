@@ -1,0 +1,36 @@
+<form class="center" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <label>
+    Address:
+    <input class="address" type="text" formControlName="address">
+  </label>
+  <br />
+  <span *ngIf="form.get('address')?.invalid && form.get('address')?.touched" class="text-danger">Address is Required</span>
+  <br />
+
+  <label>
+    Name:  
+    <input class="name" type="text" formControlName="name">
+  </label>
+  <br />
+  <span *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger">Name is Required</span>
+  <br />
+
+  <label>
+    Phone:
+    <input class="phone" type="text" formControlName="phone">
+  </label>
+  <br />
+  <span *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched" class="text-danger">Phone is Required</span>
+  <br />
+
+  <label>
+    Email:
+    <input class="email" type="text" formControlName="email">
+  </label>
+  <br />
+  <mat-error *ngIf="form.get('email')?.invalid && form.get('email')?.touched">Email Required</mat-error>
+  <br />
+
+  <button mat-button type="submit" [disabled]="!form.valid">Submit</button>
+
+</form>

@@ -1,0 +1,40 @@
+<h1 style="text-align: center;">Corona virus Data</h1>
+<br />
+
+<!-- Information of Global -->
+<div>
+    <table id="data" style="border-collapse: collapse;">
+        <tr>
+            <th *ngFor="let data of globalData | keyvalue">
+                {{ data.key }}
+            </th>
+        </tr> 
+        <tr>
+            <td *ngFor="let data of globalData | keyvalue">
+                {{ data.value }}
+            </td>
+        </tr>
+    </table>
+</div>
+
+<br />
+
+<!-- Information of each Country -->
+<div>
+    <table id="data" style="border-collapse: collapse;">
+        <tr *ngIf="countries && countries.length > 0">
+            <th *ngFor="let country of countries[0] | keyvalue">
+                <span *ngIf="country.key !== 'ID' && country.key !== 'Premium'">
+                    {{ country.key }}
+                </span>
+            </th>
+        </tr>
+        <tr *ngFor="let countryData of countries">
+            <td *ngFor="let data of countryData | keyvalue">
+                <span *ngIf="data.key !== 'ID' && data.key !== 'Premium' ">
+                    {{ data.value  }}
+                </span>
+            </td>
+        </tr>
+    </table>
+</div>
