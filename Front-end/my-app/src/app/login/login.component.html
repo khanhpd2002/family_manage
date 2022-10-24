@@ -14,8 +14,18 @@
     </mat-form-field>
   </p>
 
-  <div class="button">
-    <button type="submit" mat-button>Login</button>
+  <p *ngIf="error" class="error">
+    {{error}}
+  </p>
+
+  <div>
+    <div class="text-center sign-up">
+      Don't have an account ? <a routerLink="/sign-up">Sign Up</a> here.
+    </div>
+  
+    <div class="button">
+      <button type="submit" mat-button>Login</button>
+    </div>
   </div>
 
 </form>
