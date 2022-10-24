@@ -37,7 +37,7 @@ public class UserApi {
             newReponseLogin.setStatus(200);
         else
             newReponseLogin.setStatus(404);
-        return newReponseLogin; 
+        return newReponseLogin;
     }
 
     @PostMapping("/sign-up")
