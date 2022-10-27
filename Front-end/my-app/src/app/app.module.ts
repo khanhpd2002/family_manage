@@ -11,7 +11,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatSelectModule} from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -58,6 +61,8 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     FormsModule,
     MatTableModule,
     MatIconModule,
+    MatSelectModule,
+    MatListModule,
     MatButtonModule,
     MatSidenavModule,
     MatPaginatorModule,
@@ -65,6 +70,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatToolbarModule,
     MatCheckboxModule,
     FlexLayoutModule,
     MatCardModule
