@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ServerHttpService } from '../Services/server-http.service';
 import { Route, Router } from '@angular/router';
-import { MatSidenav } from '@angular/material/sidenav';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
@@ -11,21 +9,16 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  selectedProvince : String;
-  selectedDistrict : String;
-  selectedWard : String;
-    
   addressValues : any[] = [];
   provinceValues : String[] = [];
   districtValues : String[] = [];
   wardValues : String[] = [];
 
   tempDistrictValues : any[] =[];
-  
+  searchForm: FormGroup = new FormGroup({});
   isShowing: boolean;
 
   constructor(
-    private serverHttp: ServerHttpService,
     public routes : Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
@@ -39,7 +32,6 @@ export class HomeComponent implements OnInit {
       address: [''],
     });
   }
-  searchForm: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
@@ -50,22 +42,13 @@ export class HomeComponent implements OnInit {
       });
     })
   }
-  // searchForm: FormGroup = this.formBuilder.group({
-  //   number: [''],
-  //   owner: [''],
-  //   province: [''],
-  //   district: [''],
-  //   ward: [''],
-  //   address: [''],
-  // });
-
 
   onSearch() {
-    console.log(this.searchForm .value);
+    console.log(this.searchForm.value);
   }
 
   onResetForm() {
-
+    this.searchForm.reset();
   }
 
   provinceChange(event : any) {
@@ -75,7 +58,7 @@ export class HomeComponent implements OnInit {
       .filter(a => a.name === event.value);
     this.tempDistrictValues[0].districts.forEach((element : any) => {
       this.districtValues.push(element.name);
-    })  
+    })
   }
 
   districtChange(event : any) {
@@ -85,15 +68,9 @@ export class HomeComponent implements OnInit {
       .filter((a: any) => a.name === event.value);
     tempWardValues[0].wards.forEach((element : any) => {
       this.wardValues.push(element.name);
-    })  
+    })
   }
 
-  wardChange() {
-    console.log(this.selectedProvince);
-    console.log(this.selectedDistrict);
-    console.log(this.selectedWard);
-  }
-  
   toggleSidenav() {
     this.isShowing = !this.isShowing;
   }

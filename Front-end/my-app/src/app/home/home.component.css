@@ -20,6 +20,22 @@ form {
 .number {
     margin-left: 115px;
 }
+.owner {
+  margin-left: 170px;
+}
+.province {
+  margin-left: 170px;
+}
+.district {
+  margin-left: 170px;
+}
+.ward {
+  margin-left: 170px;
+}
+.address{
+  margin-left: 170px;
+}
+
 
 .search-button {
     margin-top: 65px;

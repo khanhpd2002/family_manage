@@ -20,65 +20,65 @@
     <mat-sidenav-content fxLayout="column">
       <form [formGroup]="searchForm">
       <div fxLayout="row">
-        <form class="number" name="number" formControlName="number">
+        <div class="number">
           <h4>Number</h4>
           <mat-form-field appearance="fill">
             <mat-label>Number</mat-label>
-            <input matInput>
+            <input matInput name="number" formControlName="number">
           </mat-form-field>
-        </form>
+        </div>
 
-        <form name="owner" formControlName="owner">
+        <div class="owner">
           <h4>Owner</h4>
           <mat-form-field appearance="fill">
             <mat-label>Owner</mat-label>
-            <input matInput>
+            <input matInput name="owner" formControlName="owner">
           </mat-form-field>
-        </form>
+        </div>
 
-        <form name="province" formControlName="province">
+        <div class="province">
             <h4>Province</h4>
             <mat-form-field appearance="fill">
               <mat-label>Province</mat-label>
-              <mat-select [(ngModel)]="selectedProvince" name="province" (selectionChange)="provinceChange($event)">
+              <mat-select (selectionChange)="provinceChange($event)" name="province" formControlName="province">
                 <mat-option *ngFor="let province of provinceValues" [value]="province">
                   {{province}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-        </form>
+        </div>
 
-        <form name="district" formControlName="district">        
+        <div class="district">
             <h4>District</h4>
             <mat-form-field appearance="fill">
               <mat-label>District</mat-label>
-              <mat-select [(ngModel)]="selectedDistrict" name="district" (selectionChange)="districtChange($event)">
+              <mat-select (selectionChange)="districtChange($event)" name="district" formControlName="district">
                 <mat-option *ngFor="let district of districtValues" [value]="district">
                   {{district}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-        </form>
+        </div>
 
-        <form name="ward" formControlName="ward">
+        <div class="ward">
             <h4>Ward</h4>
             <mat-form-field appearance="fill">
               <mat-label>Ward</mat-label>
-              <mat-select [(ngModel)]="selectedWard" name="ward" (selectionChange)="wardChange()">
+              <mat-select name="ward" formControlName="ward">
                 <mat-option *ngFor="let ward of wardValues" [value]="ward">
                   {{ward}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-        </form>
+        </div>
 
-        <form name="address" formControlName="address">
+        <div class="address">
           <h4>Address</h4>
           <mat-form-field appearance="fill">
             <mat-label>Address</mat-label>
-            <input matInput>
+            <input matInput name="address" formControlName="address">
           </mat-form-field>
-        </form>
+        </div>
       </div>
 
       <div fxLayout="row" class="search-button">
