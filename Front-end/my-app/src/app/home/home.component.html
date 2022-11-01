@@ -1,3 +1,4 @@
+
 <mat-toolbar>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="toggleSidenav()">
       <mat-icon>menu</mat-icon>
@@ -15,44 +16,80 @@
             About
         </button>
     </mat-sidenav>
-    <mat-sidenav-content>
-        <button mat-button (click)="sidenav.toggle()"> Main Content</button>
+
+    <mat-sidenav-content fxLayout="column">
+      <form [formGroup]="searchForm">
+      <div fxLayout="row">
+        <form class="number" name="number" formControlName="number">
+          <h4>Number</h4>
+          <mat-form-field appearance="fill">
+            <mat-label>Number</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </form>
+
+        <form name="owner" formControlName="owner">
+          <h4>Owner</h4>
+          <mat-form-field appearance="fill">
+            <mat-label>Owner</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </form>
+
+        <form name="province" formControlName="province">
+            <h4>Province</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>Province</mat-label>
+              <mat-select [(ngModel)]="selectedProvince" name="province" (selectionChange)="provinceChange($event)">
+                <mat-option *ngFor="let province of provinceValues" [value]="province">
+                  {{province}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </form>
+
+        <form name="district" formControlName="district">        
+            <h4>District</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>District</mat-label>
+              <mat-select [(ngModel)]="selectedDistrict" name="district" (selectionChange)="districtChange($event)">
+                <mat-option *ngFor="let district of districtValues" [value]="district">
+                  {{district}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </form>
+
+        <form name="ward" formControlName="ward">
+            <h4>Ward</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>Ward</mat-label>
+              <mat-select [(ngModel)]="selectedWard" name="ward" (selectionChange)="wardChange()">
+                <mat-option *ngFor="let ward of wardValues" [value]="ward">
+                  {{ward}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </form>
+
+        <form name="address" formControlName="address">
+          <h4>Address</h4>
+          <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input matInput>
+          </mat-form-field>
+        </form>
+      </div>
+
+      <div fxLayout="row" class="search-button">
+        <button mat-button type='submit' class='primary Update-btn' (click)="onSearch()">
+          <i class='fa fa-times'>Search</i>
+        </button>
+        <button mat-button type='submit' class='primary Update-btn' (click)="onResetForm()">
+          <i class='fa fa-times'>Clear</i>
+        </button>
+      </div>
+      </form>
+
     </mat-sidenav-content>
 </mat-sidenav-container>
-
-<!-- 
-<form>
-    <h4>Province</h4>
-    <mat-form-field appearance="fill">
-      <mat-label>Province</mat-label>
-      <mat-select [(ngModel)]="selectedProvince" name="province" (selectionChange)="provinceChange($event)">
-        <mat-option *ngFor="let province of provinceValues" [value]="province">
-          {{province}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-</form>
-
-<form>
-    <h4>District</h4>
-    <mat-form-field appearance="fill">
-      <mat-label>District</mat-label>
-      <mat-select [(ngModel)]="selectedDistrict" name="district" (selectionChange)="districtChange($event)">
-        <mat-option *ngFor="let district of districtValues" [value]="district">
-          {{district}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-</form>
-
-<form>
-    <h4>Ward</h4>
-    <mat-form-field appearance="fill">
-      <mat-label>Ward</mat-label>
-      <mat-select [(ngModel)]="selectedWard" name="ward" (selectionChange)="wardChange()">
-        <mat-option *ngFor="let ward of wardValues" [value]="ward">
-          {{ward}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-</form> -->

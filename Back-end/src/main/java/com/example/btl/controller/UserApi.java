@@ -16,7 +16,7 @@ public class UserApi {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/users")
+    @GetMapping("/users/getAll")
     public List<User> getUsers() {
         return (List<User>) userRepository.findAll();
     }

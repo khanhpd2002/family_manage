@@ -3,6 +3,7 @@ import { ServerHttpService } from '../Services/server-http.service';
 import { Route, Router } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,18 @@ export class HomeComponent implements OnInit {
     private serverHttp: ServerHttpService,
     public routes : Router,
     public http: HttpClient,
-  ) { }
+    protected formBuilder: FormBuilder,
+  ) {
+    this.searchForm = this.formBuilder.group({
+      number: [''],
+      owner: [''],
+      province: [''],
+      district: [''],
+      ward: [''],
+      address: [''],
+    });
+  }
+  searchForm: FormGroup = new FormGroup({});
 
   ngOnInit(): void {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
@@ -37,6 +49,23 @@ export class HomeComponent implements OnInit {
         this.provinceValues.push(element.name);
       });
     })
+  }
+  // searchForm: FormGroup = this.formBuilder.group({
+  //   number: [''],
+  //   owner: [''],
+  //   province: [''],
+  //   district: [''],
+  //   ward: [''],
+  //   address: [''],
+  // });
+
+
+  onSearch() {
+    console.log(this.searchForm .value);
+  }
+
+  onResetForm() {
+
   }
 
   provinceChange(event : any) {

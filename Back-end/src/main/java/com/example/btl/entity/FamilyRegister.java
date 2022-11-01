@@ -4,17 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data // getter/setter
 @AllArgsConstructor //Create FamilyRegister
 @NoArgsConstructor //Constructor default
-@Table (name="family-register")
+@Table (name = "family_register")
 @Entity
 public class FamilyRegister {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int number;
     private String owner;

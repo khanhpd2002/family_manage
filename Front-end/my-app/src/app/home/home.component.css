@@ -12,3 +12,16 @@ div, button {
     font-size: 15px;
     text-align: center;
 }
+
+form {
+    margin: 5px;
+}
+
+.number {
+    margin-left: 115px;
+}
+
+.search-button {
+    margin-top: 65px;
+    margin-left: 670px;
+}

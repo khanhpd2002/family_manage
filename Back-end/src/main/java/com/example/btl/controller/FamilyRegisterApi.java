@@ -1,16 +1,12 @@
 package com.example.btl.controller;
 
-import com.example.btl.entity.Account;
 import com.example.btl.entity.FamilyRegister;
-import com.example.btl.entity.User;
 import com.example.btl.repository.FamilyRegisterRepository;
-import com.example.btl.response.ResponseLogin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class FamilyRegisterApi {
@@ -23,9 +19,14 @@ public class FamilyRegisterApi {
         return "HelloWorld";
     }
 
-    @GetMapping("/family-register")
+    @GetMapping("/family-register/getAll")
     public List<FamilyRegister> getFamilyRegister() {
         System.out.println("Family Register");
-        return familyRegisterRepository.findAll();
+        return (List<FamilyRegister>) familyRegisterRepository.findAll();
+    }
+
+    @PostMapping("/family-register")
+    public FamilyRegister postFamilyRegister(@RequestBody FamilyRegister newFamilyRegister) {
+        return familyRegisterRepository.save(newFamilyRegister);
     }
 }
