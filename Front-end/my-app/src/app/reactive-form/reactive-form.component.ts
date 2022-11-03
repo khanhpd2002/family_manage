@@ -10,6 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Route, Router } from '@angular/router';
 import { DataPassingService } from '../Services/data-passing.service';
 import { ServerHttpService } from '../Services/server-http.service';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-reactive-form',
@@ -18,33 +19,76 @@ import { ServerHttpService } from '../Services/server-http.service';
 })
 
 export class ReactiveFormComponent {
+  addressValues : any[] = [];
+  provinceValues : String[] = [];
+  districtValues : String[] = [];
+  wardValues : String[] = [];
+
+  tempDistrictValues : any[] =[];
+  searchForm: FormGroup = new FormGroup({});
   constructor (
-    private fb: FormBuilder,
+    protected formBuilder: FormBuilder,
     public router: Router,
     public dataPassing : DataPassingService,
-    // public serverHttp: ServerHttpService
-    ) {}
-  
-  form = this.fb.group({
-    name: new FormControl(null, [Validators.required]),
-    address: new FormControl (null, [Validators.required]),
-    phone: new FormControl (null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
-    email: new FormControl (null, [Validators.required, Validators.email])
+    protected http: HttpClient,
+    ) {
+    this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
+      console.log(data);
+      this.addressValues = data;
+      data.forEach((element : any) => {
+        this.provinceValues.push(element.name);
+      });
+    })
+  }
+
+  addEditForm = this.formBuilder.group({
+    number: [''],
+    owner: [''],
+    province: [''],
+    district: [''],
+    ward: [''],
+    address: [''],
+    // name: new FormControl(null, [Validators.required]),
+    // address: new FormControl (null, [Validators.required]),
+    // phone: new FormControl (null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+    // email: new FormControl (null, [Validators.required, Validators.email])
   })
 
 
   onSubmit() {
-    const childData : PeriodicElement = {address: this.form.controls['address'].value, name: this.form.controls['name'].value, phone: this.form.controls['phone'].value, email: this.form.controls['email'].value};
-    this.dataPassing.addData(childData);
+    // const childData : PeriodicElement = {address: this.addEditForm.controls['address'].value, name: this.addEditForm.controls['name'].value, phone: this.addEditForm.controls['phone'].value, email: this.addEditForm.controls['email'].value};
+    // this.dataPassing.addData(childData);
     // this.serverHttp.postProfile(childData);
     this.router.navigate(['table']);
-    this.form.reset();
+    this.addEditForm.reset();
+  }
+
+  provinceChange(event : any) {
+    this.districtValues = [];
+    this.wardValues = [];
+    this.tempDistrictValues = this.addressValues
+      .filter(a => a.name === event.value);
+    this.tempDistrictValues[0].districts.forEach((element : any) => {
+      this.districtValues.push(element.name);
+    })
+  }
+
+  districtChange(event : any) {
+    this.wardValues = [];
+    const temp = this.tempDistrictValues[0].districts;
+    const tempWardValues = temp
+      .filter((a: any) => a.name === event.value);
+    tempWardValues[0].wards.forEach((element : any) => {
+      this.wardValues.push(element.name);
+    })
   }
 }
 
-export interface PeriodicElement {
-  name: any;
-  address: any;
-  phone: any;
-  email: any;
+export interface FamilyRegisters {
+  number: number;
+  owner: string;
+  province: string;
+  district: string;
+  ward: string;
+  address: string;
 }

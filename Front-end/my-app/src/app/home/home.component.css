@@ -6,11 +6,18 @@ mat-sidenav {
     width: 100px;
 }
 
-div, button {
+button {
     width: 50px;
     height: 50px;
     font-size: 15px;
     text-align: center;
+}
+
+#div-form {
+  width: 50px;
+  height: 50px;
+  font-size: 15px;
+  text-align: center;
 }
 
 form {
@@ -40,4 +47,14 @@ form {
 .search-button {
     margin-top: 65px;
     margin-left: 670px;
+}
+
+
+table {
+  width: 100%;
+}
+
+.add-edit {
+  margin-left: 1300px;
+  height: 50px;
 }

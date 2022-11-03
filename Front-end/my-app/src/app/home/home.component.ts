@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {MatDialog} from "@angular/material/dialog";
+import {ReactiveFormComponent} from "../reactive-form/reactive-form.component";
 
 @Component({
   selector: 'app-home',
@@ -18,10 +21,18 @@ export class HomeComponent implements OnInit {
   searchForm: FormGroup = new FormGroup({});
   isShowing: boolean;
 
+  familyRegisters: any;
+  displayedColumns: string[] = ['number', 'owner', 'province', 'district', 'ward', 'address', ' '];
+
+  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
+    this.familyRegisters.paginator = paginator;
+  }
+
   constructor(
     public routes : Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
+    private dialog: MatDialog,
   ) {
     this.searchForm = this.formBuilder.group({
       number: [''],
@@ -41,10 +52,20 @@ export class HomeComponent implements OnInit {
         this.provinceValues.push(element.name);
       });
     })
+    this.http.get<any>('http://localhost:8080/family-register/getAll/').subscribe((data) => {
+      console.log(data);
+      this.familyRegisters = data;
+    })
   }
 
   onSearch() {
-    console.log(this.searchForm.value);
+    const formValue = `${this.searchForm.get('number')?.value}${this.searchForm.get('owner')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
+    console.log(formValue);
+    this.familyRegisters.filter = formValue.trim().toLowerCase();
+    this.familyRegisters = this.familyRegisters
+      .filter((e: any) => {
+        const isNumber = e.number.includes(this.searchForm.get('number')?.value)
+      })
   }
 
   onResetForm() {
@@ -71,6 +92,18 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  deleteData(index: number) {
+
+  }
+
+  openDialogDetails(index: number) {
+
+  }
+
+  editData(index: number) {
+
+  }
+
   toggleSidenav() {
     this.isShowing = !this.isShowing;
   }
@@ -81,4 +114,28 @@ export class HomeComponent implements OnInit {
     this.routes.navigate(['about']);
   }
 
+  addEditFamilyRegister(fr: any) {
+    this.dialog.open(ReactiveFormComponent,
+      {
+        width: '500px',
+        disableClose: false,
+        panelClass: 'app-add-edit-role',
+        data: fr ? fr : null,
+      })
+      .afterClosed().subscribe(result => {
+        if (result?.value) {
+          this.onSearch();
+      }
+    });
+  }
+
+
+}
+export interface FamilyRegisters {
+  number: number;
+  owner: string;
+  province: string;
+  district: string;
+  ward: string;
+  address: string;
 }
