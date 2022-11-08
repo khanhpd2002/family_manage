@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ReactiveFormComponent} from "../reactive-form/reactive-form.component";
 
 @Component({
@@ -32,8 +32,7 @@ export class HomeComponent implements OnInit {
     public routes : Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
-    private dialog: MatDialog,
-  ) {
+    private dialog: MatDialog) {
     this.searchForm = this.formBuilder.group({
       number: [''],
       owner: [''],
@@ -46,14 +45,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
-      console.log(data);
       this.addressValues = data;
       data.forEach((element : any) => {
         this.provinceValues.push(element.name);
       });
     })
     this.http.get<any>('http://localhost:8080/family-register/getAll/').subscribe((data) => {
-      console.log(data);
       this.familyRegisters = data;
     })
   }
@@ -119,7 +116,7 @@ export class HomeComponent implements OnInit {
       {
         width: '500px',
         disableClose: false,
-        panelClass: 'app-add-edit-role',
+        panelClass: 'app-reactive-form',
         data: fr ? fr : null,
       })
       .afterClosed().subscribe(result => {

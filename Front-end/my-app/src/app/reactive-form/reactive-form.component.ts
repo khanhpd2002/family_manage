@@ -31,7 +31,8 @@ export class ReactiveFormComponent {
     public router: Router,
     public dataPassing : DataPassingService,
     protected http: HttpClient,
-    ) {
+    public dialogRef: MatDialogRef<ReactiveFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public familyRegister: any) {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       console.log(data);
       this.addressValues = data;
@@ -56,11 +57,13 @@ export class ReactiveFormComponent {
 
 
   onSubmit() {
-    // const childData : PeriodicElement = {address: this.addEditForm.controls['address'].value, name: this.addEditForm.controls['name'].value, phone: this.addEditForm.controls['phone'].value, email: this.addEditForm.controls['email'].value};
+    const data : FamilyRegisters = {number: this.addEditForm.controls['number'].value, owner: this.addEditForm.controls['owner'].value, province: this.addEditForm.controls['province'].value, district: this.addEditForm.controls['district'].value, ward: this.addEditForm.controls['ward'].value, address: this.addEditForm.controls['address'].value};
     // this.dataPassing.addData(childData);
-    // this.serverHttp.postProfile(childData);
-    this.router.navigate(['table']);
-    this.addEditForm.reset();
+    this.router.navigate(['home']);
+    this.http.post<any>('http://localhost:8080/family-register', data).subscribe((data) => {
+      console.log(data);
+    });
+    this.dialogRef.close();
   }
 
   provinceChange(event : any) {
@@ -85,10 +88,10 @@ export class ReactiveFormComponent {
 }
 
 export interface FamilyRegisters {
-  number: number;
-  owner: string;
-  province: string;
-  district: string;
-  ward: string;
-  address: string;
+  number: any;
+  owner: any;
+  province: any;
+  district: any;
+  ward: any;
+  address: any;
 }
