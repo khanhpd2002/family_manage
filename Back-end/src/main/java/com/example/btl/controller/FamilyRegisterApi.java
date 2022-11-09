@@ -2,31 +2,47 @@ package com.example.btl.controller;
 
 import com.example.btl.entity.FamilyRegister;
 import com.example.btl.repository.FamilyRegisterRepository;
+import com.example.btl.service.FamilyRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.boot.autoconfigure.freemarker.FreeMarkerTemplateAvailabilityProvider;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
+@RequestMapping("/family-register")
 public class FamilyRegisterApi {
     @Autowired
     private FamilyRegisterRepository familyRegisterRepository;
 
-    @GetMapping("/abc")
-    public String abc() {
-        System.out.println("abccahs");
-        return "HelloWorld";
-    }
+    @Autowired
+    private FamilyRegisterService familyRegisterService;
 
-    @GetMapping("/family-register/getAll")
-    public List<FamilyRegister> getFamilyRegister() {
-        System.out.println("Family Register");
+    @GetMapping()
+    public List<FamilyRegister> findAll() {
         return (List<FamilyRegister>) familyRegisterRepository.findAll();
     }
 
-    @PostMapping("/family-register")
-    public FamilyRegister postFamilyRegister(@RequestBody FamilyRegister newFamilyRegister) {
+    @GetMapping("/{id}")
+    public FamilyRegister findById(@PathVariable(name = "id", required = true) Long id) {
+        return familyRegisterRepository.findById(id == null ? 0 : id);
+    }
+
+    @PostMapping()
+    public FamilyRegister create(@RequestBody FamilyRegister newFamilyRegister) {
         return familyRegisterRepository.save(newFamilyRegister);
+    }
+
+    @PatchMapping("{id}")
+    public FamilyRegister update(@PathVariable(name = "id", required = true) Long id,
+            @RequestBody FamilyRegister newFamilyRegister) {
+        return familyRegisterService.update(id, newFamilyRegister);
+    }
+
+    @DeleteMapping("/{id}")
+    public FamilyRegister delete(@PathVariable(name = "id", required = true) Long id) {
+        return familyRegisterRepository.deleteById(id == null ? 0 : id);
     }
 }

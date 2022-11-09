@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class FamilyRegister {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private int number;
     private String owner;
     private String province;

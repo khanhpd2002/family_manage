@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ReactiveFormComponent} from "../reactive-form/reactive-form.component";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-home',
@@ -24,9 +25,7 @@ export class HomeComponent implements OnInit {
   familyRegisters: any;
   displayedColumns: string[] = ['number', 'owner', 'province', 'district', 'ward', 'address', ' '];
 
-  @ViewChild(MatPaginator) set matPaginator(paginator: MatPaginator) {
-    this.familyRegisters.paginator = paginator;
-  }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     public routes : Router,
@@ -51,7 +50,8 @@ export class HomeComponent implements OnInit {
       });
     })
     this.http.get<any>('http://localhost:8080/family-register/getAll/').subscribe((data) => {
-      this.familyRegisters = data;
+      this.familyRegisters = new MatTableDataSource(data);
+      this.familyRegisters.paginator = this.paginator;
     })
   }
 
@@ -121,7 +121,7 @@ export class HomeComponent implements OnInit {
       })
       .afterClosed().subscribe(result => {
         if (result?.value) {
-          this.onSearch();
+          console.log(result?.value);
       }
     });
   }
