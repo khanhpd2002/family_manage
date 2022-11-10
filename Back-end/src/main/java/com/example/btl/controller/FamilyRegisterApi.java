@@ -42,7 +42,7 @@ public class FamilyRegisterApi {
     }
 
     @DeleteMapping("/{id}")
-    public FamilyRegister delete(@PathVariable(name = "id", required = true) Long id) {
-        return familyRegisterRepository.deleteById(id == null ? 0 : id);
+    public void delete(@PathVariable(name = "id", required = true) Long id) {
+        familyRegisterRepository.deleteById(id == null ? 0 : id);
     }
 }

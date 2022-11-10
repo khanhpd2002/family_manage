@@ -24,4 +24,5 @@ public class FamilyRegisterService {
         familyRegister.setAddress(source.getAddress());
         return this.familyRegisterRepository.save(familyRegister);
     }
+
 }

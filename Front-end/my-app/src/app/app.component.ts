@@ -14,7 +14,6 @@ export class AppComponent {
   }
   title = 'my-app';
   goHome() {
-    this.router.navigate(['home']);
   }
 
   goAbout() {
@@ -24,7 +23,7 @@ export class AppComponent {
   goForm() {
     this.router.navigate(['reactiveform']);
   }
-  
+
   goTable() {
     this.router.navigate(['table']);
   }

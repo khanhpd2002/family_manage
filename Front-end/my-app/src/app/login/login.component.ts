@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
     const dataLogin : LOGIN_USER = {username: this.form.get('username')?.value, password: this.form.get('password')?.value};
     this.http.post<any>('http://localhost:8080/login', dataLogin).subscribe((data) => {
       if (data.status == 200) {
-        this.router.navigate(['home']);
+        this.router.navigate(['family-register']);
       }
       if (data.status == 404) {
         this.error = "Sai thong tin";

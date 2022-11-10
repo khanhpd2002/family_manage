@@ -6,13 +6,14 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {ReactiveFormComponent} from "../reactive-form/reactive-form.component";
 import {MatTableDataSource} from "@angular/material/table";
+import {AddEditFamilyRegisterComponent} from "./add-edit-family-register/add-edit-family-register.component";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-family-register',
+  templateUrl: './family-register.component.html',
+  styleUrls: ['./family-register.component.css']
 })
-export class HomeComponent implements OnInit {
+export class FamilyRegisterComponent implements OnInit {
   addressValues : any[] = [];
   provinceValues : String[] = [];
   districtValues : String[] = [];
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
   tempDistrictValues : any[] =[];
   searchForm: FormGroup = new FormGroup({});
   isShowing: boolean;
+  _index: any;
 
   familyRegisters: any;
   displayedColumns: string[] = ['number', 'owner', 'province', 'district', 'ward', 'address', ' '];
@@ -48,9 +50,9 @@ export class HomeComponent implements OnInit {
       data.forEach((element : any) => {
         this.provinceValues.push(element.name);
       });
-    })
-    this.http.get<any>('http://localhost:8080/family-register/getAll/').subscribe((data) => {
-      this.familyRegisters = new MatTableDataSource(data);
+    });
+    this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+      this.familyRegisters = new MatTableDataSource<FamilyRegisters>(data);
       this.familyRegisters.paginator = this.paginator;
     })
   }
@@ -59,14 +61,18 @@ export class HomeComponent implements OnInit {
     const formValue = `${this.searchForm.get('number')?.value}${this.searchForm.get('owner')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
     console.log(formValue);
     this.familyRegisters.filter = formValue.trim().toLowerCase();
-    this.familyRegisters = this.familyRegisters
-      .filter((e: any) => {
-        const isNumber = e.number.includes(this.searchForm.get('number')?.value)
-      })
+    console.log(this.familyRegisters)
   }
 
   onResetForm() {
-    this.searchForm.reset();
+    this.searchForm.patchValue({
+      number: '',
+      owner: '',
+      province: '',
+      district: '',
+      ward: '',
+      address: ''
+    });
   }
 
   provinceChange(event : any) {
@@ -89,16 +95,40 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  deleteData(index: number) {
-
+  addEditFamilyRegister(fr: any) {
+    this.dialog.open(AddEditFamilyRegisterComponent,
+      {
+        width: '500px',
+        disableClose: false,
+        panelClass: 'app-add-edit-family-register',
+        data: fr ? fr : null,
+      })
+      .afterClosed().subscribe(result => {
+        if (result?.value) {
+          console.log(result.value);
+          this.familyRegisters.data.push(result.value);
+          console.log(this.familyRegisters);
+          this.onSearch();
+        }
+      });
   }
 
-  openDialogDetails(index: number) {
-
+  onDelete(index: number) {
+    const deleteId = this.familyRegisters.data[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id
+    this.http.delete<any>(`http://localhost:8080/family-register/${deleteId}`).subscribe();
   }
 
-  editData(index: number) {
+  openDialogDetails(fr: any) {
+    this.dialog.open(AddEditFamilyRegisterComponent,
+      {
+        width: '500px',
+        disableClose: false,
+        panelClass: 'app-add-edit-family-register',
+        data: fr ? fr : null,
+      });
+  }
 
+  onEdit(index: number) {
   }
 
   toggleSidenav() {
@@ -110,22 +140,6 @@ export class HomeComponent implements OnInit {
   about() {
     this.routes.navigate(['about']);
   }
-
-  addEditFamilyRegister(fr: any) {
-    this.dialog.open(ReactiveFormComponent,
-      {
-        width: '500px',
-        disableClose: false,
-        panelClass: 'app-reactive-form',
-        data: fr ? fr : null,
-      })
-      .afterClosed().subscribe(result => {
-        if (result?.value) {
-          console.log(result?.value);
-      }
-    });
-  }
-
 
 }
 export interface FamilyRegisters {

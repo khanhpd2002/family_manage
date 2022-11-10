@@ -102,15 +102,16 @@
           class="primary Update-btn"
           (click)="onSearch()"
         >
-          <i class="fa fa-times">Search</i>
+          <i class="fa fa-search"></i> Search
         </button>
         <button
           mat-button
           type="submit"
           class="primary Update-btn"
+          id="clear"
           (click)="onResetForm()"
         >
-          <i class="fa fa-times">Clear</i>
+          <i class="fa fa-times"></i> Clear
         </button>
       </div>
 
@@ -121,7 +122,7 @@
           class="add-edit"
           (click)="addEditFamilyRegister($event)"
         >
-          <i class="fa fa-times">Add</i>
+          <i class="fa fa-plus"></i>  Add
         </button>
       </div>
 
@@ -167,7 +168,7 @@
           <ng-container matColumnDef=" ">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let i = index">
-              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="deleteData(i)">
+              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onDelete(i)">
                 <mat-icon>delete</mat-icon>
               </button>
               <span>&nbsp;&nbsp;&nbsp;</span>
@@ -175,7 +176,7 @@
                 <mat-icon>info</mat-icon>
               </button>
               <span>&nbsp;&nbsp;&nbsp;</span>
-              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="editData(i)">
+              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onEdit(i)">
                 <mat-icon> border_color</mat-icon>
               </button>
             </mat-cell>

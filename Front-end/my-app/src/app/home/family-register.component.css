@@ -55,6 +55,19 @@ table {
 }
 
 .add-edit {
-  margin-left: 1300px;
+  margin-left: 1100px;
   height: 50px;
+}
+
+mat-icon {
+  margin-top: -15px;
+}
+
+button {
+  width:40px;
+  height: 40px;
+}
+
+#clear {
+  margin-left: 27px;
 }
