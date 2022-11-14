@@ -1,5 +1,6 @@
 package com.example.btl.entity;
 
+import com.example.btl.entity.enums.RelationWithOwnerType;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
@@ -11,27 +12,46 @@ public class People {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "other_name")
     private String otherName;
-    private Short birthday;
+
+    @Column(name = "birthday")
+    private String birthday;
+
+    @Column(name = "province")
     private String province;
+
+    @Column(name = "district")
     private String district;
+
+    @Column(name = "ward")
     private String ward;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "place_of_birth")
     private String placeOfBirth;
+
+    @Column(name = "ethnic")
     private String ethnic;
+
+    @Column (name = "identity_card")
     private String identityCard;
     private String placeOfJob;
 
     @Column(name = "family_id")
     private Long familyId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "family_id", insertable = false, updatable = false)
-    private FamilyRegister familyRegister;
-
     @Column(name = "relationship_with_owner")
-    private String relationshipWithOwner;
+    @Enumerated(EnumType.STRING)
+    private RelationWithOwnerType relationshipWithOwner;
+
+    @Column(name = "note")
+    private String note;
 
     public Long getId() {
         return id;
@@ -57,11 +77,11 @@ public class People {
         this.otherName = otherName;
     }
 
-    public Short getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Short birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -129,11 +149,11 @@ public class People {
         this.placeOfJob = placeOfJob;
     }
 
-    public String getRelationshipWithOwner() {
+    public RelationWithOwnerType getRelationshipWithOwner() {
         return relationshipWithOwner;
     }
 
-    public void setRelationshipWithOwner(String relationshipWithOwner) {
+    public void setRelationshipWithOwner(RelationWithOwnerType relationshipWithOwner) {
         this.relationshipWithOwner = relationshipWithOwner;
     }
 
@@ -145,12 +165,11 @@ public class People {
         this.familyId = familyId;
     }
 
-    public FamilyRegister getFamilyRegister() {
-        return familyRegister;
+    public String getNote() {
+        return note;
     }
 
-    public void setFamilyRegister(FamilyRegister familyRegister) {
-        this.familyRegister = familyRegister;
+    public void setNote(String note) {
+        this.note = note;
     }
-
 }

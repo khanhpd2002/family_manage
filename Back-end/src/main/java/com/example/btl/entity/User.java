@@ -10,9 +10,17 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "username")
     private String username;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "phone")
     private String phone;
+
+    @Column(name = "email")
     private String email;
 
     public Long getId() {

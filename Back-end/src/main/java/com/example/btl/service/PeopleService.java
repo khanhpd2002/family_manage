@@ -27,7 +27,6 @@ public class PeopleService {
         people.setEthnic(source.getEthnic());
         people.setIdentityCard(source.getIdentityCard());
         people.setPlaceOfJob(source.getPlaceOfJob());
-        people.setFamilyId(source.getFamilyId());
 
         return this.peopleRepository.save(people);
     }

@@ -23,8 +23,8 @@ public class PeopleApi {
     }
 
     @GetMapping("/{id}")
-    public List<People> findById(@PathVariable(name = "id", required = true) Long id) {
-        return (List<People>) peopleRepository.findById(id == null ? 0 : id);
+    public People findById(@PathVariable(name = "id", required = true) Long id) {
+        return peopleRepository.findById(id == null ? 0 : id);
     }
 
     @PostMapping()
