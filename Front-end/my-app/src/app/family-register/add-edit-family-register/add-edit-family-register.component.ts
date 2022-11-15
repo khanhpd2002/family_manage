@@ -31,7 +31,6 @@ export class AddEditFamilyRegisterComponent {
     public dialogRef: MatDialogRef<AddEditFamilyRegisterComponent>,
     @Inject(MAT_DIALOG_DATA) public familyRegister: any) {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
-      console.log(data);
       this.addressValues = data;
       data.forEach((element : any) => {
         this.provinceValues.push(element.name);
@@ -55,10 +54,7 @@ export class AddEditFamilyRegisterComponent {
 
   onSubmit() {
     const data : FamilyRegisters = {number: this.addEditForm.controls['number'].value, owner: this.addEditForm.controls['owner'].value, province: this.addEditForm.controls['province'].value, district: this.addEditForm.controls['district'].value, ward: this.addEditForm.controls['ward'].value, address: this.addEditForm.controls['address'].value};
-    // this.dataPassing.addData(childData);
-    this.http.post<any>('http://localhost:8080/family-register', data).subscribe((data) => {
-      console.log(data);
-    });
+    this.http.post<any>('http://localhost:8080/family-register', data).subscribe(data => {});
     this.dialogRef.close();
   }
 

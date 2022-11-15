@@ -17,6 +17,7 @@ public class FamilyRegisterService {
 
         FamilyRegister familyRegister = oFamilyRegister.get();
         familyRegister.setNumber(source.getNumber());
+        familyRegister.setNumberPeople(source.getNumberPeople());
         familyRegister.setOwner(source.getOwner());
         familyRegister.setProvince(source.getProvince());
         familyRegister.setDistrict(source.getDistrict());

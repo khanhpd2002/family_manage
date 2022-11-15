@@ -17,6 +17,9 @@ public class FamilyRegister {
     @Column(name = "number")
     private int number;
 
+    @Column(name = "number_people")
+    private int numberPeople;
+
     @Column(name = "owner")
     private String owner;
 
@@ -82,6 +85,14 @@ public class FamilyRegister {
 
     public void setWard(String ward) {
         this.ward = ward;
+    }
+
+    public int getNumberPeople() {
+        return numberPeople;
+    }
+
+    public void setNumberPeople(int numberPeople) {
+        this.numberPeople = numberPeople;
     }
 
     public String getAddress() {

@@ -52,16 +52,14 @@ export class FamilyRegisterComponent implements OnInit {
       });
     });
     this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
-      this.familyRegisters = new MatTableDataSource<FamilyRegisters>(data);
+      this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
       this.familyRegisters.paginator = this.paginator;
     })
   }
 
   onSearch() {
     const formValue = `${this.searchForm.get('number')?.value}${this.searchForm.get('owner')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
-    console.log(formValue);
     this.familyRegisters.filter = formValue.trim().toLowerCase();
-    console.log(this.familyRegisters)
   }
 
   onResetForm() {
@@ -104,31 +102,41 @@ export class FamilyRegisterComponent implements OnInit {
         data: fr ? fr : null,
       })
       .afterClosed().subscribe(result => {
-        if (result?.value) {
-          console.log(result.value);
-          this.familyRegisters.data.push(result.value);
-          console.log(this.familyRegisters);
-          this.onSearch();
-        }
+        this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+          this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
+          this.familyRegisters.paginator = this.paginator;
+        })
       });
   }
 
   onDelete(index: number) {
     const deleteId = this.familyRegisters.data[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id
     this.http.delete<any>(`http://localhost:8080/family-register/${deleteId}`).subscribe();
+    this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+      this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
+      this.familyRegisters.paginator = this.paginator;
+    })
   }
 
-  openDialogDetails(fr: any) {
+  openDialogDetails(index: number): void {
     this.dialog.open(AddEditFamilyRegisterComponent,
       {
         width: '500px',
         disableClose: false,
         panelClass: 'app-add-edit-family-register',
-        data: fr ? fr : null,
+        // data: this.familyRegisters.data[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
+        data: this.familyRegisters.data[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index]
       });
   }
 
-  onEdit(index: number) {
+  onEdit(index: number): void {
+    this.dialog.open(AddEditFamilyRegisterComponent,
+      {
+        width: '500px',
+        disableClose: false,
+        panelClass: 'app-add-edit-family-register',
+        data: this.familyRegisters.data[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
+      });
   }
 
   toggleSidenav() {
@@ -142,7 +150,7 @@ export class FamilyRegisterComponent implements OnInit {
   }
 
 }
-export interface FamilyRegisters {
+export interface FamilyRegister {
   number: number;
   owner: string;
   province: string;

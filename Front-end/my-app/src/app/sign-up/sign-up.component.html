@@ -34,9 +34,9 @@
         <div class="text-center">
             <a routerLink="/sign-up">Back</a>
         </div>
-  
+
         <div class="button">
-            <button type="submit" mat-button>Signup</button>
+            <button type="submit" mat-button *ngIf="form.valid">Signup</button>
         </div>
     </div>
 

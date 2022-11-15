@@ -13,31 +13,15 @@ export class AppComponent {
 
   }
   title = 'my-app';
-  goHome() {
+  isShowing : boolean;
+  toggleSidenav() {
+    this.isShowing = !this.isShowing;
   }
+  logout () {
 
-  goAbout() {
-    this.router.navigate(['about']);
   }
+  about () {
 
-  goForm() {
-    this.router.navigate(['reactiveform']);
-  }
-
-  goTable() {
-    this.router.navigate(['table']);
-  }
-
-  goSearch() {
-    this.router.navigate(['search']);
-  }
-
-  goFlexLayout() {
-    this.router.navigate(['flex-layout']);
-  }
-
-  goCovidData() {
-    this.router.navigate(['coviddata']);
   }
 
 }

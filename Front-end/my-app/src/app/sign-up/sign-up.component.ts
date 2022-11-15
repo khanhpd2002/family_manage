@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Route, Router } from '@angular/router';
 
 @Component({
@@ -19,7 +19,7 @@ export class SignUpComponent implements OnInit {
   }
   error = '';
   form: FormGroup = new FormGroup({
-    email: new FormControl(''),
+    email: new FormControl('', Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')),
     phone: new FormControl(''),
     username: new FormControl(''),
     password: new FormControl(''),

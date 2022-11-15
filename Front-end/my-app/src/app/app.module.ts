@@ -24,9 +24,8 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 
 import { AppComponent } from './app.component';
-import { FamilyRegisterComponent } from './home/family-register.component';
+import { FamilyRegisterComponent } from './family-register/family-register.component';
 import { FormComponent } from './form/form.component';
-import { TableComponent, DialogDetailsComponent, EditTableComponent } from './table/table.component';
 import { ReactiveFormComponent } from './reactive-form/reactive-form.component';
 import { AboutComponent } from './about/about.component';
 import { FilterPipe } from './filter.pipe';
@@ -35,18 +34,15 @@ import { FlexLayoutComponent } from './flex-layout/flex-layout.component';
 import { CovidDataComponent } from './covid-data/covid-data.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { AddEditFamilyRegisterComponent } from "./home/add-edit-family-register/add-edit-family-register.component";
+import { AddEditFamilyRegisterComponent } from "./family-register/add-edit-family-register/add-edit-family-register.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     FamilyRegisterComponent,
     FormComponent,
-    TableComponent,
     ReactiveFormComponent,
     AboutComponent,
-    EditTableComponent,
-    DialogDetailsComponent,
     FilterPipe,
     SearchComponent,
     FlexLayoutComponent,
