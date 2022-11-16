@@ -4,8 +4,6 @@ import com.example.btl.entity.FamilyRegister;
 import com.example.btl.repository.FamilyRegisterRepository;
 import com.example.btl.service.FamilyRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.freemarker.FreeMarkerTemplateAvailabilityProvider;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

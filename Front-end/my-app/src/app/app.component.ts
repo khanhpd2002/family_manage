@@ -10,18 +10,6 @@ export class AppComponent {
   constructor (
     public router: Router
   ){
-
   }
   title = 'my-app';
-  isShowing : boolean;
-  toggleSidenav() {
-    this.isShowing = !this.isShowing;
-  }
-  logout () {
-
-  }
-  about () {
-
-  }
-
 }

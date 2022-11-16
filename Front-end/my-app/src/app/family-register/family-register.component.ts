@@ -23,8 +23,11 @@ export class FamilyRegisterComponent implements OnInit {
   searchForm: FormGroup = new FormGroup({});
   isShowing: boolean;
   _index: any;
+  isEdit : boolean;
 
   familyRegisters: any;
+  check: any;
+  // searchData: any;
   displayedColumns: string[] = ['number', 'owner', 'province', 'district', 'ward', 'address', ' '];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -52,6 +55,9 @@ export class FamilyRegisterComponent implements OnInit {
       });
     });
     this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+      // this.searchData = data;
+      // this.searchData = new MatTableDataSource<FamilyRegister>(data);
+      // this.searchData.paginator = this.paginator;
       this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
       this.familyRegisters.paginator = this.paginator;
     })
@@ -60,6 +66,9 @@ export class FamilyRegisterComponent implements OnInit {
   onSearch() {
     const formValue = `${this.searchForm.get('number')?.value}${this.searchForm.get('owner')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
     this.familyRegisters.filter = formValue.trim().toLowerCase();
+    this.check = this.familyRegisters.filteredData;
+    this.familyRegisters = new MatTableDataSource<FamilyRegister>(this.check);
+    this.familyRegisters.paginator = this.paginator;
   }
 
   onResetForm() {
@@ -124,8 +133,8 @@ export class FamilyRegisterComponent implements OnInit {
         width: '500px',
         disableClose: false,
         panelClass: 'app-add-edit-family-register',
-        // data: this.familyRegisters.data[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
-        data: this.familyRegisters.data[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index]
+        data: this.familyRegisters.data[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
+        id: "-1"
       });
   }
 
@@ -136,7 +145,12 @@ export class FamilyRegisterComponent implements OnInit {
         disableClose: false,
         panelClass: 'app-add-edit-family-register',
         data: this.familyRegisters.data[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
-      });
+      }).afterClosed().subscribe(result => {
+      this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+        this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
+        this.familyRegisters.paginator = this.paginator;
+      })
+    });
   }
 
   toggleSidenav() {
