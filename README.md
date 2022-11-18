@@ -16,3 +16,5 @@ Cách để chạy chương trình
                 + Nếu có lỗi thì xem file pom.xml (thường là vậy)
                 + Không thì thôi
     4. Truy cập vào trang localhost:4200, đăng nhập, và sử dụng
+        - Nếu không đăng nhập được, mở F12 lên, phần console
+            + Nếu xảy ra lỗi CORS, tìm thư mục chứa chrome.exe và chạy trên terminal dòng lệnh trong file FixCORS.txt
