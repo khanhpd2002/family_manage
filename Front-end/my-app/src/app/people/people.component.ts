@@ -5,14 +5,14 @@ import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
-import {AddEditFamilyRegisterComponent} from "./add-edit-family-register/add-edit-family-register.component";
+import {AddEditPeopleComponent} from "./add-edit-people/add-edit-people.component";
 
 @Component({
-  selector: 'app-family-register',
-  templateUrl: './family-register.component.html',
-  styleUrls: ['./family-register.component.css']
+  selector: 'app-people',
+  templateUrl: './people.component.html',
+  styleUrls: ['./people.component.css']
 })
-export class FamilyRegisterComponent implements OnInit {
+export class PeopleComponent implements OnInit {
   addressValues : any[] = [];
   provinceValues : String[] = [];
   districtValues : String[] = [];
@@ -23,9 +23,10 @@ export class FamilyRegisterComponent implements OnInit {
   isShowing: boolean;
   isEdit : boolean;
 
-  familyRegisters: any;
+  people: any;
   afterFilter: any;
-  displayedColumns: string[] = ['number', 'owner', 'province', 'district', 'ward', 'address', ' '];
+  displayedColumns: string[] = ['name', 'otherName', 'birthday', 'province', 'district', 'ward',
+    'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationWithOwner', 'note', ' '];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -35,12 +36,18 @@ export class FamilyRegisterComponent implements OnInit {
     protected formBuilder: FormBuilder,
     private dialog: MatDialog) {
     this.searchForm = this.formBuilder.group({
-      number: [''],
-      owner: [''],
+      name: [''],
+      otherName: [''],
       province: [''],
       district: [''],
       ward: [''],
       address: [''],
+      placeOfBirth: [''],
+      ethnic: [''],
+      placeOfJob: [''],
+      identityCard: [''],
+      relationWithOwner: [''],
+      note: [''],
     });
   }
 
@@ -51,17 +58,18 @@ export class FamilyRegisterComponent implements OnInit {
         this.provinceValues.push(element.name);
       });
     });
-    this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
-      this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
-      this.familyRegisters.paginator = this.paginator;
-      this.afterFilter = this.familyRegisters.data;
+    this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
+      console.log(data);
+      this.people = new MatTableDataSource<People>(data);
+      this.people.paginator = this.paginator;
+      this.afterFilter = this.people.data;
     });
   }
 
   onSearch() {
-    const formValue = `${this.searchForm.get('number')?.value}${this.searchForm.get('owner')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
-    this.familyRegisters.filter = formValue.trim().toLowerCase();
-    this.afterFilter = this.familyRegisters.filteredData;
+    // const formValue = `${this.searchForm.get('number')?.value}${this.searchForm.get('owner')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
+    // this.people.filter = formValue.trim().toLowerCase();
+    this.afterFilter = this.people.filteredData;
     console.log(this.afterFilter);
   }
 
@@ -96,56 +104,56 @@ export class FamilyRegisterComponent implements OnInit {
     })
   }
 
-  addEditFamilyRegister(fr: any) {
-    this.dialog.open(AddEditFamilyRegisterComponent,
+  addEditPeople(fr: any) {
+    this.dialog.open(AddEditPeopleComponent,
       {
         width: '500px',
         disableClose: false,
-        panelClass: 'app-add-edit-family-register',
+        panelClass: 'app-add-edit-people',
         data: fr ? fr : null,
       })
       .afterClosed().subscribe(result => {
-        this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
-          this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
-          this.familyRegisters.paginator = this.paginator;
-        })
-      });
+      this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
+        this.people = new MatTableDataSource<People>(data);
+        this.people.paginator = this.paginator;
+      })
+    });
   }
 
   onDelete(index: number) {
     console.log(index);
     console.log(this.paginator.pageSize, this.paginator.pageIndex);
-    const deleteId = this.familyRegisters[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
+    const deleteId = this.people[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
     console.log(deleteId);
-    this.http.delete<any>(`http://localhost:8080/family-register/${deleteId}`).subscribe();
-    this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
-      this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
-      this.familyRegisters.paginator = this.paginator;
+    this.http.delete<any>(`http://localhost:8080/people/${deleteId}`).subscribe();
+    this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
+      this.people = new MatTableDataSource<People>(data);
+      this.people.paginator = this.paginator;
     })
   }
 
   openDialogDetails(index: number): void {
-    this.dialog.open(AddEditFamilyRegisterComponent,
+    this.dialog.open(AddEditPeopleComponent,
       {
         width: '500px',
         disableClose: false,
-        panelClass: 'app-add-edit-family-register',
+        panelClass: 'app-add-edit-people',
         data: this.afterFilter[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
         id: "-1"
       });
   }
 
   onEdit(index: number): void {
-    this.dialog.open(AddEditFamilyRegisterComponent,
+    this.dialog.open(AddEditPeopleComponent,
       {
         width: '500px',
         disableClose: false,
-        panelClass: 'app-add-edit-family-register',
+        panelClass: 'app-add-edit-people',
         data: this.afterFilter[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
       }).afterClosed().subscribe(result => {
-      this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
-        this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
-        this.familyRegisters.paginator = this.paginator;
+      this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
+        this.people = new MatTableDataSource<People>(data);
+        this.people.paginator = this.paginator;
       })
     });
   }
@@ -167,11 +175,18 @@ export class FamilyRegisterComponent implements OnInit {
   }
 
 }
-export interface FamilyRegister {
-  number: number;
-  owner: string;
-  province: string;
-  district: string;
-  ward: string;
-  address: string;
+export interface People {
+  name: any;
+  otherName: any;
+  birthday: any;
+  province: any;
+  district: any;
+  ward: any;
+  address: any;
+  placeOfBirth: any;
+  ethnic: any;
+  placeOfJob: any;
+  identityCard: any;
+  relationWithOwner: any;
+  note: any;
 }
