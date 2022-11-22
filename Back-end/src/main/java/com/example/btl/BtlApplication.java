@@ -9,19 +9,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class BtlApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(BtlApplication.class, args);
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/users").allowedOrigins("http://localhost:8080");
-                registry.addMapping("/family-register").allowedOrigins("http://localhost:8080");
-            }
-        };
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(BtlApplication.class, args);
+	}
+//@Autowired @Component
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("*");
+			}
+		};
+	}
 
 }
