@@ -35,6 +35,9 @@ import { CovidDataComponent } from './covid-data/covid-data.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { AddEditFamilyRegisterComponent } from "./family-register/add-edit-family-register/add-edit-family-register.component";
+import { PeopleComponent } from './people/people.component';
+import { ChargeComponent } from './charge/charge.component';
+import { AddEditPeopleComponent } from "./people/add-edit-people/add-edit-people.component";
 
 @NgModule({
   declarations: [
@@ -49,7 +52,10 @@ import { AddEditFamilyRegisterComponent } from "./family-register/add-edit-famil
     CovidDataComponent,
     LoginComponent,
     SignUpComponent,
-    AddEditFamilyRegisterComponent
+    AddEditFamilyRegisterComponent,
+    PeopleComponent,
+    ChargeComponent,
+    AddEditPeopleComponent,
   ],
   imports: [
     BrowserModule,
