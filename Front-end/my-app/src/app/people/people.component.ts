@@ -22,11 +22,12 @@ export class PeopleComponent implements OnInit {
   searchForm: FormGroup = new FormGroup({});
   isShowing: boolean;
   isEdit : boolean;
+  isAdvancedSearch: boolean;
 
   people: any;
   afterFilter: any;
-  displayedColumns: string[] = ['name', 'otherName', 'birthday', 'province', 'district', 'ward',
-    'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationWithOwner', 'note', ' '];
+  displayedColumns: string[] = ['name', 'birthday', 'province', 'district', 'ward',
+    'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationshipWithOwner', 'note', ' '];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -46,7 +47,8 @@ export class PeopleComponent implements OnInit {
       ethnic: [''],
       placeOfJob: [''],
       identityCard: [''],
-      relationWithOwner: [''],
+      familyId: [''],
+      relationshipWithOwner: [''],
       note: [''],
     });
   }
@@ -59,7 +61,6 @@ export class PeopleComponent implements OnInit {
       });
     });
     this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
-      console.log(data);
       this.people = new MatTableDataSource<People>(data);
       this.people.paginator = this.paginator;
       this.afterFilter = this.people.data;
@@ -67,20 +68,27 @@ export class PeopleComponent implements OnInit {
   }
 
   onSearch() {
-    // const formValue = `${this.searchForm.get('number')?.value}${this.searchForm.get('owner')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
-    // this.people.filter = formValue.trim().toLowerCase();
+    const formValue = `${this.searchForm.get('name')?.value}${this.searchForm.get('otherName')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
+    this.people.filter = formValue.trim().toLowerCase();
     this.afterFilter = this.people.filteredData;
     console.log(this.afterFilter);
   }
 
   onResetForm() {
     this.searchForm.patchValue({
-      number: '',
-      owner: '',
+      name: '',
+      otherName: '',
       province: '',
       district: '',
       ward: '',
-      address: ''
+      address: '',
+      placeOfBirth: '',
+      ethnic: '',
+      placeOfJob: '',
+      identityCard: '',
+      familyId: '',
+      relationshipWithOwner: '',
+      note: '',
     });
   }
 
@@ -158,6 +166,10 @@ export class PeopleComponent implements OnInit {
     });
   }
 
+  toggleAdvancedSearch() {
+    this.isAdvancedSearch = !this.isAdvancedSearch;
+  }
+
   toggleSidenav() {
     this.isShowing = !this.isShowing;
   }
@@ -187,6 +199,7 @@ export interface People {
   ethnic: any;
   placeOfJob: any;
   identityCard: any;
-  relationWithOwner: any;
+  familyId: any;
+  relationshipWithOwner: any;
   note: any;
 }

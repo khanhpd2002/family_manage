@@ -22,6 +22,9 @@ export class AddEditPeopleComponent implements OnInit{
   districtValues : String[] = [];
   wardValues : String[] = [];
 
+  relationshipValues = ['OWNER', 'WIFE', 'SON', 'DAUGHTER'];
+  familyValues : any[] = [];
+
   tempDistrictValues : any[] =[];
   isView = false;
   searchForm: FormGroup = new FormGroup({});
@@ -51,7 +54,7 @@ export class AddEditPeopleComponent implements OnInit{
     ethnic: [this.people.ethnic],
     placeOfJob: [this.people.placeOfJob],
     identityCard: [this.people.identityCard],
-    relationWithOwner: [this.people.relationWithOwner],
+    relationshipWithOwner: [this.people.relationshipWithOwner],
     note: [this.people.note],
 
     // name: new FormControl(null, [Validators.required]),
@@ -61,6 +64,13 @@ export class AddEditPeopleComponent implements OnInit{
   })
 
   ngOnInit() {
+    this.http.get<any>('http://localhost:8080/family-register').subscribe((data: any) => {
+      data.forEach((element: any) => {
+        this.familyValues.push(element.owner);
+      })
+    })
+
+    // Neu View thi disable tat ca cac field
     if (this.dialogRef.id === '-1') {
       this.isView = true;
       this.addEditForm.controls['name'].disable();
@@ -74,7 +84,7 @@ export class AddEditPeopleComponent implements OnInit{
       this.addEditForm.controls['ethnic'].disable();
       this.addEditForm.controls['placeOfJob'].disable();
       this.addEditForm.controls['identityCard'].disable();
-      this.addEditForm.controls['relationWithOwner'].disable();
+      this.addEditForm.controls['relationshipWithOwner'].disable();
       this.addEditForm.controls['note'].disable();
     }
     console.log(this.dialogRef.id);
@@ -110,7 +120,7 @@ export class AddEditPeopleComponent implements OnInit{
     const data : People = {name: this.addEditForm.controls['name'].value, otherName: this.addEditForm.controls['otherName'].value, birthday: this.addEditForm.controls['birthday'].value,
         province: this.addEditForm.controls['province'].value, district: this.addEditForm.controls['district'].value, ward: this.addEditForm.controls['ward'].value,
         address: this.addEditForm.controls['address'].value, placeOfBirth: this.addEditForm.controls['placeOfBirth'].value, ethnic: this.addEditForm.controls['ethnic'].value,
-        placeOfJob: this.addEditForm.controls['placeOfJob'].value, identityCard: this.addEditForm.controls['identityCard'].value, relationWithOwner: this.addEditForm.controls['relationWithOwner'].value, note: this.addEditForm.controls['note'].value};
+        placeOfJob: this.addEditForm.controls['placeOfJob'].value, identityCard: this.addEditForm.controls['identityCard'].value, relationshipWithOwner: this.addEditForm.controls['relationshipWithOwner'].value, note: this.addEditForm.controls['note'].value};
     // Tuy trang thai se goi method post/patch tuong ung
     if (this.people.id) {
       this.http.patch(`http://localhost:8080/people/${this.people.id}`, data).subscribe(data => {});
@@ -154,6 +164,6 @@ export interface People {
   ethnic: any;
   placeOfJob: any;
   identityCard: any;
-  relationWithOwner: any;
+  relationshipWithOwner: any;
   note: any;
 }

@@ -7,6 +7,9 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
+
+  <button mat-button (click)="goFamilyRegisters()" style="width: 100%">Family</button>
+
   <span>My App</span>
 </mat-toolbar>
 
@@ -26,19 +29,19 @@
       <div fxLayout="row">
         <div class="name" id="div-form-name">
           <h4>Name</h4>
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput name="name" formControlName="name"/>
           </mat-form-field>
         </div>
 
-        <div class="other-name" id="div-form-other-name">
-          <h4>Other Name</h4>
-          <mat-form-field appearance="fill">
-            <mat-label>Other Name</mat-label>
-            <input matInput name="otherName" formControlName="otherName"/>
-          </mat-form-field>
-        </div>
+<!--        <div class="other-name" id="div-form-other-name">-->
+<!--          <h4>Other Name</h4>-->
+<!--          <mat-form-field appearance="fill">-->
+<!--            <mat-label>Other Name</mat-label>-->
+<!--            <input matInput name="otherName" formControlName="otherName"/>-->
+<!--          </mat-form-field>-->
+<!--        </div>-->
 
         <div class="birthday" id="div-form-birthday">
           <h4>Birthday</h4>
@@ -107,6 +110,74 @@
         </div>
       </div>
 
+      <ng-container *ngIf="isAdvancedSearch">
+        <div fxLayout="row">
+          <div class="placeOfBirth" id="div-form-place-of-birth">
+            <h4>Place Of Birth</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>Place Of Birth</mat-label>
+              <input matInput name="placeOfBirth" formControlName="placeOfBirth"/>
+            </mat-form-field>
+          </div>
+
+          <div class="ethnic" id="div-form-ethnic">
+            <h4>Ethnic</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>Ethnic</mat-label>
+              <input matInput name="ethnic" formControlName="ethnic"/>
+            </mat-form-field>
+          </div>
+
+          <div class="placeOfJob" id="div-form-place-of-job">
+            <h4>Place Of Job</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>Place Of Job</mat-label>
+              <input matInput name="placeOfJob" formControlName="placeOfJob"/>
+            </mat-form-field>
+          </div>
+
+          <div class="identityCard" id="div-form-identity-card">
+            <h4>Identity Card</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>Identity Card</mat-label>
+              <input matInput name="identityCard" formControlName="identityCard"/>
+            </mat-form-field>
+          </div>
+
+<!--          <div class="family" id="div-form-family">-->
+<!--            <h4>Family</h4>-->
+<!--            <mat-form-field appearance="fill">-->
+<!--              <mat-label>Family</mat-label>-->
+<!--              <input matInput name="familyId" formControlName="familyId"/>-->
+<!--            </mat-form-field>-->
+<!--          </div>-->
+
+          <div class="relationshipWithOwner" id="div-form-relationship-with-owner">
+            <h4>Relationship With Owner</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>Relationship With Owner</mat-label>
+              <input matInput name="relationshipWithOwner" formControlName="relationshipWithOwner"/>
+            </mat-form-field>
+          </div>
+
+          <div class="note" id="div-form-note">
+            <h4>Note</h4>
+            <mat-form-field appearance="fill">
+              <mat-label>Note</mat-label>
+              <input matInput name="note" formControlName="note"/>
+            </mat-form-field>
+          </div>
+        </div>
+      </ng-container>
+
+      <div fxLayout='row wrap' class='row-wrap-padding'>
+        <div fxLayout='column' fxFlex='100%' fxLayoutAlign='center center' class='advanced-search'>
+        <span ngClass="{{isAdvancedSearch ? 'hide_advance' : 'show_advance'}}"
+              (click)='toggleAdvancedSearch()'>{{(isAdvancedSearch ? 'Thu gọn' : 'Mở rộng')}}
+          <i ngClass="{{isAdvancedSearch ? 'fa fa-chevron-up' : 'fa fa-chevron-down'}}"></i></span>
+        </div>
+      </div>
+
       <div fxLayout="row" class="search-button">
         <button
           mat-button
@@ -141,16 +212,16 @@
       <div class="mat-elevation-z8">
         <table mat-table [dataSource]="people">
           <!-- Name Column -->
-          <ng-container matColumnDef="number">
+          <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef>Name</th>
             <td mat-cell *matCellDef="let element">{{ element.name }}</td>
           </ng-container>
 
           <!-- Other Name Column -->
-          <ng-container matColumnDef="otherName">
-            <th mat-header-cell *matHeaderCellDef>Other Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.otherName }}</td>
-          </ng-container>
+<!--          <ng-container matColumnDef="otherName">-->
+<!--            <th mat-header-cell *matHeaderCellDef>Other Name</th>-->
+<!--            <td mat-cell *matCellDef="let element">{{ element.otherName }}</td>-->
+<!--          </ng-container>-->
 
           <!-- Birthday Column -->
           <ng-container matColumnDef="birthday">
@@ -206,10 +277,16 @@
             <td mat-cell *matCellDef="let element">{{ element.identityCard }}</td>
           </ng-container>
 
-          <!-- Relation With Owner Column -->
-          <ng-container matColumnDef="relationWithOwner">
-            <th mat-header-cell *matHeaderCellDef>Relation With Owner</th>
-            <td mat-cell *matCellDef="let element">{{ element.relationWithOwner }}</td>
+          <!-- Family Column -->
+<!--          <ng-container matColumnDef="familyId">-->
+<!--            <th mat-header-cell *matHeaderCellDef>Family</th>-->
+<!--            <td mat-cell *matCellDef="let element">{{ element.familyId }}</td>-->
+<!--          </ng-container>-->
+
+          <!-- Relationship With Owner Column -->
+          <ng-container matColumnDef="relationshipWithOwner">
+            <th mat-header-cell *matHeaderCellDef>Relationship With Owner</th>
+            <td mat-cell *matCellDef="let element">{{ element.relationshipWithOwner }}</td>
           </ng-container>
 
           <!-- Note Column -->

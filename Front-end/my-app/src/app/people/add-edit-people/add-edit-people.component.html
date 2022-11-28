@@ -1,7 +1,7 @@
 <form class="center" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <div class="name" id="div-form" fxLayout="row">
     <h4>Name</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline" class="no-line">
       <mat-label>Name</mat-label>
       <input matInput name="name" formControlName="name"/>
     </mat-form-field>
@@ -130,11 +130,28 @@
     </mat-form-field>
   </div>
 
-  <div class="relation-with-owner" id="div-form" fxLayout="row">
-    <h4>Relation With Owner</h4>
+
+  <div class="familyId" id="div-form" fxLayout="row">
+    <h4>Family Id</h4>
     <mat-form-field appearance="fill">
-      <mat-label>Address</mat-label>
-      <input matInput name="relationWithOwner" formControlName="relationWithOwner" />
+      <mat-label>Family Id</mat-label>
+      <mat-select name="familyId" formControlName="familyId">
+        <mat-option *ngFor="let family of familyValues" [value]="family">
+          {{ family }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="relationship-with-owner" id="div-form" fxLayout="row">
+    <h4>Relationship With Owner</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Relationship With Owner</mat-label>
+      <mat-select name="relationshipWithOwner" formControlName="relationshipWithOwner">
+        <mat-option *ngFor="let relationship of relationshipValues" [value]="relationship">
+          {{ relationship }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
   </div>
 
