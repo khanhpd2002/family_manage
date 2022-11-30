@@ -1,11 +1,13 @@
 package com.example.btl.controller;
 
+import com.example.btl.entity.FamilyRegister;
 import com.example.btl.entity.People;
 import com.example.btl.repository.PeopleRepository;
 import com.example.btl.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,6 +22,20 @@ public class PeopleApi {
     @GetMapping()
     public List<People> findAll() {
         return (List<People>) peopleRepository.findAll();
+    }
+
+    @GetMapping("/params")
+    public List<People> find(@RequestParam(required = false) String name, @RequestParam(required = false) String otherName,
+                             @RequestParam(required = false) String birthday, @RequestParam(required = false) String province,
+                             @RequestParam(required = false) String district, @RequestParam(required = false) String ward,
+                             @RequestParam(required = false) String address, @RequestParam(required = false) String placeOfBirth,
+                             @RequestParam(required = false) String ethnic, @RequestParam(required = false) String placeOfJob,
+                             @RequestParam(required = false) String identityCard, @RequestParam(required = false) String relationshipWithOwner,
+                             @RequestParam(required = false) String note) {
+        List<People> pp = new ArrayList<>();
+        pp = this.peopleRepository.find(name, otherName, birthday, province, district, ward, address,
+                placeOfBirth, ethnic, placeOfJob, identityCard, relationshipWithOwner, note);
+        return pp;
     }
 
     @GetMapping("/{id}")

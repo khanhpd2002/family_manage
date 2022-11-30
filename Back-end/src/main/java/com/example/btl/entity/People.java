@@ -41,6 +41,8 @@ public class People {
 
     @Column (name = "identity_card")
     private String identityCard;
+
+    @Column (name = "place_of_job")
     private String placeOfJob;
 
     @Column(name = "family_id")
