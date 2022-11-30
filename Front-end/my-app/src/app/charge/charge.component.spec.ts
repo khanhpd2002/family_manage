@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FamilyRegisterComponent } from './family-register.component';
+import { ChargeComponent } from './charge.component';
 
-describe('HomeComponent', () => {
-  let component: FamilyRegisterComponent;
-  let fixture: ComponentFixture<FamilyRegisterComponent>;
+describe('ChargeComponent', () => {
+  let component: ChargeComponent;
+  let fixture: ComponentFixture<ChargeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FamilyRegisterComponent ]
+      declarations: [ ChargeComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FamilyRegisterComponent);
+    fixture = TestBed.createComponent(ChargeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

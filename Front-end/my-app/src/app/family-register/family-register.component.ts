@@ -54,7 +54,8 @@ export class FamilyRegisterComponent implements OnInit {
     this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
       this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
       this.familyRegisters.paginator = this.paginator;
-    })
+      this.afterFilter = this.familyRegisters.data;
+    });
   }
 
   onSearch() {
@@ -112,7 +113,10 @@ export class FamilyRegisterComponent implements OnInit {
   }
 
   onDelete(index: number) {
-    const deleteId = this.afterFilter[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id
+    console.log(index);
+    console.log(this.paginator.pageSize, this.paginator.pageIndex);
+    const deleteId = this.familyRegisters[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
+    console.log(deleteId);
     this.http.delete<any>(`http://localhost:8080/family-register/${deleteId}`).subscribe();
     this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
       this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
@@ -149,11 +153,17 @@ export class FamilyRegisterComponent implements OnInit {
   toggleSidenav() {
     this.isShowing = !this.isShowing;
   }
-  logout() {
+  goLogout() {
     this.routes.navigate(['login']);
   }
-  about() {
-    this.routes.navigate(['about']);
+  goFamilyRegisters() {
+    this.routes.navigate(['family-register']);
+  }
+  goPeople() {
+    this.routes.navigate(['people']);
+  }
+  goCharge() {
+    this.routes.navigate(['charge']);
   }
 
 }

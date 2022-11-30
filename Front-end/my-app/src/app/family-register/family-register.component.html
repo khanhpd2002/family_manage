@@ -12,15 +12,19 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav [opened]="isShowing">
-    <button mat-button (click)="logout()" style="width: 100%">Logout</button>
+    <button mat-button (click)="goFamilyRegisters()" style="width: 100%">Family</button>
 
-    <button mat-button (click)="about()" style="width: 100%">About</button>
+    <button mat-button (click)="goPeople()" style="width: 100%">People</button>
+
+    <button mat-button (click)="goCharge()" style="width: 100%">Charge</button>
+
+    <button mat-button (click)="goLogout()" style="width: 100%">Logout</button>
   </mat-sidenav>
 
   <mat-sidenav-content fxLayout="column">
     <form [formGroup]="searchForm">
       <div fxLayout="row">
-        <div class="number" id="div-form">
+        <div class="number" id="div-form-number">
           <h4>Number</h4>
           <mat-form-field appearance="fill">
             <mat-label>Number</mat-label>
@@ -28,7 +32,7 @@
           </mat-form-field>
         </div>
 
-        <div class="owner" id="div-form">
+        <div class="owner" id="div-form-owner">
           <h4>Owner</h4>
           <mat-form-field appearance="fill">
             <mat-label>Owner</mat-label>
@@ -36,7 +40,7 @@
           </mat-form-field>
         </div>
 
-        <div class="province" id="div-form">
+        <div class="province" id="div-form-province">
           <h4>Province</h4>
           <mat-form-field appearance="fill">
             <mat-label>Province</mat-label>
@@ -55,7 +59,7 @@
           </mat-form-field>
         </div>
 
-        <div class="district" id="div-form">
+        <div class="district" id="div-form-district">
           <h4>District</h4>
           <mat-form-field appearance="fill">
             <mat-label>District</mat-label>
@@ -74,7 +78,7 @@
           </mat-form-field>
         </div>
 
-        <div class="ward" id="div-form">
+        <div class="ward" id="div-form-ward">
           <h4>Ward</h4>
           <mat-form-field appearance="fill">
             <mat-label>Ward</mat-label>
@@ -86,7 +90,7 @@
           </mat-form-field>
         </div>
 
-        <div class="address" id="div-form">
+        <div class="address" id="div-form-address">
           <h4>Address</h4>
           <mat-form-field appearance="fill">
             <mat-label>Address</mat-label>

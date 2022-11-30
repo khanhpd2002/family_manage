@@ -1,7 +1,7 @@
 <form class="center" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <div class="number" id="div-form" fxLayout="row">
     <h4>Number</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Number</mat-label>
       <input matInput name="number" formControlName="number"/>
     </mat-form-field>
@@ -12,7 +12,7 @@
 
   <div class="owner" id="div-form" fxLayout="row">
     <h4>Owner</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Owner</mat-label>
       <input matInput name="owner" formControlName="owner" />
     </mat-form-field>
@@ -23,7 +23,7 @@
 
   <div class="province" id="div-form" fxLayout="row">
     <h4>Province</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Province</mat-label>
       <mat-select
         (selectionChange)="provinceChange($event)"
@@ -45,7 +45,7 @@
 
   <div class="district" id="div-form" fxLayout="row">
     <h4>District</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>District</mat-label>
       <mat-select
         (selectionChange)="districtChange($event)"
@@ -67,7 +67,7 @@
 
   <div class="ward" id="div-form" fxLayout="row">
     <h4>Ward</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Ward</mat-label>
       <mat-select name="ward" formControlName="ward">
         <mat-option *ngFor="let ward of wardValues" [value]="ward">
@@ -82,7 +82,7 @@
 
   <div class="address" id="div-form" fxLayout="row">
     <h4>Address</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Address</mat-label>
       <input matInput name="address" formControlName="address" />
     </mat-form-field>

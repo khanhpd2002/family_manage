@@ -1,0 +1,26 @@
+#div-form {
+  width: 60px;
+  height: 50px;
+  font-size: 15px;
+  text-align: center;
+  margin: 5px;
+  /*position: absolute;*/
+}
+
+form {
+  margin: 5px;
+}
+
+
+.form-field-1{
+  position: relative;
+}
+
+::ng-deep .mat-input-underline {
+  display: none;
+}
+.no-line .mat-form-field-underline {
+  display: none;
+}
+
+

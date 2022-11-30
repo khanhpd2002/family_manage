@@ -1,18 +1,6 @@
-a {
-    color: orange;
-}
-
-.form-control {
-    resize: vertical;
-    width: 298px;
-}
-
-.hello {
-    background-color: blue;
-}
-.block1 {
-    background-color: green;
-}
-.block2 {
-    background-color: rebeccapurple;
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
 }

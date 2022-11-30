@@ -6,6 +6,7 @@ import com.example.btl.service.FamilyRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,6 +22,16 @@ public class FamilyRegisterApi {
     @GetMapping()
     public List<FamilyRegister> findAll() {
         return (List<FamilyRegister>) familyRegisterRepository.findAll();
+    }
+
+    @GetMapping("/params")
+    public List<FamilyRegister> find(@RequestParam(required = false) Long number,
+            @RequestParam(required = false) String owner, @RequestParam(required = false) String province,
+            @RequestParam(required = false) String district, @RequestParam(required = false) String ward,
+            @RequestParam(required = false) String address) {
+        List<FamilyRegister> fr = new ArrayList<>();
+        fr = this.familyRegisterRepository.find(number, owner, province, district, ward, address);
+        return fr;
     }
 
     @GetMapping("/{id}")
