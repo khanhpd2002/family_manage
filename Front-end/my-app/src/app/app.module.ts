@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { ToastrModule } from  "ngx-toastr";
 
 
 import { AppComponent } from './app.component';
@@ -78,7 +79,11 @@ import { AddEditPeopleComponent } from "./people/add-edit-people/add-edit-people
     MatCheckboxModule,
     FlexLayoutModule,
     MatCardModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ToastrModule.forRoot({
+      timeOut: 1000,
+      positionClass: 'toast-bottom-right',
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
