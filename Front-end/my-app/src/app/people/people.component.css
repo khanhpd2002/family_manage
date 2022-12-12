@@ -15,12 +15,12 @@ mat-sidenav {
 }
 
 .show_advance {
-    color: gray;
-}
-.hide_advance {
-    color: grey;
+  color: gray;
 }
 
+.hide_advance {
+  color: grey;
+}
 
 
 button {
@@ -30,7 +30,7 @@ button {
   text-align: center;
 }
 
-#div-form{
+#div-form {
   width: 20px;
   height: 20px;
   font-size: 5px;
@@ -81,7 +81,7 @@ mat-icon {
 }
 
 button {
-  width:40px;
+  width: 40px;
   height: 40px;
 }
 

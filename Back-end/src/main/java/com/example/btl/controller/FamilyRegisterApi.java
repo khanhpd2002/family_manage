@@ -26,9 +26,9 @@ public class FamilyRegisterApi {
 
     @GetMapping("/params")
     public List<FamilyRegister> find(@RequestParam(required = false) Long number,
-            @RequestParam(required = false) String owner, @RequestParam(required = false) String province,
-            @RequestParam(required = false) String district, @RequestParam(required = false) String ward,
-            @RequestParam(required = false) String address) {
+                                     @RequestParam(required = false) String owner, @RequestParam(required = false) String province,
+                                     @RequestParam(required = false) String district, @RequestParam(required = false) String ward,
+                                     @RequestParam(required = false) String address) {
         List<FamilyRegister> fr = new ArrayList<>();
         fr = this.familyRegisterRepository.find(number, owner, province, district, ward, address);
         return fr;
@@ -46,7 +46,7 @@ public class FamilyRegisterApi {
 
     @PatchMapping("{id}")
     public FamilyRegister update(@PathVariable(name = "id", required = true) Long id,
-            @RequestBody FamilyRegister newFamilyRegister) {
+                                 @RequestBody FamilyRegister newFamilyRegister) {
         return familyRegisterService.update(id, newFamilyRegister);
     }
 

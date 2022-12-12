@@ -13,15 +13,15 @@ import {AddEditPeopleComponent} from "./add-edit-people/add-edit-people.componen
   styleUrls: ['./people.component.css']
 })
 export class PeopleComponent implements OnInit {
-  addressValues : any[] = [];
-  provinceValues : String[] = [];
-  districtValues : String[] = [];
-  wardValues : String[] = [];
+  addressValues: any[] = [];
+  provinceValues: String[] = [];
+  districtValues: String[] = [];
+  wardValues: String[] = [];
 
-  tempDistrictValues : any[] =[];
+  tempDistrictValues: any[] = [];
   searchForm: FormGroup = new FormGroup({});
   isShowing: boolean;
-  isEdit : boolean;
+  isEdit: boolean;
   isAdvancedSearch: boolean;
 
   people: any;
@@ -32,7 +32,7 @@ export class PeopleComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    public routes : Router,
+    public routes: Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
     private dialog: MatDialog) {
@@ -56,7 +56,7 @@ export class PeopleComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
-      data.forEach((element : any) => {
+      data.forEach((element: any) => {
         this.provinceValues.push(element.name);
       });
     });
@@ -92,22 +92,22 @@ export class PeopleComponent implements OnInit {
     });
   }
 
-  provinceChange(event : any) {
+  provinceChange(event: any) {
     this.districtValues = [];
     this.wardValues = [];
     this.tempDistrictValues = this.addressValues
       .filter(a => a.name === event.value);
-    this.tempDistrictValues[0].districts.forEach((element : any) => {
+    this.tempDistrictValues[0].districts.forEach((element: any) => {
       this.districtValues.push(element.name);
     })
   }
 
-  districtChange(event : any) {
+  districtChange(event: any) {
     this.wardValues = [];
     const temp = this.tempDistrictValues[0].districts;
     const tempWardValues = temp
       .filter((a: any) => a.name === event.value);
-    tempWardValues[0].wards.forEach((element : any) => {
+    tempWardValues[0].wards.forEach((element: any) => {
       this.wardValues.push(element.name);
     })
   }
@@ -173,20 +173,25 @@ export class PeopleComponent implements OnInit {
   toggleSidenav() {
     this.isShowing = !this.isShowing;
   }
+
   goLogout() {
     this.routes.navigate(['login']);
   }
+
   goFamilyRegisters() {
     this.routes.navigate(['family-register']);
   }
+
   goPeople() {
     this.routes.navigate(['people']);
   }
+
   goCharge() {
     this.routes.navigate(['charge']);
   }
 
 }
+
 export interface People {
   name: any;
   otherName: any;

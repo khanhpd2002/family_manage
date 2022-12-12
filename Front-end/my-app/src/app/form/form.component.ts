@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -8,7 +8,8 @@ import {ToastrService} from "ngx-toastr";
 })
 export class FormComponent implements OnInit {
 
-  constructor(private toastr: ToastrService) { }
+  constructor(private toastr: ToastrService) {
+  }
 
   ngOnInit(): void {
   }

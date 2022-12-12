@@ -12,13 +12,14 @@ form {
 }
 
 
-.form-field-1{
+.form-field-1 {
   position: relative;
 }
 
 ::ng-deep .mat-input-underline {
   display: none;
 }
+
 .no-line .mat-form-field-underline {
   display: none;
 }

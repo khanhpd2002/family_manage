@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CovidDataComponent } from './covid-data.component';
+import {CovidDataComponent} from './covid-data.component';
 
 describe('CovidDataComponent', () => {
   let component: CovidDataComponent;
@@ -8,9 +8,9 @@ describe('CovidDataComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CovidDataComponent ]
+      declarations: [CovidDataComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CovidDataComponent);
     component = fixture.componentInstance;

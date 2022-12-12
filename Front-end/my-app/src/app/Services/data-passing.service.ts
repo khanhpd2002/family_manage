@@ -1,20 +1,21 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataPassingService {
-  public data : any[] = [];
-  public tempData : any = {};
-  public tempIndex : any;
+  public data: any[] = [];
+  public tempData: any = {};
+  public tempIndex: any;
 
-  addData (data: any) {
+  addData(data: any) {
     this.data.push(data);
   }
 
-  getIndex (index: number) {
+  getIndex(index: number) {
     this.tempIndex = index;
   }
 
-  constructor() { }
+  constructor() {
+  }
 }

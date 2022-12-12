@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {Route, Router} from '@angular/router';
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -15,10 +15,12 @@ export class LoginComponent implements OnInit {
     public router: Router,
     public http: HttpClient,
     private toastr: ToastrService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
+
   error = '';
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
@@ -26,7 +28,10 @@ export class LoginComponent implements OnInit {
   });
 
   submit() {
-    const dataLogin : LOGIN_USER = {username: this.form.get('username')?.value, password: this.form.get('password')?.value};
+    const dataLogin: LOGIN_USER = {
+      username: this.form.get('username')?.value,
+      password: this.form.get('password')?.value
+    };
     this.http.post<any>('http://localhost:8080/login', dataLogin).subscribe((data) => {
       if (data.status == 200) {
         this.toastr.success('Login success');
@@ -43,8 +48,8 @@ export class LoginComponent implements OnInit {
 }
 
 export interface LOGIN_USER {
-  username : String;
-  password : String;
+  username: String;
+  password: String;
 }
 
 

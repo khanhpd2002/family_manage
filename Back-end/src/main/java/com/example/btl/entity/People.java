@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.*;
 
 @Entity
-@Table (name = "people")
+@Table(name = "people")
 public class People {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,10 +39,10 @@ public class People {
     @Column(name = "ethnic")
     private String ethnic;
 
-    @Column (name = "identity_card")
+    @Column(name = "identity_card")
     private String identityCard;
 
-    @Column (name = "place_of_job")
+    @Column(name = "place_of_job")
     private String placeOfJob;
 
     @Column(name = "family_id")

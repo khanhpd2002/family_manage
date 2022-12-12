@@ -13,15 +13,15 @@ import {AddEditFamilyRegisterComponent} from "./add-edit-family-register/add-edi
   styleUrls: ['./family-register.component.css']
 })
 export class FamilyRegisterComponent implements OnInit {
-  addressValues : any[] = [];
-  provinceValues : String[] = [];
-  districtValues : String[] = [];
-  wardValues : String[] = [];
+  addressValues: any[] = [];
+  provinceValues: String[] = [];
+  districtValues: String[] = [];
+  wardValues: String[] = [];
 
-  tempDistrictValues : any[] =[];
+  tempDistrictValues: any[] = [];
   searchForm: FormGroup = new FormGroup({});
   isShowing: boolean;
-  isEdit : boolean;
+  isEdit: boolean;
 
   familyRegisters: any;
   afterFilter: any;
@@ -30,7 +30,7 @@ export class FamilyRegisterComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    public routes : Router,
+    public routes: Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
     private dialog: MatDialog) {
@@ -47,7 +47,7 @@ export class FamilyRegisterComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
-      data.forEach((element : any) => {
+      data.forEach((element: any) => {
         this.provinceValues.push(element.name);
       });
     });
@@ -76,22 +76,22 @@ export class FamilyRegisterComponent implements OnInit {
     });
   }
 
-  provinceChange(event : any) {
+  provinceChange(event: any) {
     this.districtValues = [];
     this.wardValues = [];
     this.tempDistrictValues = this.addressValues
       .filter(a => a.name === event.value);
-    this.tempDistrictValues[0].districts.forEach((element : any) => {
+    this.tempDistrictValues[0].districts.forEach((element: any) => {
       this.districtValues.push(element.name);
     })
   }
 
-  districtChange(event : any) {
+  districtChange(event: any) {
     this.wardValues = [];
     const temp = this.tempDistrictValues[0].districts;
     const tempWardValues = temp
       .filter((a: any) => a.name === event.value);
-    tempWardValues[0].wards.forEach((element : any) => {
+    tempWardValues[0].wards.forEach((element: any) => {
       this.wardValues.push(element.name);
     })
   }
@@ -105,11 +105,11 @@ export class FamilyRegisterComponent implements OnInit {
         data: fr ? fr : null,
       })
       .afterClosed().subscribe(result => {
-        this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
-          this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
-          this.familyRegisters.paginator = this.paginator;
-        })
-      });
+      this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+        this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
+        this.familyRegisters.paginator = this.paginator;
+      })
+    });
   }
 
   onDelete(index: number) {
@@ -153,20 +153,25 @@ export class FamilyRegisterComponent implements OnInit {
   toggleSidenav() {
     this.isShowing = !this.isShowing;
   }
+
   goLogout() {
     this.routes.navigate(['login']);
   }
+
   goFamilyRegisters() {
     this.routes.navigate(['family-register']);
   }
+
   goPeople() {
     this.routes.navigate(['people']);
   }
+
   goCharge() {
     this.routes.navigate(['charge']);
   }
 
 }
+
 export interface FamilyRegister {
   number: number;
   owner: string;

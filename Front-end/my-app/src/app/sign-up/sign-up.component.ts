@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import {Route, Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,10 +13,12 @@ export class SignUpComponent implements OnInit {
   constructor(
     public router: Router,
     public http: HttpClient,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
+
   error = '';
   form: FormGroup = new FormGroup({
     email: new FormControl('', Validators.pattern('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')),
@@ -26,7 +28,12 @@ export class SignUpComponent implements OnInit {
   });
 
   submit() {
-    const dataSingup : SIGNUP_USER = {email: this.form.get('email')?.value, phone: this.form.get('phone')?.value, username: this.form.get('username')?.value, password: this.form.get('password')?.value};
+    const dataSingup: SIGNUP_USER = {
+      email: this.form.get('email')?.value,
+      phone: this.form.get('phone')?.value,
+      username: this.form.get('username')?.value,
+      password: this.form.get('password')?.value
+    };
     this.http.post<any>('http://localhost:8080/sign-up', dataSingup).subscribe((data) => {
       if (data.status == 200) {
         this.router.navigate(['login']);
@@ -44,8 +51,8 @@ export class SignUpComponent implements OnInit {
 export interface SIGNUP_USER {
   email: String;
   phone: String;
-  username : String;
-  password : String;
+  username: String;
+  password: String;
 }
 
 
