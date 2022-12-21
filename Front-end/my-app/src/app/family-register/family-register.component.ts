@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
@@ -59,10 +59,29 @@ export class FamilyRegisterComponent implements OnInit {
   }
 
   onSearch() {
-    const formValue = `${this.searchForm.get('number')?.value}${this.searchForm.get('owner')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
-    this.familyRegisters.filter = formValue.trim().toLowerCase();
-    this.afterFilter = this.familyRegisters.filteredData;
-    console.log(this.afterFilter);
+    const map = Object.fromEntries(
+      ['number', 'owner', 'province', 'district', 'ward', 'address'].map(s => [s, s]));
+    let params = this._collectParams(this.searchForm, map);
+    console.log(params);
+    this.http.get<any>('http://localhost:8080/family-register/params', {params: params}).subscribe((data) => {
+      this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
+      this.familyRegisters.paginator = this.paginator;
+      this.afterFilter = this.familyRegisters.data;
+    });
+  }
+
+  _collectParams(searchForm: FormGroup, map: { [key: string]: string }): HttpParams {
+    let params = new HttpParams();
+    for (const key of Object.keys(map)) {
+      const value = map[key];
+      if (value) {
+        const control = searchForm.get(value);
+        if (control) {
+          params = params.set(key, control.value ? control.value : '');
+        }
+      }
+    }
+    return params;
   }
 
   onResetForm() {
