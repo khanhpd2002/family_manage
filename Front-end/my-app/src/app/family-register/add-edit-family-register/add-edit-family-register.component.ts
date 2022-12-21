@@ -13,7 +13,7 @@ import {HttpClient} from "@angular/common/http";
 @Component({
   selector: 'app-add-edit-family-register',
   templateUrl: './add-edit-family-register.component.html',
-  styleUrls: ['./add-edit-family-register.component.css']
+  styleUrls: ['./add-edit-family-register.component.scss']
 })
 
 export class AddEditFamilyRegisterComponent implements OnInit {

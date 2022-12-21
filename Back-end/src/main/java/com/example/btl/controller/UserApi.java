@@ -12,20 +12,15 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/user")
 public class UserApi {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/users/getAll")
+    @GetMapping()
     public List<User> getUsers() {
         return (List<User>) userRepository.findAll();
     }
-
-    @PostMapping("/users-signup")
-    public User createUsers(@RequestBody User newUser) {
-        return userRepository.save(newUser);
-    }
-
 
     @PostMapping("/login")
     public ResponseLogin responseLogin(@RequestBody Account loginAccount) {
@@ -46,16 +41,13 @@ public class UserApi {
         System.out.println(signupUser.getPassword());
         User newUsername = userRepository.findUserByUsername(signupUser.getUsername());
         ResponseLogin newReponseLogin = new ResponseLogin();
-        if (newUsername == null)
+        if (newUsername == null) {
             newReponseLogin.setStatus(200);
+            userRepository.save(signupUser);
+        }
         else
             newReponseLogin.setStatus(404);
         return newReponseLogin;
-    }
-
-    @PostMapping("/update-users")
-    public void update(@RequestBody User signupUser) {
-
     }
 
 }

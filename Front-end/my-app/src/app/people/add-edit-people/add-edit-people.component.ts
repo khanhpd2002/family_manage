@@ -13,7 +13,7 @@ import {HttpClient} from "@angular/common/http";
 @Component({
   selector: 'app-add-edit-peop;e',
   templateUrl: './add-edit-people.component.html',
-  styleUrls: ['./add-edit-people.component.css']
+  styleUrls: ['./add-edit-people.component.scss']
 })
 
 export class AddEditPeopleComponent implements OnInit {

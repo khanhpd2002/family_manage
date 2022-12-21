@@ -12,7 +12,7 @@
 
   <div class="otherName" id="div-form" fxLayout="row">
     <h4>Other Name</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Other Name</mat-label>
       <input matInput name="otherName" formControlName="otherName"/>
     </mat-form-field>
@@ -23,7 +23,7 @@
 
   <div class="birthday" id="div-form" fxLayout="row">
     <h4>Birthday</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Birthday</mat-label>
       <input matInput name="birthday" formControlName="birthday"/>
     </mat-form-field>
@@ -31,7 +31,7 @@
 
   <div class="province" id="div-form" fxLayout="row">
     <h4>Province</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Province</mat-label>
       <mat-select
         (selectionChange)="provinceChange($event)"
@@ -53,7 +53,7 @@
 
   <div class="district" id="div-form" fxLayout="row">
     <h4>District</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>District</mat-label>
       <mat-select
         (selectionChange)="districtChange($event)"
@@ -75,7 +75,7 @@
 
   <div class="ward" id="div-form" fxLayout="row">
     <h4>Ward</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Ward</mat-label>
       <mat-select name="ward" formControlName="ward">
         <mat-option *ngFor="let ward of wardValues" [value]="ward">
@@ -90,7 +90,7 @@
 
   <div class="address" id="div-form" fxLayout="row">
     <h4>Address</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Address</mat-label>
       <input matInput name="address" formControlName="address"/>
     </mat-form-field>
@@ -100,7 +100,7 @@
   <!--  <br />-->
   <div class="place-of-birth" id="div-form" fxLayout="row">
     <h4>Place Of Birth</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Place Of Birth</mat-label>
       <input matInput name="placeOfBirth" formControlName="placeOfBirth"/>
     </mat-form-field>
@@ -108,7 +108,7 @@
 
   <div class="ethnic" id="div-form" fxLayout="row">
     <h4>Ethnic</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Ethnic</mat-label>
       <input matInput name="ethnic" formControlName="ethnic"/>
     </mat-form-field>
@@ -116,7 +116,7 @@
 
   <div class="place-of-job" id="div-form" fxLayout="row">
     <h4>Place Of Job</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Place Of Job</mat-label>
       <input matInput name="placeOfJob" formControlName="placeOfJob"/>
     </mat-form-field>
@@ -124,16 +124,16 @@
 
   <div class="identity-card" id="div-form" fxLayout="row">
     <h4>Identity Card</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Identity Card</mat-label>
-      <input matInput name="identityCard" formControlName="identityCard"/>
+      <input matInput name="identityCard" formControlName="identityCard" [required]="true"/>
     </mat-form-field>
   </div>
 
 
   <div class="familyId" id="div-form" fxLayout="row">
     <h4>Family Id</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Family Id</mat-label>
       <mat-select name="familyId" formControlName="familyId">
         <mat-option *ngFor="let family of familyValues" [value]="family">
@@ -145,7 +145,7 @@
 
   <div class="relationship-with-owner" id="div-form" fxLayout="row">
     <h4>Relationship With Owner</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Relationship With Owner</mat-label>
       <mat-select name="relationshipWithOwner" formControlName="relationshipWithOwner">
         <mat-option *ngFor="let relationship of relationshipValues" [value]="relationship">
@@ -157,7 +157,7 @@
 
   <div class="note" id="div-form" fxLayout="row">
     <h4>Note</h4>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Note</mat-label>
       <input matInput name="note" formControlName="note"/>
     </mat-form-field>

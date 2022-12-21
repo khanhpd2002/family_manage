@@ -116,6 +116,7 @@ export class PeopleComponent implements OnInit {
     this.dialog.open(AddEditPeopleComponent,
       {
         width: '500px',
+        height: '1000px',
         disableClose: false,
         panelClass: 'app-add-edit-people',
         data: fr ? fr : null,
