@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       username: this.form.get('username')?.value,
       password: this.form.get('password')?.value
     };
-    this.http.post<any>('http://localhost:8080/login', dataLogin).subscribe((data) => {
+    this.http.post<any>('http://localhost:8080/user/login', dataLogin).subscribe((data) => {
       if (data.status == 200) {
         this.toastr.success('Login success');
         this.router.navigate(['family-register']);
