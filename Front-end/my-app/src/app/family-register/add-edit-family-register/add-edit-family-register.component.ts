@@ -9,6 +9,7 @@ import {MatTableModule} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import {Route, Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-add-edit-family-register',
@@ -31,7 +32,8 @@ export class AddEditFamilyRegisterComponent implements OnInit {
     public router: Router,
     protected http: HttpClient,
     public dialogRef: MatDialogRef<AddEditFamilyRegisterComponent>,
-    @Inject(MAT_DIALOG_DATA) public familyRegister: any) {
+    @Inject(MAT_DIALOG_DATA) public familyRegister: any,
+    private toastr: ToastrService) {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
       data.forEach((element: any) => {
@@ -104,9 +106,16 @@ export class AddEditFamilyRegisterComponent implements OnInit {
     // Tuy trang thai se goi method post/patch tuong ung
     if (this.familyRegister.id) {
       this.http.patch(`http://localhost:8080/family-register/${this.familyRegister.id}`, data).subscribe(data => {
+        this.toastr.success('Sửa thành công');
       });
     } else {
       this.http.post<any>('http://localhost:8080/family-register', data).subscribe(data => {
+        if (data) {
+          this.toastr.success('Thêm mới thành công');
+        }
+        else {
+          this.toastr.error('Thêm mới thất bại');
+        }
       });
     }
     this.dialogRef.close();

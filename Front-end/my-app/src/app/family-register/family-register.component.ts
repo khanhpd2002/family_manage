@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
 import {AddEditFamilyRegisterComponent} from "./add-edit-family-register/add-edit-family-register.component";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-family-register',
@@ -33,7 +34,8 @@ export class FamilyRegisterComponent implements OnInit {
     public routes: Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private toastr: ToastrService) {
     this.searchForm = this.formBuilder.group({
       number: [''],
       owner: [''],
@@ -128,19 +130,23 @@ export class FamilyRegisterComponent implements OnInit {
         this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
         this.familyRegisters.paginator = this.paginator;
       })
+      this.onSearch();
     });
   }
 
-  onDelete(index: number) {
+  async onDelete(index: number) {
     console.log(index);
     console.log(this.paginator.pageSize, this.paginator.pageIndex);
-    const deleteId = this.familyRegisters[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
+    console.log(this.afterFilter);
+    const deleteId = this.afterFilter[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
     console.log(deleteId);
-    this.http.delete<any>(`http://localhost:8080/family-register/${deleteId}`).subscribe();
-    this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+    await this.http.delete<any>(`http://localhost:8080/family-register/${deleteId}`).subscribe();
+    await this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
       this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
       this.familyRegisters.paginator = this.paginator;
     })
+    this.toastr.success('Xóa thành công');
+    setTimeout(() => this.onSearch(), 500)
   }
 
   openDialogDetails(index: number): void {

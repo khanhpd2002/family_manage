@@ -4,6 +4,7 @@ import com.example.btl.entity.FamilyRegister;
 import com.example.btl.repository.FamilyRegisterRepository;
 import com.example.btl.service.FamilyRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -40,8 +41,8 @@ public class FamilyRegisterApi {
     }
 
     @PostMapping()
-    public FamilyRegister create(@RequestBody FamilyRegister newFamilyRegister) {
-        return familyRegisterRepository.save(newFamilyRegister);
+    public ResponseEntity create(@RequestBody FamilyRegister newFamilyRegister) {
+        return this.familyRegisterService.create(newFamilyRegister);
     }
 
     @PatchMapping("{id}")
