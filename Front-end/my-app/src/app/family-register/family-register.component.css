@@ -2,6 +2,11 @@ mat-sidenav-container {
   height: 720px;
 }
 
+mat-toolbar {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
 mat-sidenav {
   width: 100px;
 }
