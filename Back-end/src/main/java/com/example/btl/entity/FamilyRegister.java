@@ -7,7 +7,7 @@ import javax.swing.text.View;
 import java.util.List;
 import java.util.Set;
 
-@Table (name = "family_register")
+@Table(name = "family_register")
 @Entity
 public class FamilyRegister {
     @Id

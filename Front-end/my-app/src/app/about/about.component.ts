@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ServerHttpService } from '../Services/server-http.service';
+import {Component, OnInit} from '@angular/core';
+import {ServerHttpService} from '../Services/server-http.service';
 
 @Component({
   selector: 'app-about',
@@ -10,7 +10,8 @@ export class AboutComponent implements OnInit {
 
   constructor(
     private serverHttp: ServerHttpService
-    ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.serverHttp.getProfile().subscribe((data) => {

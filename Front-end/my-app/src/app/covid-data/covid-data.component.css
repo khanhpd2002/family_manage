@@ -1,21 +1,21 @@
 #data th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    background-color: blue;
+  border: 1px solid #ddd;
+  padding: 8px;
+  background-color: blue;
 }
 
 #data tr:nth-child(even) {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 #data tr:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 #data th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
 }
 
 /* #data tr {

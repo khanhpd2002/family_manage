@@ -18,3 +18,11 @@ Cách để chạy chương trình
     4. Truy cập vào trang localhost:4200, đăng nhập, và sử dụng
         - Nếu không đăng nhập được, mở F12 lên, phần console
             + Nếu xảy ra lỗi CORS, tìm thư mục chứa chrome.exe và chạy trên terminal dòng lệnh trong file FixCORS.txt
+
+# Version
+    Angular: 14.2.4
+    Node: 14.20.0
+    Npm: 6.14.17
+    ngx-toastr: 15.2.0
+    
+

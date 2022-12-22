@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DataPassingService } from '../Services/data-passing.service';
+import {Component, OnInit} from '@angular/core';
+import {DataPassingService} from '../Services/data-passing.service';
 
 interface Info {
   address: any;
@@ -14,7 +14,7 @@ interface Info {
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent {
-  constructor(public dataPassing: DataPassingService) { 
+  constructor(public dataPassing: DataPassingService) {
     // this.data = dataPassing.data;
   }
 

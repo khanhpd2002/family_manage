@@ -1,39 +1,42 @@
 import {AfterViewInit, Component, Inject, ViewChild, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatTableModule } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
-import { Route, Router } from '@angular/router';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatTableModule} from '@angular/material/table';
+import {SelectionModel} from '@angular/cdk/collections';
+import {Route, Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-add-edit-family-register',
   templateUrl: './add-edit-family-register.component.html',
-  styleUrls: ['./add-edit-family-register.component.css']
+  styleUrls: ['./add-edit-family-register.component.scss']
 })
 
-export class AddEditFamilyRegisterComponent implements OnInit{
-  addressValues : any[] = [];
-  provinceValues : String[] = [];
-  districtValues : String[] = [];
-  wardValues : String[] = [];
+export class AddEditFamilyRegisterComponent implements OnInit {
+  addressValues: any[] = [];
+  provinceValues: String[] = [];
+  districtValues: String[] = [];
+  wardValues: String[] = [];
 
-  tempDistrictValues : any[] =[];
+  tempDistrictValues: any[] = [];
   isView = false;
   searchForm: FormGroup = new FormGroup({});
-  constructor (
+
+  constructor(
     protected formBuilder: FormBuilder,
     public router: Router,
     protected http: HttpClient,
     public dialogRef: MatDialogRef<AddEditFamilyRegisterComponent>,
-    @Inject(MAT_DIALOG_DATA) public familyRegister: any) {
+    @Inject(MAT_DIALOG_DATA) public familyRegister: any,
+    private toastr: ToastrService) {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
-      data.forEach((element : any) => {
+      data.forEach((element: any) => {
         this.provinceValues.push(element.name);
       });
     })
@@ -67,12 +70,12 @@ export class AddEditFamilyRegisterComponent implements OnInit{
     if (this.familyRegister.id) {
       this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
         this.addressValues = data;
-        data.forEach((element : any) => {
+        data.forEach((element: any) => {
           this.provinceValues.push(element.name);
         });
         this.tempDistrictValues = this.addressValues
           .filter(a => a.name === this.familyRegister.province);
-        this.tempDistrictValues[0].districts.forEach((element : any) => {
+        this.tempDistrictValues[0].districts.forEach((element: any) => {
           this.districtValues.push(element.name);
         })
         this.addEditForm.patchValue({
@@ -81,7 +84,7 @@ export class AddEditFamilyRegisterComponent implements OnInit{
         const temp = this.tempDistrictValues[0].districts;
         const tempWardValues = temp
           .filter((a: any) => a.name === this.familyRegister.district);
-        tempWardValues[0].wards.forEach((element : any) => {
+        tempWardValues[0].wards.forEach((element: any) => {
           this.wardValues.push(element.name);
         })
         this.addEditForm.patchValue({
@@ -92,33 +95,48 @@ export class AddEditFamilyRegisterComponent implements OnInit{
   }
 
   onSubmit() {
-    const data : FamilyRegisters = {number: this.addEditForm.controls['number'].value, owner: this.addEditForm.controls['owner'].value, province: this.addEditForm.controls['province'].value, district: this.addEditForm.controls['district'].value, ward: this.addEditForm.controls['ward'].value, address: this.addEditForm.controls['address'].value};
+    const data: FamilyRegisters = {
+      number: this.addEditForm.controls['number'].value,
+      owner: this.addEditForm.controls['owner'].value,
+      province: this.addEditForm.controls['province'].value,
+      district: this.addEditForm.controls['district'].value,
+      ward: this.addEditForm.controls['ward'].value,
+      address: this.addEditForm.controls['address'].value
+    };
     // Tuy trang thai se goi method post/patch tuong ung
     if (this.familyRegister.id) {
-      this.http.patch(`http://localhost:8080/family-register/${this.familyRegister.id}`, data).subscribe(data => {});
-    }
-    else {
-      this.http.post<any>('http://localhost:8080/family-register', data).subscribe(data => {});
+      this.http.patch(`http://localhost:8080/family-register/${this.familyRegister.id}`, data).subscribe(data => {
+        this.toastr.success('Sửa thành công');
+      });
+    } else {
+      this.http.post<any>('http://localhost:8080/family-register', data).subscribe(data => {
+        if (data) {
+          this.toastr.success('Thêm mới thành công');
+        }
+        else {
+          this.toastr.error('Thêm mới thất bại');
+        }
+      });
     }
     this.dialogRef.close();
   }
 
-  provinceChange(event : any) {
+  provinceChange(event: any) {
     this.districtValues = [];
     this.wardValues = [];
     this.tempDistrictValues = this.addressValues
       .filter(a => a.name === event.value);
-    this.tempDistrictValues[0].districts.forEach((element : any) => {
+    this.tempDistrictValues[0].districts.forEach((element: any) => {
       this.districtValues.push(element.name);
     })
   }
 
-  districtChange(event : any) {
+  districtChange(event: any) {
     this.wardValues = [];
     const temp = this.tempDistrictValues[0].districts;
     const tempWardValues = temp
       .filter((a: any) => a.name === event.value);
-    tempWardValues[0].wards.forEach((element : any) => {
+    tempWardValues[0].wards.forEach((element: any) => {
       this.wardValues.push(element.name);
     })
   }

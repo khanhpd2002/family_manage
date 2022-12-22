@@ -1,11 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
 import {AddEditFamilyRegisterComponent} from "./add-edit-family-register/add-edit-family-register.component";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-family-register',
@@ -13,15 +14,15 @@ import {AddEditFamilyRegisterComponent} from "./add-edit-family-register/add-edi
   styleUrls: ['./family-register.component.css']
 })
 export class FamilyRegisterComponent implements OnInit {
-  addressValues : any[] = [];
-  provinceValues : String[] = [];
-  districtValues : String[] = [];
-  wardValues : String[] = [];
+  addressValues: any[] = [];
+  provinceValues: String[] = [];
+  districtValues: String[] = [];
+  wardValues: String[] = [];
 
-  tempDistrictValues : any[] =[];
+  tempDistrictValues: any[] = [];
   searchForm: FormGroup = new FormGroup({});
   isShowing: boolean;
-  isEdit : boolean;
+  isEdit: boolean;
 
   familyRegisters: any;
   afterFilter: any;
@@ -30,10 +31,11 @@ export class FamilyRegisterComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    public routes : Router,
+    public routes: Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private toastr: ToastrService) {
     this.searchForm = this.formBuilder.group({
       number: [''],
       owner: [''],
@@ -47,7 +49,7 @@ export class FamilyRegisterComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
-      data.forEach((element : any) => {
+      data.forEach((element: any) => {
         this.provinceValues.push(element.name);
       });
     });
@@ -59,10 +61,29 @@ export class FamilyRegisterComponent implements OnInit {
   }
 
   onSearch() {
-    const formValue = `${this.searchForm.get('number')?.value}${this.searchForm.get('owner')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
-    this.familyRegisters.filter = formValue.trim().toLowerCase();
-    this.afterFilter = this.familyRegisters.filteredData;
-    console.log(this.afterFilter);
+    const map = Object.fromEntries(
+      ['number', 'owner', 'province', 'district', 'ward', 'address'].map(s => [s, s]));
+    let params = this._collectParams(this.searchForm, map);
+    console.log(params);
+    this.http.get<any>('http://localhost:8080/family-register/params', {params: params}).subscribe((data) => {
+      this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
+      this.familyRegisters.paginator = this.paginator;
+      this.afterFilter = this.familyRegisters.data;
+    });
+  }
+
+  _collectParams(searchForm: FormGroup, map: { [key: string]: string }): HttpParams {
+    let params = new HttpParams();
+    for (const key of Object.keys(map)) {
+      const value = map[key];
+      if (value) {
+        const control = searchForm.get(value);
+        if (control) {
+          params = params.set(key, control.value ? control.value : '');
+        }
+      }
+    }
+    return params;
   }
 
   onResetForm() {
@@ -76,22 +97,22 @@ export class FamilyRegisterComponent implements OnInit {
     });
   }
 
-  provinceChange(event : any) {
+  provinceChange(event: any) {
     this.districtValues = [];
     this.wardValues = [];
     this.tempDistrictValues = this.addressValues
       .filter(a => a.name === event.value);
-    this.tempDistrictValues[0].districts.forEach((element : any) => {
+    this.tempDistrictValues[0].districts.forEach((element: any) => {
       this.districtValues.push(element.name);
     })
   }
 
-  districtChange(event : any) {
+  districtChange(event: any) {
     this.wardValues = [];
     const temp = this.tempDistrictValues[0].districts;
     const tempWardValues = temp
       .filter((a: any) => a.name === event.value);
-    tempWardValues[0].wards.forEach((element : any) => {
+    tempWardValues[0].wards.forEach((element: any) => {
       this.wardValues.push(element.name);
     })
   }
@@ -105,23 +126,27 @@ export class FamilyRegisterComponent implements OnInit {
         data: fr ? fr : null,
       })
       .afterClosed().subscribe(result => {
-        this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
-          this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
-          this.familyRegisters.paginator = this.paginator;
-        })
-      });
+      this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+        this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
+        this.familyRegisters.paginator = this.paginator;
+      })
+      this.onSearch();
+    });
   }
 
-  onDelete(index: number) {
+  async onDelete(index: number) {
     console.log(index);
     console.log(this.paginator.pageSize, this.paginator.pageIndex);
-    const deleteId = this.familyRegisters[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
+    console.log(this.afterFilter);
+    const deleteId = this.afterFilter[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
     console.log(deleteId);
-    this.http.delete<any>(`http://localhost:8080/family-register/${deleteId}`).subscribe();
-    this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+    await this.http.delete<any>(`http://localhost:8080/family-register/${deleteId}`).subscribe();
+    await this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
       this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
       this.familyRegisters.paginator = this.paginator;
     })
+    this.toastr.success('Xóa thành công');
+    setTimeout(() => this.onSearch(), 500)
   }
 
   openDialogDetails(index: number): void {
@@ -153,20 +178,25 @@ export class FamilyRegisterComponent implements OnInit {
   toggleSidenav() {
     this.isShowing = !this.isShowing;
   }
+
   goLogout() {
     this.routes.navigate(['login']);
   }
+
   goFamilyRegisters() {
     this.routes.navigate(['family-register']);
   }
+
   goPeople() {
     this.routes.navigate(['people']);
   }
+
   goCharge() {
     this.routes.navigate(['charge']);
   }
 
 }
+
 export interface FamilyRegister {
   number: number;
   owner: string;

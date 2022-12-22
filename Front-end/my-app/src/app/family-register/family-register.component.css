@@ -1,20 +1,25 @@
 mat-sidenav-container {
-    height: 720px;
+  height: 720px;
+}
+
+mat-toolbar {
+  width: 100%;
+  margin-bottom: 50px;
 }
 
 mat-sidenav {
-    width: 100px;
+  width: 100px;
 }
 
 button {
-    width: 50px;
-    height: 50px;
-    font-size: 15px;
-    text-align: center;
+  width: 50px;
+  height: 50px;
+  font-size: 15px;
+  text-align: center;
 }
 
 #div-form-number, #div-form-owner, #div-form-province,
-#div-form-district, #div-form-ward, #div-form-address{
+#div-form-district, #div-form-ward, #div-form-address {
   width: 50px;
   height: 50px;
   font-size: 15px;
@@ -22,32 +27,37 @@ button {
 }
 
 form {
-    margin: 5px;
+  margin: 5px;
 }
 
 .number {
-    margin-left: 115px;
+  margin-left: 115px;
 }
+
 .owner {
   margin-left: 170px;
 }
+
 .province {
   margin-left: 170px;
 }
+
 .district {
   margin-left: 170px;
 }
+
 .ward {
   margin-left: 170px;
 }
-.address{
+
+.address {
   margin-left: 170px;
 }
 
 
 .search-button {
-    margin-top: 65px;
-    margin-left: 670px;
+  margin-top: 65px;
+  margin-left: 670px;
 }
 
 
@@ -65,7 +75,7 @@ mat-icon {
 }
 
 button {
-  width:40px;
+  width: 40px;
   height: 40px;
 }
 
