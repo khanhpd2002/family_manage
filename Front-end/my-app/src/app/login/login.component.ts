@@ -34,15 +34,19 @@ export class LoginComponent implements OnInit {
     };
     this.http.post<any>('http://localhost:8080/user/login', dataLogin).subscribe((data) => {
       if (data.status == 200) {
-        this.toastr.success('Login success');
+        this.toastr.success('Đăng nhập thành công');
         this.router.navigate(['family-register']);
       }
       if (data.status == 404) {
-        this.toastr.error('Login fail');
-        this.error = "Sai thong tin";
+        this.toastr.error('Đăng nhập thất bại');
+        this.error = "Tài khoản hoặc mật khẩu không đúng";
         this.form.reset();
       }
     })
+  }
+
+  isFocus() {
+    this.error = '';
   }
 
 }
