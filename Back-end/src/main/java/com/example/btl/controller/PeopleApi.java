@@ -5,6 +5,7 @@ import com.example.btl.entity.People;
 import com.example.btl.repository.PeopleRepository;
 import com.example.btl.service.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/people")
+@PreAuthorize("hasAuthority('user')")
 public class PeopleApi {
     @Autowired
     PeopleRepository peopleRepository;

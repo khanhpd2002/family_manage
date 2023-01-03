@@ -5,14 +5,23 @@ import com.example.btl.repository.FamilyRegisterRepository;
 import com.example.btl.service.FamilyRegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity.TransportGuarantee;
+
 
 @RestController
 @RequestMapping("/family-register")
+@PreAuthorize("hasAuthority('user')")
 public class FamilyRegisterApi {
     @Autowired
     private FamilyRegisterRepository familyRegisterRepository;
@@ -34,7 +43,7 @@ public class FamilyRegisterApi {
         fr = this.familyRegisterRepository.find(number, owner, province, district, ward, address);
         return fr;
     }
-
+  
     @GetMapping("/{id}")
     public FamilyRegister findById(@PathVariable(name = "id", required = true) Long id) {
         return familyRegisterRepository.findById(id == null ? 0 : id);
