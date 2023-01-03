@@ -8,10 +8,10 @@
     <mat-icon>menu</mat-icon>
   </button>
 
-  <button mat-button (click)="goFamilyRegisters()" style="width: 25%">Family</button>
-  <button mat-button (click)="goPeople()" style="width: 25%">People</button>
-  <button mat-button (click)="goCharge()" style="width: 25%">Charge</button>
-  <button mat-button (click)="goLogout()" style="width: 25%">Logout</button>
+  <button mat-button (click)="goFamilyRegisters()" style="width: 25%" class="is-click">Family</button>
+  <button mat-button (click)="goPeople()" style="width: 25%" class="is-click">People</button>
+  <button mat-button (click)="goCharge()" style="width: 25%" class="is-click">Charge</button>
+  <button mat-button (click)="goLogout()" style="width: 25%" class="is-click">Logout</button>
 </mat-toolbar>
 
 <mat-sidenav-container>
@@ -123,7 +123,8 @@
         </button>
       </div>
 
-      <div>
+      <div fxLayout="row">
+        <h1>{{this.paginator.length}} Kết quả</h1>
         <button
           mat-button
           type="submit"

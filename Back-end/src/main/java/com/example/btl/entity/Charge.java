@@ -19,7 +19,10 @@ public class Charge {
     private String amount;
 
     @Column(name = "charge_type")
-    private ChargeType chargeType;
+    private String chargeType;
+
+    @Column(name = "unit")
+    private String unit;
 
     public Long getId() {
         return id;
@@ -45,11 +48,19 @@ public class Charge {
         this.amount = amount;
     }
 
-    public ChargeType getChargeType() {
+    public String getChargeType() {
         return chargeType;
     }
 
-    public void setChargeType(ChargeType chargeType) {
+    public void setChargeType(String chargeType) {
         this.chargeType = chargeType;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

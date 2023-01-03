@@ -6,6 +6,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
 import {AddEditPeopleComponent} from "./add-edit-people/add-edit-people.component";
+import {People} from "../models/people.model";
 
 @Component({
   selector: 'app-people',
@@ -191,21 +192,4 @@ export class PeopleComponent implements OnInit {
     this.routes.navigate(['charge']);
   }
 
-}
-
-export interface People {
-  name: any;
-  otherName: any;
-  birthday: any;
-  province: any;
-  district: any;
-  ward: any;
-  address: any;
-  placeOfBirth: any;
-  ethnic: any;
-  placeOfJob: any;
-  identityCard: any;
-  familyId: any;
-  relationshipWithOwner: any;
-  note: any;
 }

@@ -18,6 +18,11 @@ button {
   text-align: center;
 }
 
+h1 {
+  margin-left: 20px;
+  font-weight: bold;
+}
+
 #div-form-number, #div-form-owner, #div-form-province,
 #div-form-district, #div-form-ward, #div-form-address {
   width: 50px;
@@ -81,4 +86,10 @@ button {
 
 #clear {
   margin-left: 27px;
+}
+
+.is-click {
+  &.active {
+    background-color: black;
+  }
 }
