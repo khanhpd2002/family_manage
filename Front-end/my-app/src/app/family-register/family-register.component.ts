@@ -7,11 +7,12 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
 import {AddEditFamilyRegisterComponent} from "./add-edit-family-register/add-edit-family-register.component";
 import {ToastrService} from "ngx-toastr";
+import {FamilyRegister} from "../models/family-register.models";
 
 @Component({
   selector: 'app-family-register',
   templateUrl: './family-register.component.html',
-  styleUrls: ['./family-register.component.css']
+  styleUrls: ['./family-register.component.scss']
 })
 export class FamilyRegisterComponent implements OnInit {
   addressValues: any[] = [];
@@ -53,11 +54,7 @@ export class FamilyRegisterComponent implements OnInit {
         this.provinceValues.push(element.name);
       });
     });
-    this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
-      this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
-      this.familyRegisters.paginator = this.paginator;
-      this.afterFilter = this.familyRegisters.data;
-    });
+    this.onSearch();
   }
 
   onSearch() {
@@ -195,13 +192,4 @@ export class FamilyRegisterComponent implements OnInit {
     this.routes.navigate(['charge']);
   }
 
-}
-
-export interface FamilyRegister {
-  number: number;
-  owner: string;
-  province: string;
-  district: string;
-  ward: string;
-  address: string;
 }

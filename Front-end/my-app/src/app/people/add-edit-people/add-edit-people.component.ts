@@ -1,17 +1,12 @@
-import {AfterViewInit, Component, Inject, ViewChild, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTable, MatTableDataSource} from '@angular/material/table';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MatTableModule} from '@angular/material/table';
-import {SelectionModel} from '@angular/cdk/collections';
-import {Route, Router} from '@angular/router';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
+import {People} from "../../models/people.model";
 
 @Component({
-  selector: 'app-add-edit-peop;e',
+  selector: 'app-add-edit-people',
   templateUrl: './add-edit-people.component.html',
   styleUrls: ['./add-edit-people.component.scss']
 })
@@ -54,6 +49,7 @@ export class AddEditPeopleComponent implements OnInit {
     placeOfBirth: [this.people.placeOfBirth],
     ethnic: [this.people.ethnic],
     placeOfJob: [this.people.placeOfJob],
+    familyId: [this.people.familyId],
     identityCard: [this.people.identityCard],
     relationshipWithOwner: [this.people.relationshipWithOwner],
     note: [this.people.note],
@@ -130,6 +126,7 @@ export class AddEditPeopleComponent implements OnInit {
       ethnic: this.addEditForm.controls['ethnic'].value,
       placeOfJob: this.addEditForm.controls['placeOfJob'].value,
       identityCard: this.addEditForm.controls['identityCard'].value,
+      familyId: this.addEditForm.controls['familyId'].value,
       relationshipWithOwner: this.addEditForm.controls['relationshipWithOwner'].value,
       note: this.addEditForm.controls['note'].value
     };
@@ -137,10 +134,23 @@ export class AddEditPeopleComponent implements OnInit {
     if (this.people.id) {
       this.http.patch(`http://localhost:8080/people/${this.people.id}`, data).subscribe(data => {
       });
-    } else {
-      this.http.post<any>('http://localhost:8080/people', data).subscribe(data => {
-      });
     }
+    // else {
+    //   if (data.relationshipWithOwner === 'OWNER') {
+    //     const fr: FamilyRegister = new FamilyRegister;
+    //     fr.owner = data.name;
+    //     fr.province = data.province;
+    //     fr.district = data.district;
+    //     fr.ward = data.ward;
+    //     fr.address = data.address;
+    //     this.http.post<any>('http://localhost:8080/family-register', fr);
+    //     this.http.post<any>('http://localhost:8080/people', data);
+    //   }
+      else {
+        this.http.post<any>('http://localhost:8080/people', data).subscribe(data => {
+        });
+      }
+
     this.dialogRef.close();
   }
 
@@ -163,20 +173,4 @@ export class AddEditPeopleComponent implements OnInit {
       this.wardValues.push(element.name);
     })
   }
-}
-
-export interface People {
-  name: any;
-  otherName: any;
-  birthday: any;
-  province: any;
-  district: any;
-  ward: any;
-  address: any;
-  placeOfBirth: any;
-  ethnic: any;
-  placeOfJob: any;
-  identityCard: any;
-  relationshipWithOwner: any;
-  note: any;
 }
