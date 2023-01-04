@@ -6,6 +6,7 @@ import com.example.btl.entity.AuthResponse;
 import com.example.btl.entity.Role;
 import com.example.btl.entity.User;
 import com.example.btl.jwt.JwtTokenUtil;
+import com.example.btl.repository.RoleRepository;
 import com.example.btl.repository.UserRepository;
 import com.example.btl.response.ResponseLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/user")
 public class UserApi {
+	@Autowired RoleRepository roleRepository;
     @Autowired UserRepository userRepository;
     @Autowired AuthenticationManager authManager;
     @Autowired JwtTokenUtil jwtUtil;
@@ -69,8 +71,8 @@ public class UserApi {
         if (!newUsername.isPresent()) {
             newReponseLogin.setStatus(200);
             Set<Role> roles = new HashSet<Role>();
-            Role role = new Role("user");
-            roles.add(role);
+            Optional<Role> role = roleRepository.findById(2);
+            roles.add(role.get());
             signupUser.setRoles(roles);
             userRepository.save(signupUser);
         }

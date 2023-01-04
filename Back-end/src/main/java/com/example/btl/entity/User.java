@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private String email;
     
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(
         name = "users_roles",
         joinColumns = @JoinColumn(name = "user_id"),
