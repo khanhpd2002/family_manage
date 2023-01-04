@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/people")
-@PreAuthorize("hasAuthority('user')")
+@PreAuthorize("hasAuthority('admin')")
 public class PeopleApi {
     @Autowired
     PeopleRepository peopleRepository;
