@@ -19,6 +19,7 @@ public class Charge {
     private String amount;
 
     @Column(name = "charge_type")
+//    @Enumerated(EnumType.STRING)
     private String chargeType;
 
     @Column(name = "unit")

@@ -1,4 +1,4 @@
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
@@ -10,54 +10,27 @@ import {throwError} from 'rxjs/internal/observable/throwError';
 
 
 export class ServerHttpService {
-  private httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      // Authorization: 'my-auth-token',
-    }),
-  }
-
-  REST_API_SERVER_COVID = 'https://api.covid19api.com';
-  REST_API_SERVER_PROFILE = 'http://localhost:3000';
+  token = window.sessionStorage.getItem('token');
+  private header = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: this.token ? `Bearer ${this.token.substring(1, this.token.length - 1)}` : ''
+  })
+  // private httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     Authorization: this.token ? `Bearer ${this.token.substring(1, this.token.length - 1)}` : ''
+  //   }),
+  // }
 
   constructor(private httpClient: HttpClient) {
   }
 
-  public getAll() {
-    const url = `${this.REST_API_SERVER_COVID}`;
+  public get<T>(url: string, options?: { headers: HttpHeaders, params?: HttpParams }) {
     return this.httpClient
-      .get<any>(url, this.httpOptions)
+      .get<any>(url, options)
       .pipe(catchError(this.handleError));
   }
 
-  public getSummary() {
-    const url = `${this.REST_API_SERVER_COVID}/summary`;
-    return this.httpClient
-      .get<any>(url, this.httpOptions)
-      .pipe(catchError(this.handleError));
-  }
-
-
-  public getProfile(): Observable<any> {
-    const url = `${this.REST_API_SERVER_PROFILE}/profile`;
-    return this.httpClient
-      .get<any>(url, this.httpOptions)
-      .pipe(catchError(this.handleError));
-  }
-
-  public postProfile(data: any): Observable<any> {
-    const url = `${this.REST_API_SERVER_PROFILE}/profile`;
-    return this.httpClient
-      .post<any>(url, data, this.httpOptions)
-      .pipe(catchError(this.handleError));
-  }
-
-  public getCommmets(): Observable<any> {
-    const url = `${this.REST_API_SERVER_PROFILE}/comments`;
-    return this.httpClient
-      .get<any>(url, this.httpOptions)
-      .pipe(catchError(this.handleError));
-  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

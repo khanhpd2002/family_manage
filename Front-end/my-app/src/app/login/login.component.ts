@@ -35,8 +35,13 @@ export class LoginComponent implements OnInit {
     this.http.post<any>('http://localhost:8080/user/login', dataLogin, {observe: 'response'}).subscribe(
       (data) => {
         if (data.status == 200) {
+          window.sessionStorage.setItem('token', JSON.stringify(data.body.accessToken));
+          console.log(data.body.accessToken);
           this.toastr.success('Đăng nhập thành công');
           this.router.navigate(['family-register']);
+          const a = window.sessionStorage.getItem('token');
+          if (a)
+            console.log(a.substring(1, a.length - 1));
         }
       },
       (err) => {
