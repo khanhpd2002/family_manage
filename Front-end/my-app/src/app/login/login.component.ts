@@ -32,16 +32,16 @@ export class LoginComponent implements OnInit {
       username: this.form.get('username')?.value,
       password: this.form.get('password')?.value
     };
-    this.http.post<any>('http://localhost:8080/user/login', dataLogin).subscribe((data) => {
-      // if (data.status == 200) {
-        this.toastr.success(data);
-        // this.router.navigate(['family-register']);
-      // }
-      // if (data.status == 404) {
-      //   this.toastr.error('Đăng nhập thất bại');
-      //   this.error = "Tài khoản hoặc mật khẩu không đúng";
-      //   this.form.reset();
-      // }
+    this.http.post<any>('http://localhost:8080/user/login', dataLogin, {observe: 'response'}).subscribe((data) => {
+      if (data.status == 200) {
+        this.toastr.success('Đăng nhập thành công');
+        this.router.navigate(['family-register']);
+      }
+      if (data.status == 401) {
+        this.toastr.error('Đăng nhập thất bại');
+        this.error = "Tài khoản hoặc mật khẩu không đúng";
+        this.form.reset();
+      }
     })
   }
 
