@@ -13,11 +13,16 @@ const routes: Routes = [
   {path: 'people', component: PeopleComponent, canActivate: [AuthGuard]},
   {path: 'charge', component: ChargeComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
-  {path: 'sign-up', component: SignUpComponent}
+  {path: 'sign-up', component: SignUpComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    useHash: true,
+    onSameUrlNavigation: 'reload',
+    },
+  ),
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

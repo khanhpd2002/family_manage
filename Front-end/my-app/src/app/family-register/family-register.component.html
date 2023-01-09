@@ -1,3 +1,19 @@
+<mat-toolbar>
+  <button
+    mat-icon-button
+    class="example-icon"
+    aria-label="Example icon-button with menu icon"
+    (click)="toggleSidenav()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <button mat-button (click)="goFamilyRegisters()" style="width: 25%" class="is-click">Family</button>
+  <button mat-button (click)="goPeople()" style="width: 25%" class="is-click">People</button>
+  <button mat-button (click)="goCharge()" style="width: 25%" class="is-click">Charge</button>
+  <button mat-button (click)="goLogout()" style="width: 25%" class="is-click">Logout</button>
+</mat-toolbar>
+
 <mat-sidenav-container>
   <mat-sidenav #sidenav [opened]="isShowing">
     <button mat-button (click)="goFamilyRegisters()" style="width: 100%">Family</button>
@@ -191,3 +207,4 @@
     </form>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<router-outlet (activate)="true"></router-outlet>
