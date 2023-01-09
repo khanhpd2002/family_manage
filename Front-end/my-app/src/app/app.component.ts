@@ -11,6 +11,28 @@ export class AppComponent {
     public router: Router
   ) {
   }
+  isShowing = false;
 
   title = 'my-app';
+
+  toggleSidenav() {
+    this.isShowing = !this.isShowing;
+  }
+
+  goLogout() {
+    window.sessionStorage.removeItem('token');
+    this.router.navigate(['login']);
+  }
+
+  goFamilyRegisters() {
+    this.router.navigate(['family-register']);
+  }
+
+  goPeople() {
+    this.router.navigate(['people']);
+  }
+
+  goCharge() {
+    this.router.navigate(['charge']);
+  }
 }

@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import {Route, Router} from '@angular/router';
 import {ToastrService} from "ngx-toastr";
 
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public router: Router,
     public http: HttpClient,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {
   }
 
@@ -36,12 +37,8 @@ export class LoginComponent implements OnInit {
       (data) => {
         if (data.status == 200) {
           window.sessionStorage.setItem('token', JSON.stringify(data.body.accessToken));
-          console.log(data.body.accessToken);
           this.toastr.success('Đăng nhập thành công');
           this.router.navigate(['family-register']);
-          const a = window.sessionStorage.getItem('token');
-          if (a)
-            console.log(a.substring(1, a.length - 1));
         }
       },
       (err) => {

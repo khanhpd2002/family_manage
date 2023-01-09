@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
@@ -19,6 +19,7 @@ export class FamilyRegisterComponent implements OnInit {
   provinceValues: String[] = [];
   districtValues: String[] = [];
   wardValues: String[] = [];
+  isFirstTime = true;
 
   tempDistrictValues: any[] = [];
   searchForm: FormGroup = new FormGroup({});
@@ -47,7 +48,7 @@ export class FamilyRegisterComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
       data.forEach((element: any) => {
@@ -55,6 +56,12 @@ export class FamilyRegisterComponent implements OnInit {
       });
     });
     this.onSearch();
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload()
+    } else {
+      localStorage.removeItem('foo')
+    }
   }
 
   onSearch() {
@@ -177,6 +184,7 @@ export class FamilyRegisterComponent implements OnInit {
   }
 
   goLogout() {
+    window.sessionStorage.removeItem('token');
     this.routes.navigate(['login']);
   }
 
