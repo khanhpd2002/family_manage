@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.Json;
+
 @RestController
 @RequestMapping("/charge")
 public class ChargeApi {
@@ -30,15 +32,16 @@ public class ChargeApi {
 
     @GetMapping("/params")
     public List<Charge> find(@RequestParam(name = "name", required = false) String name, @RequestParam(name = "amount", required = false) String amount,
-                             @RequestParam(name = "chargeType", required = false) String chargeType, @RequestParam(name = "unit", required = false) String unit) {
+                             @RequestParam(name = "chargeType", required = false) String chargeType) {
         List<Charge> c = new ArrayList<>();
-        c = this.chargeRepository.find(name, amount, chargeType, unit);
+        c = this.chargeRepository.find(name, amount, chargeType);
         return c;
     }
 
     @PostMapping()
     public Charge create(@RequestBody Charge newCharge) {
-        return chargeRepository.save(newCharge);
+    	System.out.println(newCharge.getName());
+        return chargeRepository.saveAndFlush(newCharge);
     }
 
     @PatchMapping("/{id}")
