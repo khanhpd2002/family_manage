@@ -22,5 +22,5 @@ public interface ChargeRepository extends JpaRepository<Charge, Integer> {
                     "AND (:amount IS NULL OR LOWER(c.amount) LIKE LOWER(CONCAT('%',:amount,'%'))) " +
                     "AND (:chargeType IS NULL OR LOWER(c.charge_type) LIKE LOWER(CONCAT('%',:chargeType,'%'))) " +
                     "AND (:unit IS NULL OR LOWER(c.unit) LIKE LOWER(CONCAT('%',:unit,'%'))) ", nativeQuery = true)
-    public List<Charge> find(String name, String amount, String chargeType, String unit);
+    public List<Charge> find(String name, String amount, String chargeType);
 }

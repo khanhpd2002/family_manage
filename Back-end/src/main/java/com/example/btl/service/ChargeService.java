@@ -19,8 +19,8 @@ public class ChargeService {
         Charge charge = oCharge.get();
         charge.setName(source.getName());
         charge.setAmount(source.getAmount());
-        charge.setChargeType(source.getChargeType());
-        charge.setUnit(source.getUnit());
+        charge.setChargeType(source.getCharge_type());
+//        charge.setUnit(source.getUnit());
 
         return this.chargeRepository.save(charge);
     }

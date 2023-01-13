@@ -1,7 +1,7 @@
 package com.example.btl.entity;
 
 
-import com.example.btl.entity.enums.ChargeType;
+//import com.example.btl.entity.enums.ChargeType;
 
 import javax.persistence.*;
 
@@ -20,16 +20,16 @@ public class Charge {
 
     @Column(name = "charge_type")
 //    @Enumerated(EnumType.STRING)
-    private String chargeType;
+    private String charge_type;
 
-    @Column(name = "unit")
-    private String unit;
-
+//    @Column(name = "unit")
+//    private String unit; 
+ 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id) { 
         this.id = id;
     }
 
@@ -49,19 +49,19 @@ public class Charge {
         this.amount = amount;
     }
 
-    public String getChargeType() {
-        return chargeType;
+    public String getCharge_type() {
+        return charge_type;
     }
 
-    public void setChargeType(String chargeType) {
-        this.chargeType = chargeType;
+    public void setCharge_type(String chargeType) {
+        this.charge_type = chargeType;
     }
 
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
+//    public String getUnit() {
+//        return unit;
+//    }
+//
+//    public void setUnit(String unit) {
+//        this.unit = unit;
+//    }
 }
