@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import { catchError, filter, finalize, switchMap, take } from 'rxjs/operators';
@@ -6,7 +7,9 @@ import { catchError, filter, finalize, switchMap, take } from 'rxjs/operators';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
-  constructor() {
+  constructor(
+    private router: Router,
+  ) {
   }
   private refreshTokenInProgress = false;
   private refreshTokenSubject = new BehaviorSubject(null);
@@ -20,7 +23,13 @@ export class Interceptor implements HttpInterceptor {
       },
     });
     return next.handle(request1).pipe(
-      catchError((err) => {
+      catchError((err) => { // return next.handle(request);
+        // if (err.status == 404)
+        //   return next.handle(request);
+        if(err.status == 401){
+          this.router.navigateByUrl('/login');
+          throw new Error();
+        }
         return next.handle(request);
       })
     );

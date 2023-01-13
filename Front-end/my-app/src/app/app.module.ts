@@ -34,6 +34,7 @@ import {
 import {PeopleComponent} from './people/people.component';
 import {ChargeComponent} from './charge/charge.component';
 import {AddEditPeopleComponent} from "./people/add-edit-people/add-edit-people.component";
+import {AddEditChargeComponent} from "./charge/add-edit-charge/add-edit-charge.component";
 import {Interceptor} from "./_helpers/interceptor";
 
 @NgModule({
@@ -46,6 +47,7 @@ import {Interceptor} from "./_helpers/interceptor";
     PeopleComponent,
     ChargeComponent,
     AddEditPeopleComponent,
+    AddEditChargeComponent,
   ],
   imports: [
     BrowserModule,

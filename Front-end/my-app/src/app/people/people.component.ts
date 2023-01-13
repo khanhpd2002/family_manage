@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -33,6 +33,7 @@ export class PeopleComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     public routes: Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
@@ -61,8 +62,8 @@ export class PeopleComponent implements OnInit {
         this.provinceValues.push(element.name);
       });
     });
-    this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
-      this.people = new MatTableDataSource<People>(data);
+    this.activatedRoute.data.subscribe(({people}) => {
+      this.people = new MatTableDataSource<People>(people);
       this.people.paginator = this.paginator;
       this.afterFilter = this.people.data;
     });

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
@@ -32,6 +32,7 @@ export class FamilyRegisterComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     public routes: Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
@@ -48,13 +49,22 @@ export class FamilyRegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ family }) => {
+      this.familyRegisters = new MatTableDataSource<FamilyRegister>(family);
+      this.familyRegisters.paginator = this.paginator;
+      this.afterFilter = this.familyRegisters.family;    })
+    // this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
+    //   this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
+    //   this.familyRegisters.paginator = this.paginator;
+    //   this.afterFilter = this.familyRegisters.data;
+    // });
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
       data.forEach((element: any) => {
         this.provinceValues.push(element.name);
       });
     });
-    this.onSearch();
+
   }
 
   onSearch() {

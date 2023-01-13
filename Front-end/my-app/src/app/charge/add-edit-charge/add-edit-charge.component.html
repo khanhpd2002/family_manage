@@ -1,0 +1,39 @@
+<form class="center" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
+  <div class="name" id="div-form" fxLayout="row">
+    <h4>Name</h4>
+    <mat-form-field appearance="outline" class="no-line">
+      <mat-label>Name</mat-label>
+      <input required matInput name="name" formControlName="name"/>
+    </mat-form-field>
+  </div>
+
+  <div class="amount" id="div-form" fxLayout="row">
+    <h4>Amount</h4>
+    <mat-form-field appearance="outline">
+      <mat-label>Amount</mat-label>
+      <input required matInput name="amount" formControlName="amount"/>
+    </mat-form-field>
+  </div>
+
+  <div class="charge_type" id="div-form" fxLayout="row">
+    <h4>Type</h4>
+    <mat-form-field appearance="outline">
+      <mat-label>Type</mat-label>
+      <mat-select
+        required
+        name="charge_type"
+        formControlName="charge_type"
+      >
+        <mat-option
+          *ngFor="let charge_type of charge_typeValues"
+          [value]="charge_type"
+        >
+          {{ charge_type }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <button mat-button type="submit" [disabled]="!addEditForm.valid">Submit</button>
+
+</form>
