@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -6,16 +6,21 @@ import { catchError, filter, finalize, switchMap, take } from 'rxjs/operators';
 
 
 @Injectable()
-export class Interceptor implements HttpInterceptor {
+export class Interceptor implements HttpInterceptor, OnInit {
+  public token: any;
   constructor(
     private router: Router,
   ) {
+    // this.token = localStorage.getItem('token');
   }
-  private refreshTokenInProgress = false;
-  private refreshTokenSubject = new BehaviorSubject(null);
 
-  token = window.sessionStorage.getItem('token');
+  ngOnInit(): void {
+    // this.token = localStorage.getItem('token');
+  }
+
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.token = localStorage.getItem('token');
+    console.log(this.token);
     var request1 = request.clone({
       setHeaders: {
         'Content-Type': 'application/json',
