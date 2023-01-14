@@ -188,6 +188,7 @@ export class FamilyRegisterComponent implements OnInit {
 
   goLogout() {
     this.routes.navigate(['login']);
+    localStorage.removeItem('token');
   }
 
   goFamilyRegisters() {

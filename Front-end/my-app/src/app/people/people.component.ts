@@ -179,6 +179,7 @@ export class PeopleComponent implements OnInit {
 
   goLogout() {
     this.routes.navigate(['login']);
+    localStorage.removeItem('token');
   }
 
   goFamilyRegisters() {

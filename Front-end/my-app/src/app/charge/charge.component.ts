@@ -126,6 +126,7 @@ export class ChargeComponent implements OnInit {
 
     goLogout() {
       this.routes.navigate(['login']);
+      localStorage.removeItem('token');
     }
 
     goFamilyRegisters() {
