@@ -7,6 +7,9 @@ import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
 import {AddEditChargeComponent} from "./add-edit-charge/add-edit-charge.component";
 import {Charge} from "../models/charge.models";
+import {ToastrService} from "ngx-toastr";
+import { MatMenuTrigger } from '@angular/material/menu';
+
 @Component({
   selector: 'app-charge',
   templateUrl: './charge.component.html',
@@ -16,16 +19,17 @@ export class ChargeComponent implements OnInit {
     charge : any;
     nameValues: String[] = [];
     amountValues: Int16Array[] = [];
-    charge_typeValues = ['Voluntary', 'Mandatory'];
+    charge_typeValues = ['','Voluntary', 'Mandatory'];
     searchForm: FormGroup = new FormGroup({});
-    isShowing: boolean;
-    isEdit: boolean;
+    isShowing: boolean = false;
+    isEdit: boolean = false;
 
     // people: any;
     afterFilter: any;
-    displayedColumns: string[] = ['name', 'amount', 'charge_type'];
+    displayedColumns: string[] = ['name', 'amount', 'charge_type', ' '];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
 
     constructor(
       private activatedRoute: ActivatedRoute,
@@ -48,6 +52,10 @@ export class ChargeComponent implements OnInit {
         this.charge.paginator = this.paginator;
         this.afterFilter = this.charge.data;
       });
+    }
+
+    openMenu() {
+      this.trigger.openMenu();
     }
 
     onSearch() {
@@ -82,16 +90,20 @@ export class ChargeComponent implements OnInit {
       });
     }
 
-    onDelete(index: number) {
-      console.log(index);
+    onDelete(id: number) {
+      console.log(id);
       console.log(this.paginator.pageSize, this.paginator.pageIndex);
-      const deleteId = this.charge[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
-      console.log(deleteId);
-      this.http.delete<any>(`http://localhost:8080/charge/${deleteId}`).subscribe();
-      this.http.get<any>('http://localhost:8080/charge').subscribe((data) => {
-        this.charge = new MatTableDataSource<Charge>(data);
-        this.charge.paginator = this.paginator;
-      })
+      // const deleteId = this.charge[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
+      // console.log(deleteId);
+      this.http.delete<any>(`http://localhost:8080/charge/${id}`).subscribe(
+        {
+          complete: () => {
+            this.http.get<any>('http://localhost:8080/charge').subscribe((data) => {
+              this.charge = new MatTableDataSource<Charge>(data);
+              this.charge.paginator = this.paginator;
+            })
+          }
+        })
     }
 
     openDialogDetails(index: number): void {
@@ -105,13 +117,14 @@ export class ChargeComponent implements OnInit {
         });
     }
 
-    onEdit(index: number): void {
+    onEdit(charge: Charge): void {
+      this.isEdit = !this.isEdit;
       this.dialog.open(AddEditChargeComponent,
         {
           width: '500px',
           disableClose: false,
           panelClass: 'app-add-edit-charge',
-          data: this.afterFilter[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
+          data: charge,
         }).afterClosed().subscribe(result => {
         this.http.get<any>('http://localhost:8080/charge').subscribe((data) => {
           this.charge = new MatTableDataSource<Charge>(data);

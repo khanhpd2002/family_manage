@@ -22,7 +22,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ToastrModule} from "ngx-toastr";
-
+import { MatMenuModule} from '@angular/material/menu';
+import { MenuModule } from '@syncfusion/ej2-angular-navigations';
 
 import {AppComponent} from './app.component';
 import {FamilyRegisterComponent} from './family-register/family-register.component';
@@ -65,6 +66,7 @@ import {Interceptor} from "./_helpers/interceptor";
     ReactiveFormsModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatMenuModule,
     MatInputModule,
     MatToolbarModule,
     MatCheckboxModule,

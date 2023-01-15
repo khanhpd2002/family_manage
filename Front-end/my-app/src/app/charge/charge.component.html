@@ -10,8 +10,33 @@
 
   <button mat-button (click)="goFamilyRegisters()" style="width: 25%">Family</button>
   <button mat-button (click)="goPeople()" style="width: 25%">People</button>
-  <button mat-button (click)="goCharge()" style="width: 25%">Charge</button>
-  <button mat-button (click)="goLogout()" style="width: 25%">Logout</button>
+  <!-- <button mat-button (click)="goCharge()" style="width: 25%">Charge</button> -->
+  <button mat-button [matMenuTriggerFor]="menu" style="width: 25%; align-items: center;" (click)="openMenu()" >
+    <span>Charge</span>
+    <mat-icon>expand_more</mat-icon>
+  </button>
+  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>dialpad</mat-icon>
+      <span>Redial</span>
+    </button>
+    <button mat-menu-item disabled>
+      <mat-icon>voicemail</mat-icon>
+      <span>Check voice mail</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>notifications_off</mat-icon>
+      <span>Disable alerts</span>
+    </button>
+  </mat-menu>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+  </mat-menu>
+    <button mat-button (click)="goLogout()" style="width: 25%">Logout</button>
 </mat-toolbar>
 
 <mat-sidenav-container>
@@ -122,17 +147,17 @@
           <!-- Action Column-->
           <ng-container matColumnDef=" ">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let i = index">
-              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onDelete(i)">
+            <mat-cell *matCellDef="let element">
+              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onDelete(element.id)">
                 <mat-icon>delete</mat-icon>
               </button>
               <span>&nbsp;&nbsp;&nbsp;</span>
-              <button mat-fab color="primary" aria-label="Example icon button with a delete icon"
-                      (click)="openDialogDetails(i)">
+              <!-- <button mat-fab color="primary" aria-label="Example icon button with a delete icon"
+                      (click)="openDialogDetails(element.id)">
                 <mat-icon>info</mat-icon>
-              </button>
+              </button> -->
               <span>&nbsp;&nbsp;&nbsp;</span>
-              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onEdit(i)">
+              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onEdit(element)">
                 <mat-icon> border_color</mat-icon>
               </button>
             </mat-cell>

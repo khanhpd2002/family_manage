@@ -14,7 +14,7 @@ import { Charge } from 'src/app/models/charge.models';
 
 export class AddEditChargeComponent implements OnInit {
   charge_typeValues = ['Voluntary', 'Mandatory'];
-  isView = false;
+  isEdit : boolean = false;
   searchForm: FormGroup = new FormGroup({});
   charge: Charge;
 
@@ -42,13 +42,14 @@ export class AddEditChargeComponent implements OnInit {
     // }
     // console.log(this.dialogRef.id);
     // // Check neu ton tai charge thi patch Value vao form
-    // if (this.charge.id) {
-    //   this.addEditForm.patchValue({
-    //     name: this.charge.name,
-    //     amount: this.charge.amount,
-    //     charge_type: this.charge.charge_type
-    //   })
-    // }
+    if (this.data) {
+      this.isEdit = true;
+      this.addEditForm.patchValue({
+        name: this.data.name,
+        amount: this.data.amount,
+        charge_type: this.data.charge_type
+      })
+    }
   }
 
   onSubmit() {
@@ -58,16 +59,16 @@ export class AddEditChargeComponent implements OnInit {
       charge_type: this.addEditForm.controls['charge_type'].value,
     };
     // Tuy trang thai se goi method post/patch tuong ung
-    // if (data.id) {
-    //   this.http.patch(`http://localhost:8080/charge/${this.charge.id}`, data).subscribe(data => {
-    //   });
-    // }
-    // else {
+    if (this.isEdit) {
+      this.http.patch(`http://localhost:8080/charge/${this.data.id}`, newCharge).subscribe(data => {
+      });
+    }
+    else {
       console.log(JSON.stringify(newCharge));
-    this.http.post<any>('http://localhost:8080/charge', newCharge).subscribe(
-      charge => console.log(JSON.stringify(charge))
-    );
-
+      this.http.post<any>('http://localhost:8080/charge', newCharge).subscribe(
+        charge => console.log(JSON.stringify(charge))
+      );
+    }
     this.dialogRef.close({data: newCharge});
   }
 }
