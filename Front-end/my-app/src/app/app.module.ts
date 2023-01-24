@@ -23,20 +23,21 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ToastrModule} from "ngx-toastr";
 import { MatMenuModule} from '@angular/material/menu';
-import { MenuModule } from '@syncfusion/ej2-angular-navigations';
+// import { MenuModule } from '@syncfusion/ej2-angular-navigations';
 
 import {AppComponent} from './app.component';
 import {FamilyRegisterComponent} from './family-register/family-register.component';
 import {LoginComponent} from './login/login.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
-import {
-  AddEditFamilyRegisterComponent
-} from "./family-register/add-edit-family-register/add-edit-family-register.component";
+import {AddEditFamilyRegisterComponent} from "./family-register/add-edit-family-register/add-edit-family-register.component";
 import {PeopleComponent} from './people/people.component';
 import {ChargeComponent} from './charge/charge.component';
 import {AddEditPeopleComponent} from "./people/add-edit-people/add-edit-people.component";
 import {AddEditChargeComponent} from "./charge/add-edit-charge/add-edit-charge.component";
+// import {AddEditFamilyComponent } from './charge-detail/add-edit-family/add-edit-family.component';
+import { AddEditCharge_manageComponent } from './charge-detail/add-edit-charge_manage/add-edit-charge_manage';
 import {Interceptor} from "./_helpers/interceptor";
+import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,8 @@ import {Interceptor} from "./_helpers/interceptor";
     ChargeComponent,
     AddEditPeopleComponent,
     AddEditChargeComponent,
+    AddEditCharge_manageComponent,
+    ChargeDetailComponent,
   ],
   imports: [
     BrowserModule,

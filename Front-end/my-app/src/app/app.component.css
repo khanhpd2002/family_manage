@@ -1,0 +1,96 @@
+mat-sidenav-container {
+  height: 720px;
+}
+
+mat-toolbar {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+mat-sidenav {
+  width: 100px;
+}
+
+.advanced-search {
+  margin-top: 70px
+}
+
+.advanced-search:hover {
+  cursor: pointer;
+}
+
+.show_advance {
+  color: gray;
+}
+
+.hide_advance {
+  color: grey;
+}
+
+
+button {
+  width: 50px;
+  height: 50px;
+  font-size: 15px;
+  text-align: center;
+}
+
+#div-form {
+  width: 20px;
+  height: 20px;
+  font-size: 5px;
+  text-align: center;
+}
+
+form {
+  margin: 5px;
+}
+
+.search-button {
+  margin-top: 65px;
+  margin-left: 670px;
+}
+
+
+table {
+  width: 100%;
+}
+
+.add-edit {
+  margin-left: 1100px;
+  height: 50px;
+}
+
+mat-icon {
+  margin-top: -15px;
+}
+
+button {
+  width: 40px;
+  height: 40px;
+}
+
+#clear {
+  margin-left: 27px;
+}
+
+#div-form-name, #div-form-birthday, #div-form-province,
+#div-form-district, #div-form-ward, #div-form-address,
+#div-form-place-of-birth, #div-form-ethnic, #div-form-place-of-job,
+#div-form-identity-card, #div-form-relationship-with-owner, #div-form-note{
+  width: 50px;
+  height: 50px;
+  font-size: 15px;
+  text-align: center;
+  margin: 5px;
+}
+
+.default-search {
+  margin-left: 40px;
+}
+
+.expand-search {
+  margin-top: 60px;
+  margin-left: 40px;
+}
+

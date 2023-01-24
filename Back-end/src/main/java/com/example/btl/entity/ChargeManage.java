@@ -1,63 +1,70 @@
 package com.example.btl.entity;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "charge_manage")
-public class ChargeManage {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@IdClass(CompositeKey.class)
+public class ChargeManage implements Serializable{
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+	@Id
     @Column(name = "charge_id")
-    private Integer charge_id;
+    private Long charge_id;
     
-    @Column(name = "family_id")
-    private Integer family_id;
+	@Id
+    @Column(name = "family_number")
+    private Long family_number;
 
-	@Column(name = "payer")
+	@Column(name = "payer") 
     private String payer;
     
     @Column(name = "pay_date")
     private Date pay_date;
     
-    @Column(name = "name")
-    private String name;
-
-    public ChargeManage(Long id, Integer charge_id, Integer family_id, String payer, Date pay_date, String name) {
+    @Column(name = "amount")
+    private Integer amount;
+    
+    public ChargeManage() {
 		super();
-		this.id = id;
+	}
+
+	public ChargeManage(Long charge_id, Long family_number, String payer, Date pay_date, Integer amount) {
+		super();
+//		this.id = id;
 		this.charge_id = charge_id;
-		this.family_id = family_id;
+		this.family_number = family_number;
 		this.payer = payer;
 		this.pay_date = pay_date;
-		this.name = name;
+		this.amount = amount;
 	}
 
-	public Long getId() {
-		return id;
-	}
+//	public Long getId() {
+//		return id;
+//	}
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Integer getCharge_id() {
+	public Long getCharge_id() {
 		return charge_id;
 	}
 
-	public void setCharge_id(Integer charge_id) {
+	public void setCharge_id(Long charge_id) {
 		this.charge_id = charge_id;
 	}
 
-	public Integer getFamily_id() {
-		return family_id;
+	public Long getFamily_number() {
+		return family_number;
 	}
 
-	public void setFamily_id(Integer family_id) {
-		this.family_id = family_id;
+	public void setFamily_number(Long family_number) {
+		this.family_number = family_number;
 	}
 
 	public String getPayer() {
@@ -76,13 +83,16 @@ public class ChargeManage {
 		this.pay_date = pay_date;
 	}
 
-	public String getName() {
-		return name;
+	public Integer getAmount() {
+		return amount;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAmount(Integer amount) {
+		this.amount = amount;
 	}
-    
-    
+}
+
+class CompositeKey implements Serializable {
+    private Long charge_id;
+    private Long family_number;
 }

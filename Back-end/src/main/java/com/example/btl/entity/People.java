@@ -45,8 +45,8 @@ public class People {
     @Column(name = "place_of_job")
     private String placeOfJob;
 
-    @Column(name = "family_id")
-    private Long familyId;
+    @Column(name = "family_number")
+    private Long family_number;
 
     @Column(name = "relationship_with_owner")
     @Enumerated(EnumType.STRING)
@@ -168,12 +168,12 @@ public class People {
 //    }
 
 
-    public Long getFamilyId() {
-        return familyId;
+    public Long getFamily_number() {
+        return family_number;
     }
 
-    public void setFamilyId(Long familyId) {
-        this.familyId = familyId;
+    public void setFamilyId(Long family_number) {
+        this.family_number = family_number;
     }
 
     public String getNote() {

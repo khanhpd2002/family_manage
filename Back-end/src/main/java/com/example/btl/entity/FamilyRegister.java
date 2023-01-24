@@ -10,12 +10,13 @@ import java.util.Set;
 @Table(name = "family_register")
 @Entity
 public class FamilyRegister {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//    
+	@Id
     @Column(name = "number")
-    private int number;
+    private Long number;
 
     @Column(name = "number_people")
     private int numberPeople;
@@ -36,22 +37,22 @@ public class FamilyRegister {
     private String address;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "family_id", insertable = false, updatable = false)
+    @JoinColumn(name = "family_number", insertable = false, updatable = false)
     private List<People> memberFamily;
 
-    public Long getId() {
-        return id;
-    }
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 

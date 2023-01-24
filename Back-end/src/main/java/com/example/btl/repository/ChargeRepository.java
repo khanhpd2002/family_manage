@@ -15,8 +15,8 @@ public interface ChargeRepository extends JpaRepository<Charge, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM charge WHERE id = ?1", nativeQuery = true)
-    public Charge deleteById(Long id);
+    @Query(value = "DELETE FROM charge WHERE id=:id", nativeQuery = true)
+    public void deleteById(Long id);
 
     @Query(value = "SELECT * FROM charge c WHERE (:name IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%',:name,'%'))) " +
                     "AND (:amount IS NULL OR LOWER(c.amount) LIKE LOWER(CONCAT('%',:amount,'%'))) " +

@@ -14,8 +14,8 @@ public class FamilyRegisterService {
     @Autowired
     FamilyRegisterRepository familyRegisterRepository;
 
-    public FamilyRegister update(Long id, FamilyRegister source) {
-        Optional<FamilyRegister> oFamilyRegister = Optional.ofNullable(this.familyRegisterRepository.findById(id == null ? 0 : id));
+    public FamilyRegister update(Long number, FamilyRegister source) {
+        Optional<FamilyRegister> oFamilyRegister = Optional.ofNullable(this.familyRegisterRepository.findByNumber(number == null ? 0 : number));
 
         FamilyRegister familyRegister = oFamilyRegister.get();
         familyRegister.setNumber(source.getNumber());

@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.json.Json;
-
 @RestController
 @RequestMapping("/charge")
 public class ChargeApi {
@@ -50,8 +48,9 @@ public class ChargeApi {
         return chargeService.update(id, newCharge);
     }
 
-    @DeleteMapping("/id")
-    public Charge delete(@PathVariable(name = "id", required = true) Long id) {
-        return chargeRepository.deleteById(id == null ? 0 : id);
+    @DeleteMapping(value ="/{id}")
+    public void delete(@PathVariable(name = "id", required = true) Long id) {
+    	System.out.println(id);
+        chargeRepository.deleteById(id);
     }
 }

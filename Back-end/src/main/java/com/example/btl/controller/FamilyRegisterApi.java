@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,24 +45,24 @@ public class FamilyRegisterApi {
         return fr;
     }
   
-    @GetMapping("/{id}")
-    public FamilyRegister findById(@PathVariable(name = "id", required = true) Long id) {
-        return familyRegisterRepository.findById(id == null ? 0 : id);
+    @GetMapping("/{number}")
+    public FamilyRegister findById(@PathVariable(name = "number", required = true) Long number) {
+        return familyRegisterRepository.findByNumber(number == null ? 0 : number);
     }
 
     @PostMapping()
-    public ResponseEntity create(@RequestBody FamilyRegister newFamilyRegister) {
+    public ResponseEntity<Object> create(@RequestBody FamilyRegister newFamilyRegister) {
         return this.familyRegisterService.create(newFamilyRegister);
     }
 
-    @PatchMapping("{id}")
-    public FamilyRegister update(@PathVariable(name = "id", required = true) Long id,
+    @PatchMapping("{number}")
+    public FamilyRegister update(@PathVariable(name = "number", required = true) Long number,
                                  @RequestBody FamilyRegister newFamilyRegister) {
-        return familyRegisterService.update(id, newFamilyRegister);
+        return familyRegisterService.update(number, newFamilyRegister);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable(name = "id", required = true) Long id) {
-        familyRegisterRepository.deleteById(id == null ? 0 : id);
+    @DeleteMapping("/{number}")
+    public void delete(@PathVariable(name = "number", required = true) Long number) {
+        familyRegisterRepository.deleteById(number == null ? 0 : number);
     }
 }

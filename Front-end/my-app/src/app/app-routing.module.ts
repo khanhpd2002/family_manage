@@ -5,6 +5,7 @@ import {LoginComponent} from './login/login.component';
 import {SignUpComponent} from './sign-up/sign-up.component';
 import {PeopleComponent} from "./people/people.component";
 import {ChargeComponent} from "./charge/charge.component";
+import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
 import { FamilyRegister } from './models/family-register.models';
 import { FamilyResolver } from './_resolve/FamilyResolver';
 import { PeopleResolver } from './_resolve/PeopleResolver';
@@ -34,6 +35,10 @@ const routes: Routes = [
       charge: ChargeResolver,
     }
   },
+  {
+    path: 'charge/:id',
+    component: ChargeDetailComponent
+  },
   {path: 'login', component: LoginComponent},
   {path: 'sign-up', component: SignUpComponent}
 ];
@@ -41,7 +46,7 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(
     routes,
-    {preloadingStrategy: PreloadAllModules}
+    {preloadingStrategy: PreloadAllModules},
   )],
   exports: [RouterModule]
 })

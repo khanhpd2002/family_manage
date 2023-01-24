@@ -12,13 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-public interface FamilyRegisterRepository extends JpaRepository<FamilyRegister, Integer> {
-    public FamilyRegister findById(Long id);
+public interface FamilyRegisterRepository extends JpaRepository<FamilyRegister, Long> {
+    public FamilyRegister findByNumber(Long number);
+    
+    public List<FamilyRegister> findAllByNumberIn(List<Long> id);
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM family_register WHERE id = ?1", nativeQuery = true)
-    public void deleteById(Long id);
+    @Query(value = "DELETE FROM family_register WHERE number = ?1", nativeQuery = true)
+    public void deleteByNumber(Long number); 
 
     @Query(value = "SELECT * FROM family_register fr WHERE (:number IS NULL OR fr.number = :number)" +
             "AND (:owner IS NULL OR LOWER(fr.owner) LIKE LOWER(CONCAT('%',:owner,'%')))" +

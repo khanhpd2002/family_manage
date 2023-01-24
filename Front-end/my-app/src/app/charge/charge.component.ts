@@ -19,7 +19,7 @@ export class ChargeComponent implements OnInit {
     charge : any;
     nameValues: String[] = [];
     amountValues: Int16Array[] = [];
-    charge_typeValues = ['','Voluntary', 'Mandatory'];
+    charge_typeValues = ['Voluntary', 'Mandatory'];
     searchForm: FormGroup = new FormGroup({});
     isShowing: boolean = false;
     isEdit: boolean = false;
@@ -69,7 +69,7 @@ export class ChargeComponent implements OnInit {
       this.searchForm.patchValue({
         name: '',
         amount: '',
-        charge_type: '',
+        charge_type: null,
       });
     }
 
@@ -136,24 +136,6 @@ export class ChargeComponent implements OnInit {
     toggleSidenav() {
       this.isShowing = !this.isShowing;
     }
-
-    goLogout() {
-      this.routes.navigate(['login']);
-      localStorage.removeItem('token');
-    }
-
-    goFamilyRegisters() {
-      this.routes.navigate(['family-register']);
-    }
-
-    goPeople() {
-      this.routes.navigate(['people']);
-    }
-
-    goCharge() {
-      this.routes.navigate(['charge']);
-    }
-
   }
 
 
