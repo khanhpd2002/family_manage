@@ -3,7 +3,6 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
-import {People} from "../../models/people.model";
 import { Charge } from 'src/app/models/charge.models';
 
 @Component({
@@ -26,7 +25,6 @@ export class AddEditChargeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   addEditForm = this.formBuilder.group({
-    // id: [this.charge.id],
     name: '',
     amount: null,
     charge_type: '',

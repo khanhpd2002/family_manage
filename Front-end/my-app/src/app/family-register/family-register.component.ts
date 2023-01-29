@@ -49,22 +49,13 @@ export class FamilyRegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ family }) => {
-      this.familyRegisters = new MatTableDataSource<FamilyRegister>(family);
-      this.familyRegisters.paginator = this.paginator;
-      this.afterFilter = this.familyRegisters.family;    })
-    // this.http.get<any>('http://localhost:8080/family-register').subscribe((data) => {
-    //   this.familyRegisters = new MatTableDataSource<FamilyRegister>(data);
-    //   this.familyRegisters.paginator = this.paginator;
-    //   this.afterFilter = this.familyRegisters.data;
-    // });
+    this.onSearch();
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
       data.forEach((element: any) => {
         this.provinceValues.push(element.name);
       });
     });
-
   }
 
   onSearch() {

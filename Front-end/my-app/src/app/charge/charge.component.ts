@@ -36,7 +36,8 @@ export class ChargeComponent implements OnInit {
       public routes: Router,
       public http: HttpClient,
       protected formBuilder: FormBuilder,
-      private dialog: MatDialog) {
+      private dialog: MatDialog,
+      public toastr: ToastrService) {
       this.searchForm = this.formBuilder.group({
         name: [''],
         amount: [''],
@@ -87,6 +88,7 @@ export class ChargeComponent implements OnInit {
           this.charge = new MatTableDataSource<Charge>(data);
           this.charge.paginator = this.paginator;
         })
+        this.toastr.success('Thêm mới thành công');
       });
     }
 

@@ -20,7 +20,6 @@ export class Interceptor implements HttpInterceptor, OnInit {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.token = localStorage.getItem('token');
-    console.log(this.token);
     var request1 = request.clone({
       setHeaders: {
         'Content-Type': 'application/json',
