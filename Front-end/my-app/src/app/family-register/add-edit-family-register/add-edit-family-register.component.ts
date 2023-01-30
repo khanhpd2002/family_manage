@@ -20,6 +20,8 @@ import { People } from 'src/app/models/people.model';
 })
 
 export class AddEditFamilyRegisterComponent implements OnInit {
+  isAdding: boolean = false;
+  isEditting: boolean = false;
   addressValues: any[] = [];
   provinceValues: String[] = [];
   districtValues: String[] = [];
@@ -73,18 +75,19 @@ export class AddEditFamilyRegisterComponent implements OnInit {
   })
 
   ngOnInit() {
-    if (this.dialogRef.id === '-1') {
-      this.isView = true;
-      this.addEditForm.controls['number'].disable();
-      // this.addEditForm.controls['owner'].disable();
-      this.addEditForm.controls['province'].disable();
-      this.addEditForm.controls['district'].disable();
-      this.addEditForm.controls['ward'].disable();
-      this.addEditForm.controls['address'].disable();
-    }
-    console.log(this.dialogRef.id);
+    // if (this.dialogRef.id === '-1') {
+    //   this.isView = true;
+    //   this.addEditForm.controls['number'].disable();
+    //   // this.addEditForm.controls['owner'].disable();
+    //   this.addEditForm.controls['province'].disable();
+    //   this.addEditForm.controls['district'].disable();
+    //   this.addEditForm.controls['ward'].disable();
+    //   this.addEditForm.controls['address'].disable();
+    // }
+    // console.log(this.dialogRef.id);
     // Check neu ton tai familyRegister thi patch Value vao form
     if (this.familyRegister.number) {
+      this.isEditting = true;
       this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
         this.addressValues = data;
         data.forEach((element: any) => {
@@ -109,6 +112,7 @@ export class AddEditFamilyRegisterComponent implements OnInit {
         });
       })
     }
+    else this.isAdding = true;
   }
 
   onSubmit() {

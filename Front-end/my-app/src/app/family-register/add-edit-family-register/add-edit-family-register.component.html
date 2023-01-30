@@ -11,7 +11,7 @@
   <!--  <span *ngIf="form.get('address')?.invalid && form.get('address')?.touched" class="text-danger">Address is Required</span>-->
   <!--  <br />-->
 
-  <div formGroupName="owner" id="div-form1" >
+  <div formGroupName="owner" id="div-form1" *ngIf="isAdding">
     <h4>Owner</h4>
     <div style="margin-left: 30px">
     <div class="name" id="div-form" fxLayout="row">
