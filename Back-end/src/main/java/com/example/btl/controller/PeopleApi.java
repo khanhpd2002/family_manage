@@ -47,7 +47,8 @@ public class PeopleApi {
 
     @PostMapping()
     public People create(@RequestBody People newPeople) {
-        return peopleRepository.save(newPeople);
+//    	System.out.println(newPeople.getfamily_number());
+        return peopleRepository.saveAndFlush(newPeople);
     }
 
     @PatchMapping("{id}")

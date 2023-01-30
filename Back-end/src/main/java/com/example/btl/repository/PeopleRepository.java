@@ -17,7 +17,12 @@ public interface PeopleRepository extends JpaRepository<People, Integer> {
     @Transactional
     @Query(value = "DELETE FROM people WHERE id = ?1", nativeQuery = true)
     public void deleteById(Long id);
-
+    
+    @Modifying
+	@Transactional
+	@Query(value = "delete FROM people c WHERE (c.family_number=:family_number)", 
+	nativeQuery = true)
+	public void deleteByFamily_number(Long family_number);
 
     @Query(value = "SELECT * FROM people pp WHERE (:name IS NULL OR LOWER(pp.name) LIKE LOWER(CONCAT('%',:name,'%'))) " +
             "AND (:otherName IS NULL OR LOWER(pp.other_name) LIKE LOWER(CONCAT('%',:otherName,'%'))) " +

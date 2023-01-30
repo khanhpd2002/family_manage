@@ -1,3 +1,4 @@
+<mat-dialog-content>
 <form class="center" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <div class="name" id="div-form" fxLayout="row">
     <h4>Name</h4>
@@ -132,10 +133,10 @@
 
 
   <div class="familyId" id="div-form" fxLayout="row">
-    <h4>Family Id</h4>
+    <h4>Family Number</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Family Id</mat-label>
-      <mat-select name="familyId" formControlName="familyId">
+      <mat-label>Family Number</mat-label>
+      <mat-select name="family_number" formControlName="family_number">
         <mat-option *ngFor="let family of familyValues" [value]="family">
           {{ family }}
         </mat-option>
@@ -166,3 +167,4 @@
   <button mat-button type="submit" [disabled]="!addEditForm.valid">Submit</button>
 
 </form>
+</mat-dialog-content>

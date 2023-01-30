@@ -193,7 +193,7 @@
           mat-button
           type="submit"
           class="add-edit"
-          (click)="addEditPeople($event)"
+          (click)="addEditPeople()"
         >
           <i class="fa fa-plus"></i> Add
         </button>
@@ -288,17 +288,17 @@
           <!-- Action Column-->
           <ng-container matColumnDef=" ">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
-            <mat-cell *matCellDef="let i = index">
-              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onDelete(i)">
+            <mat-cell *matCellDef="let element">
+              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onDelete(element.id)">
                 <mat-icon>delete</mat-icon>
               </button>
               <span>&nbsp;&nbsp;&nbsp;</span>
               <button mat-fab color="primary" aria-label="Example icon button with a delete icon"
-                      (click)="openDialogDetails(i)">
+                      (click)="openDialogDetails(element.id)">
                 <mat-icon>info</mat-icon>
               </button>
               <span>&nbsp;&nbsp;&nbsp;</span>
-              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onEdit(i)">
+              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onEdit(element.id)">
                 <mat-icon> border_color</mat-icon>
               </button>
             </mat-cell>

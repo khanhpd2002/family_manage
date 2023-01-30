@@ -27,10 +27,7 @@
           <h4>Type of Charge</h4>
           <mat-form-field appearance="fill">
             <mat-label>Type of Charge</mat-label>
-            <mat-select
-              name="charge_type"
-
-            >
+            <mat-select #matRef name="charge_type">
               <mat-option
                 *ngFor="let charge_type of charge_typeValues"
                 [value]="charge_type"

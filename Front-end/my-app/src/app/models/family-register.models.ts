@@ -1,6 +1,8 @@
+import { People } from "./people.model";
+
 export class FamilyRegister {
   number: number;
-  owner: string;
+  owner: People;
   province: string;
   district: string;
   ward: string;

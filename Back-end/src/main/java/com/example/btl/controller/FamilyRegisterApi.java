@@ -9,6 +9,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import com.example.btl.repository.PeopleRepository;
+import com.example.btl.repository.ChargeManageRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,9 @@ import javax.servlet.annotation.ServletSecurity.TransportGuarantee;
 public class FamilyRegisterApi {
     @Autowired
     private FamilyRegisterRepository familyRegisterRepository;
-
+    
+    @Autowired PeopleRepository peopleRepository;
+    @Autowired ChargeManageRepository chargeManageRepository;
     @Autowired
     private FamilyRegisterService familyRegisterService;
 
@@ -52,6 +56,7 @@ public class FamilyRegisterApi {
 
     @PostMapping()
     public ResponseEntity<Object> create(@RequestBody FamilyRegister newFamilyRegister) {
+//    	System.out.println(newFamilyRegister);
         return this.familyRegisterService.create(newFamilyRegister);
     }
 
@@ -63,6 +68,9 @@ public class FamilyRegisterApi {
 
     @DeleteMapping("/{number}")
     public void delete(@PathVariable(name = "number", required = true) Long number) {
-        familyRegisterRepository.deleteById(number == null ? 0 : number);
+    	System.out.println("here");
+    	chargeManageRepository.deleteByFamily_number(number);
+    	peopleRepository.deleteByFamily_number(number);
+        familyRegisterRepository.deleteByNumber(number);
     }
 }

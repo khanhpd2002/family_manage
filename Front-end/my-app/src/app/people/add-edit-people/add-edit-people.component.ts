@@ -12,6 +12,7 @@ import {People} from "../../models/people.model";
 })
 
 export class AddEditPeopleComponent implements OnInit {
+  id: any;
   addressValues: any[] = [];
   provinceValues: String[] = [];
   districtValues: String[] = [];
@@ -29,7 +30,7 @@ export class AddEditPeopleComponent implements OnInit {
     public router: Router,
     protected http: HttpClient,
     public dialogRef: MatDialogRef<AddEditPeopleComponent>,
-    @Inject(MAT_DIALOG_DATA) public people: any) {
+    @Inject(MAT_DIALOG_DATA) public people: People) {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
       data.forEach((element: any) => {
@@ -39,20 +40,20 @@ export class AddEditPeopleComponent implements OnInit {
   }
 
   addEditForm = this.formBuilder.group({
-    name: [this.people.name],
-    otherName: [this.people.otherName],
-    birthday: [this.people.birthday],
-    province: [this.people.province],
-    district: [this.people.district],
-    ward: [this.people.ward],
-    address: [this.people.address],
-    placeOfBirth: [this.people.placeOfBirth],
-    ethnic: [this.people.ethnic],
-    placeOfJob: [this.people.placeOfJob],
-    familyId: [this.people.familyId],
-    identityCard: [this.people.identityCard],
-    relationshipWithOwner: [this.people.relationshipWithOwner],
-    note: [this.people.note],
+    name: '',
+    otherName: '',
+    birthday: '',
+    province: '',
+    district: '',
+    ward: '',
+    address: '',
+    placeOfBirth: '',
+    ethnic: '',
+    placeOfJob: '',
+    family_number: '',
+    identityCard: '',
+    relationshipWithOwner: '',
+    note: ''
 
     // name: new FormControl(null, [Validators.required]),
     // address: new FormControl (null, [Validators.required]),
@@ -61,14 +62,16 @@ export class AddEditPeopleComponent implements OnInit {
   })
 
   ngOnInit() {
+    console.log(JSON.stringify(this.people));
     this.http.get<any>('http://localhost:8080/family-register').subscribe((data: any) => {
       data.forEach((element: any) => {
-        this.familyValues.push(element.owner);
+        this.familyValues.push(element.number);
       })
     })
 
     // Neu View thi disable tat ca cac field
     if (this.dialogRef.id === '-1') {
+      this.id = this.people.id;
       this.isView = true;
       this.addEditForm.controls['name'].disable();
       this.addEditForm.controls['otherName'].disable();
@@ -82,12 +85,31 @@ export class AddEditPeopleComponent implements OnInit {
       this.addEditForm.controls['placeOfJob'].disable();
       this.addEditForm.controls['identityCard'].disable();
       this.addEditForm.controls['relationshipWithOwner'].disable();
+      this.addEditForm.controls['family_number'].disable();
       this.addEditForm.controls['note'].disable();
     }
     console.log(this.dialogRef.id);
     // Check neu ton tai people thi patch Value vao form
-    if (this.people.id) {
+    if (this.people) {
+      this.id = this.people.id;
       this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
+        this.addEditForm.patchValue({
+          name: this.people.name,
+          otherName: this.people.otherName,
+          birthday: this.people.birthday,
+          province: this.people.province,
+          district: this.people.district,
+          ward: this.people.ward,
+          address: this.people.address,
+          placeOfBirth: this.people.placeOfBirth,
+          ethnic: this.people.ethnic,
+          placeOfJob: this.people.placeOfJob,
+          family_number: this.people.family_number,
+          identityCard: this.people.identityCard,
+          relationshipWithOwner: this.people.relationshipWithOwner,
+          note: this.people.note,
+        });
+
         this.addressValues = data;
         data.forEach((element: any) => {
           this.provinceValues.push(element.name);
@@ -97,24 +119,29 @@ export class AddEditPeopleComponent implements OnInit {
         this.tempDistrictValues[0].districts.forEach((element: any) => {
           this.districtValues.push(element.name);
         })
-        this.addEditForm.patchValue({
-          district: this.people.district
-        });
+        // this.addEditForm.patchValue({
+        //   district: this.people.district
+        // });
         const temp = this.tempDistrictValues[0].districts;
         const tempWardValues = temp
           .filter((a: any) => a.name === this.people.district);
         tempWardValues[0].wards.forEach((element: any) => {
           this.wardValues.push(element.name);
         })
-        this.addEditForm.patchValue({
-          ward: this.people.ward
-        });
+        // this.addEditForm.patchValue({
+        //   ward: this.people.ward
+        // });
       })
+    }
+    else{
+      this.id = null;
+      console.log("here");
     }
   }
 
   onSubmit() {
-    const data: People = {
+    const data = {
+      id: this.id,
       name: this.addEditForm.controls['name'].value,
       otherName: this.addEditForm.controls['otherName'].value,
       birthday: this.addEditForm.controls['birthday'].value,
@@ -126,12 +153,12 @@ export class AddEditPeopleComponent implements OnInit {
       ethnic: this.addEditForm.controls['ethnic'].value,
       placeOfJob: this.addEditForm.controls['placeOfJob'].value,
       identityCard: this.addEditForm.controls['identityCard'].value,
-      familyId: this.addEditForm.controls['familyId'].value,
+      family_number: this.addEditForm.controls['family_number'].value,
       relationshipWithOwner: this.addEditForm.controls['relationshipWithOwner'].value,
       note: this.addEditForm.controls['note'].value
     };
     // Tuy trang thai se goi method post/patch tuong ung
-    if (this.people.id) {
+    if (this.people) {
       this.http.patch(`http://localhost:8080/people/${this.people.id}`, data).subscribe(data => {
       });
     }
@@ -147,11 +174,12 @@ export class AddEditPeopleComponent implements OnInit {
     //     this.http.post<any>('http://localhost:8080/people', data);
     //   }
       else {
+        console.log(JSON.stringify(data));
         this.http.post<any>('http://localhost:8080/people', data).subscribe(data => {
         });
       }
 
-    this.dialogRef.close();
+    this.dialogRef.close({data: data});
   }
 
   provinceChange(event: any) {

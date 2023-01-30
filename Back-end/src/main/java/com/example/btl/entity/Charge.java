@@ -1,9 +1,12 @@
 package com.example.btl.entity;
 
 
+import java.util.Set;
+
 //import com.example.btl.entity.enums.ChargeType;
 
 import javax.persistence.*;
+import com.example.btl.entity.FamilyRegister;
 
 @Entity
 @Table(name = "charge")
@@ -25,6 +28,9 @@ public class Charge {
 //    @Column(name = "unit")
 //    private String unit; 
  
+    @ManyToMany(mappedBy = "charges")
+    private Set<FamilyRegister> families;
+    
     public Long getId() {
         return id;
     }

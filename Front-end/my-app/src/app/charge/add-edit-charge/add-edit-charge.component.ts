@@ -17,7 +17,7 @@ export class AddEditChargeComponent implements OnInit {
   isEdit : boolean = false;
   searchForm: FormGroup = new FormGroup({});
   charge: Charge;
-
+  id: any;
   constructor(
     protected formBuilder: FormBuilder,
     public router: Router,
@@ -42,7 +42,8 @@ export class AddEditChargeComponent implements OnInit {
     // }
     // console.log(this.dialogRef.id);
     // // Check neu ton tai charge thi patch Value vao form
-    if (this.data) {
+    if (this.data.name) {
+      this.id = this.data.id;
       this.isEdit = true;
       this.addEditForm.patchValue({
         name: this.data.name,
@@ -50,10 +51,12 @@ export class AddEditChargeComponent implements OnInit {
         charge_type: this.data.charge_type
       })
     }
+    else this.id = null;
   }
 
   onSubmit() {
-    const newCharge = {
+    var newCharge = {
+      id: this.id,
       name: this.addEditForm.controls['name'].value,
       amount: this.addEditForm.controls['amount'].value,
       charge_type: this.addEditForm.controls['charge_type'].value,
@@ -66,7 +69,7 @@ export class AddEditChargeComponent implements OnInit {
     else {
       console.log(JSON.stringify(newCharge));
       this.http.post<any>('http://localhost:8080/charge', newCharge).subscribe(
-        charge => console.log(JSON.stringify(charge))
+        charge => {newCharge = charge}
       );
     }
     this.dialogRef.close({data: newCharge});

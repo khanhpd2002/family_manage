@@ -51,10 +51,14 @@ public class People {
     @Column(name = "relationship_with_owner")
     @Enumerated(EnumType.STRING)
     private RelationWithOwnerType relationshipWithOwner;
-
+ 
     @Column(name = "note")
     private String note;
 
+    @ManyToOne
+    @JoinColumn(name="family_number", insertable = false, updatable = false,  nullable=true)
+    private FamilyRegister family; 
+    
     public Long getId() {
         return id;
     }
@@ -159,22 +163,22 @@ public class People {
         this.relationshipWithOwner = relationshipWithOwner;
     }
 
-//    public String getFamilyId() {
-//        return familyId;
-//    }
-//
-//    public void setFamilyId(String familyId) {
-//        this.familyId = familyId;
-//    }
-
-
     public Long getFamily_number() {
         return family_number;
     }
 
-    public void setFamilyId(Long family_number) {
+    public void setFamilyI_number(Long family_number) {
         this.family_number = family_number;
     }
+
+
+//    public Long getFamily_number() {
+//        return getFamily_number();
+//    }
+//
+//    public void setFamily_number(Long family_number) {
+//        this.family_number = family_number;
+//    }
 
     public String getNote() {
         return note;

@@ -1,4 +1,5 @@
 export class People {
+  id: number;
   name: string;
   otherName: string;
   birthday: string;
@@ -10,7 +11,7 @@ export class People {
   ethnic: string;
   placeOfJob: string;
   identityCard: string;
-  familyId: number;
+  family_number: string;
   relationshipWithOwner: 'OWNER' | 'WIFE' | 'SON' | 'DAUGHTER';
   note: string;
 }

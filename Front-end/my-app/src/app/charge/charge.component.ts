@@ -9,6 +9,8 @@ import {AddEditChargeComponent} from "./add-edit-charge/add-edit-charge.componen
 import {Charge} from "../models/charge.models";
 import {ToastrService} from "ngx-toastr";
 import { MatMenuTrigger } from '@angular/material/menu';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 
 @Component({
   selector: 'app-charge',
@@ -16,6 +18,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
   styleUrls: ['./charge.component.css']
 })
 export class ChargeComponent implements OnInit {
+    chargeList : Charge[];
     charge : any;
     nameValues: String[] = [];
     amountValues: Int16Array[] = [];
@@ -30,6 +33,7 @@ export class ChargeComponent implements OnInit {
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
+    @ViewChild('matRef') matRef: MatSelect;
 
     constructor(
       private activatedRoute: ActivatedRoute,
@@ -47,8 +51,10 @@ export class ChargeComponent implements OnInit {
     ngOnInit(): void {
 
       this.activatedRoute.data.subscribe(({charge}) => {
-        console.log(JSON.stringify(charge));
-        this.charge = new MatTableDataSource<Charge>(charge);
+        this.chargeList = charge;
+        // console.log(JSON.stringify(charge));
+        this.charge = new MatTableDataSource<Charge>();
+        this.charge.data = charge;
         this.charge.paginator = this.paginator;
         this.afterFilter = this.charge.data;
       });
@@ -69,8 +75,9 @@ export class ChargeComponent implements OnInit {
       this.searchForm.patchValue({
         name: '',
         amount: '',
-        charge_type: null,
+        // charge_type: null,
       });
+      this.matRef.options.forEach((data: MatOption) => data.deselect());
     }
 
     addEditCharge() {
@@ -82,60 +89,46 @@ export class ChargeComponent implements OnInit {
           panelClass: 'app-add-edit-charge',
           data: null,
         })
-        .afterClosed().subscribe(result => {
-        this.http.get<any>('http://localhost:8080/charge').subscribe((data) => {
-          this.charge = new MatTableDataSource<Charge>(data);
-          this.charge.paginator = this.paginator;
+        .afterClosed().subscribe(charge => {
+          this.chargeList.push(charge.data);
+          this.charge.data = this.chargeList;
         })
-      });
     }
 
-    onDelete(id: number) {
-      console.log(id);
-      console.log(this.paginator.pageSize, this.paginator.pageIndex);
+    onDelete(id: Int16Array) {
+      // console.log(this.paginator.pageSize, this.paginator.pageIndex);
       // const deleteId = this.charge[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
       // console.log(deleteId);
       this.http.delete<any>(`http://localhost:8080/charge/${id}`).subscribe(
         {
           complete: () => {
-            this.http.get<any>('http://localhost:8080/charge').subscribe((data) => {
-              this.charge = new MatTableDataSource<Charge>(data);
-              this.charge.paginator = this.paginator;
+            this.chargeList = this.chargeList.filter(charge => {
+              if (charge.id == id) return false;
+              return true;
             })
+            this.charge.data = this.chargeList;
+
           }
         })
     }
 
-    openDialogDetails(index: number): void {
-      this.dialog.open(AddEditChargeComponent,
-        {
-          width: '500px',
-          disableClose: false,
-          panelClass: 'app-add-edit-people',
-          data: this.afterFilter[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
-          id: "-1"
-        });
-    }
-
     onEdit(charge: Charge): void {
-      this.isEdit = !this.isEdit;
+      // this.isEdit = !this.isEdit;
       this.dialog.open(AddEditChargeComponent,
         {
           width: '500px',
           disableClose: false,
           panelClass: 'app-add-edit-charge',
           data: charge,
-        }).afterClosed().subscribe(result => {
-        this.http.get<any>('http://localhost:8080/charge').subscribe((data) => {
-          this.charge = new MatTableDataSource<Charge>(data);
-          this.charge.paginator = this.paginator;
+        }).afterClosed().subscribe(charge => {
+          this.chargeList = this.chargeList.map(chargeE => chargeE.id !== charge.data.id as Int16Array ? chargeE : charge.data);
+          this.charge.data = this.chargeList;
         })
-      });
     }
 
-    toggleSidenav() {
-      this.isShowing = !this.isShowing;
-    }
+    // toggleSidenav() {
+    //   this.isShowing = !this.isShowing;
+    // }
   }
 
 

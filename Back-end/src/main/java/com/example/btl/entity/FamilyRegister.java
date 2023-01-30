@@ -18,8 +18,8 @@ public class FamilyRegister {
     @Column(name = "number")
     private Long number;
 
-    @Column(name = "number_people")
-    private int numberPeople;
+//    @Column(name = "number_people")
+//    private int numberPeople;
 
     @Column(name = "owner")
     private String owner;
@@ -36,10 +36,13 @@ public class FamilyRegister {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "family_number", insertable = false, updatable = false)
-    private List<People> memberFamily;
-
+    @OneToMany(mappedBy = "family", fetch = FetchType.LAZY)
+    private Set<People> memberFamily;
+    
+    @ManyToMany
+    @JoinTable(name="charge_manage", joinColumns = @JoinColumn(name = "family_number"), inverseJoinColumns = @JoinColumn(name = "charge_id"))
+    private Set<Charge> charges;
+    
 //    public Long getId() {
 //        return id;
 //    }
@@ -88,13 +91,13 @@ public class FamilyRegister {
         this.ward = ward;
     }
 
-    public int getNumberPeople() {
-        return numberPeople;
-    }
-
-    public void setNumberPeople(int numberPeople) {
-        this.numberPeople = numberPeople;
-    }
+//    public int getNumberPeople() {
+//        return numberPeople;
+//    }
+//
+//    public void setNumberPeople(int numberPeople) {
+//        this.numberPeople = numberPeople;
+//    }
 
     public String getAddress() {
         return address;
@@ -104,11 +107,15 @@ public class FamilyRegister {
         this.address = address;
     }
 
-    public List<People> getMemberFamily() {
+    public Set<People> getMemberFamily() {
         return memberFamily;
     }
 
-    public void setMemberFamily(List<People> memberFamily) {
+    public void setMemberFamily(Set<People> memberFamily) {
         this.memberFamily = memberFamily;
     }
+    
+//    public Set<People> getMembers () {
+//        return memberFamily;
+//      }
 }

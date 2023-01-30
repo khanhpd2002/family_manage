@@ -14,6 +14,7 @@ import {People} from "../models/people.model";
   styleUrls: ['./people.component.css']
 })
 export class PeopleComponent implements OnInit {
+  peopleList: People[];
   addressValues: any[] = [];
   provinceValues: String[] = [];
   districtValues: String[] = [];
@@ -41,6 +42,7 @@ export class PeopleComponent implements OnInit {
     this.searchForm = this.formBuilder.group({
       name: [''],
       otherName: [''],
+      birthday: [''],
       province: [''],
       district: [''],
       ward: [''],
@@ -49,7 +51,7 @@ export class PeopleComponent implements OnInit {
       ethnic: [''],
       placeOfJob: [''],
       identityCard: [''],
-      familyId: [''],
+      family_number: [''],
       relationshipWithOwner: [''],
       note: [''],
     });
@@ -63,7 +65,9 @@ export class PeopleComponent implements OnInit {
       });
     });
     this.activatedRoute.data.subscribe(({people}) => {
-      this.people = new MatTableDataSource<People>(people);
+      this.peopleList = people;
+      this.people = new MatTableDataSource<People>();
+      this.people.data = this.peopleList;
       this.people.paginator = this.paginator;
       this.afterFilter = this.people.data;
     });
@@ -88,7 +92,7 @@ export class PeopleComponent implements OnInit {
       ethnic: '',
       placeOfJob: '',
       identityCard: '',
-      familyId: '',
+      family_number: '',
       relationshipWithOwner: '',
       note: '',
     });
@@ -114,53 +118,54 @@ export class PeopleComponent implements OnInit {
     })
   }
 
-  addEditPeople(fr: any) {
+  addEditPeople() {
     this.dialog.open(AddEditPeopleComponent,
       {
         width: '500px',
         height: '1000px',
         disableClose: false,
         panelClass: 'app-add-edit-people',
-        data: fr ? fr : null,
+        data:  null,
       })
-      .afterClosed().subscribe(result => {
-      this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
-        this.people = new MatTableDataSource<People>(data);
-        this.people.paginator = this.paginator;
-      })
+      .afterClosed().subscribe(people => {
+        this.peopleList.push(people.data);
+        this.people.data = this.peopleList;
+
     });
   }
 
-  onDelete(index: number) {
-    console.log(index);
+  onDelete(deleteId: number) {
+    console.log(deleteId + "hihi");
     console.log(this.paginator.pageSize, this.paginator.pageIndex);
-    const deleteId = this.people[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
+    // const deleteId = this.people[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
     console.log(deleteId);
-    this.http.delete<any>(`http://localhost:8080/people/${deleteId}`).subscribe();
-    this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
-      this.people = new MatTableDataSource<People>(data);
-      this.people.paginator = this.paginator;
-    })
+    this.http.delete<any>(`http://localhost:8080/people/${deleteId}`).subscribe(
+      () => this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
+        this.people.data = data;
+      })
+    );
+
   }
 
-  openDialogDetails(index: number): void {
+  openDialogDetails(id: number): void {
+    console.log(id + "hihi");
     this.dialog.open(AddEditPeopleComponent,
       {
         width: '500px',
         disableClose: false,
         panelClass: 'app-add-edit-people',
-        data: this.afterFilter[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
+        data: this.peopleList.filter(people => people.id == id)[0],
         id: "-1"
       });
   }
 
-  onEdit(index: number): void {
+  onEdit(id: number): void {
     this.dialog.open(AddEditPeopleComponent,
       {
         width: '500px',
         disableClose: false,
         panelClass: 'app-add-edit-people',
-        data: this.afterFilter[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index],
+        data: this.peopleList.filter(people => people.id == id)[0],
       }).afterClosed().subscribe(result => {
       this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
         this.people = new MatTableDataSource<People>(data);

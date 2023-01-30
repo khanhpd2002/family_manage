@@ -19,7 +19,7 @@ public interface FamilyRegisterRepository extends JpaRepository<FamilyRegister, 
 
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM family_register WHERE number = ?1", nativeQuery = true)
+    @Query(value = "DELETE FROM family_register fr WHERE fr.number = :number", nativeQuery = true) 
     public void deleteByNumber(Long number); 
 
     @Query(value = "SELECT * FROM family_register fr WHERE (:number IS NULL OR fr.number = :number)" +
