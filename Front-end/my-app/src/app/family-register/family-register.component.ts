@@ -49,7 +49,7 @@ export class FamilyRegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ family }) => {
+    this.http.get<any>('http://localhost:8080/family-register').subscribe(( family ) => {
       this.familyList = family;
       this.familyRegisters = new MatTableDataSource<FamilyRegister>();
       this.familyRegisters.data = family;
@@ -75,10 +75,8 @@ export class FamilyRegisterComponent implements OnInit {
     let params = this._collectParams(this.searchForm, map);
     console.log(params);
     this.http.get<any>('http://localhost:8080/family-register/params', {params: params}).subscribe((data) => {
-      this.familyRegisters = new MatTableDataSource<FamilyRegister>();
+      this.familyList = data;
       this.familyRegisters.data = data;
-      this.familyRegisters.paginator = this.paginator;
-      this.afterFilter = this.familyRegisters.data;
     });
   }
 

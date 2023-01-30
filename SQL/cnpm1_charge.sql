@@ -30,6 +30,16 @@ CREATE TABLE `charge` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `charge`
+--
+
+LOCK TABLES `charge` WRITE;
+/*!40000 ALTER TABLE `charge` DISABLE KEYS */;
+INSERT INTO `charge` VALUES (15,'Quỹ','100000','Mandatory'),(21,'Linh vật mèo','100000','Mandatory'),(23,'Xây nhà văn hóa khu dân cư','200000','Mandatory'),(27,'Tượng đài Lenin','100000','Mandatory'),(28,'Ủng hộ miền Trung','10000','Voluntary'),(29,'Tết cho trẻ em','5000','Mandatory'),(30,'Quỹ vì người nghèo ','5000','Voluntary'),(31,'Tết vì trẻ em','30000','Voluntary');
+/*!40000 ALTER TABLE `charge` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -40,4 +50,4 @@ CREATE TABLE `charge` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-30 10:29:00
+-- Dump completed on 2023-01-30 11:46:50

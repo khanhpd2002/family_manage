@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
 import {AddEditPeopleComponent} from "./add-edit-people/add-edit-people.component";
 import {People} from "../models/people.model";
+import {FamilyRegister} from "../models/family-register.models";
 
 @Component({
   selector: 'app-people',
@@ -64,7 +65,7 @@ export class PeopleComponent implements OnInit {
         this.provinceValues.push(element.name);
       });
     });
-    this.activatedRoute.data.subscribe(({people}) => {
+    this.http.get<any>('http://localhost:8080/people').subscribe((people) => {
       this.peopleList = people;
       this.people = new MatTableDataSource<People>();
       this.people.data = this.peopleList;
@@ -74,10 +75,28 @@ export class PeopleComponent implements OnInit {
   }
 
   onSearch() {
-    const formValue = `${this.searchForm.get('name')?.value}${this.searchForm.get('otherName')?.value}${this.searchForm.get('province')?.value}${this.searchForm.get('district')?.value}${this.searchForm.get('ward')?.value}${this.searchForm.get('address')?.value}`;
-    this.people.filter = formValue.trim().toLowerCase();
-    this.afterFilter = this.people.filteredData;
-    console.log(this.afterFilter);
+    const map = Object.fromEntries(
+      ['name', 'otherName', 'birthday', 'province', 'district', 'ward', 'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationshipWithOwner'].map(s => [s, s]));
+    let params = this._collectParams(this.searchForm, map);
+    console.log(params);
+    this.http.get<any>('http://localhost:8080/people/params', {params: params}).subscribe((data) => {
+      this.people = new MatTableDataSource<People>(data);
+      this.people.paginator = this.paginator;
+      this.afterFilter = this.people.data;
+    });
+  }
+  _collectParams(searchForm: FormGroup, map: { [key: string]: string }): HttpParams {
+    let params = new HttpParams();
+    for (const key of Object.keys(map)) {
+      const value = map[key];
+      if (value) {
+        const control = searchForm.get(value);
+        if (control) {
+          params = params.set(key, control.value ? control.value : '');
+        }
+      }
+    }
+    return params;
   }
 
   onResetForm() {

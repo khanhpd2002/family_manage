@@ -43,6 +43,16 @@ CREATE TABLE `people` (
   CONSTRAINT `FK9iuy5kyo79hhgr5rk2rpnd6px` FOREIGN KEY (`family_number`) REFERENCES `family_register` (`number`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `people`
+--
+
+LOCK TABLES `people` WRITE;
+/*!40000 ALTER TABLE `people` DISABLE KEYS */;
+INSERT INTO `people` VALUES (12,'Hoang','','2022-05-25 00:00:00',23,'Thành phố Hà Nội','Quận Ba Đình','Phường Phúc Xá','abcd','fff','Kinh','sdfsf','026202000158','OWNER',''),(14,'hoa','','2022-05-25 00:00:00',30,'Tỉnh Bắc Kạn','Thành Phố Bắc Kạn','Xã Lũng Cú','h,mm','fff','Kinh','','026202000158','OWNER',''),(15,'hu','','2022-05-25 00:00:00',54,'Tỉnh Tuyên Quang','Thành phố Tuyên Quang','Xã Trung Minh','hmmm','hhh','Kinh','sdfsf','026202000158','OWNER',''),(16,'Khnh','','2022-05-25 00:00:00',23,'Thành phố Hà Nội','Quận Tây Hồ','Phường Phú Thượng','hmmm','fff','Kinh','sdfsf','026202000158','SON','');
+/*!40000 ALTER TABLE `people` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -53,4 +63,4 @@ CREATE TABLE `people` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-30 10:29:01
+-- Dump completed on 2023-01-30 11:46:50
