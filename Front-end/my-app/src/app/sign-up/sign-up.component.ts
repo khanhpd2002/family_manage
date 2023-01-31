@@ -1,7 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Route, Router} from '@angular/router';
+import {Router} from '@angular/router';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-sign-up',
@@ -13,6 +14,7 @@ export class SignUpComponent implements OnInit {
   constructor(
     public router: Router,
     public http: HttpClient,
+    public toastr: ToastrService
   ) {
   }
 
@@ -27,6 +29,15 @@ export class SignUpComponent implements OnInit {
     password: new FormControl(''),
   });
 
+  numberOnly(event: any): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
+
   submit() {
     const dataSingup: SIGNUP_USER = {
       email: this.form.get('email')?.value,
@@ -36,10 +47,12 @@ export class SignUpComponent implements OnInit {
     };
     this.http.post<any>('http://localhost:8080/user/sign-up', dataSingup).subscribe((data) => {
       if (data.status == 200) {
+        this.toastr.success('Đăng kí thành công');
         this.router.navigate(['login']);
       }
       if (data.status == 404) {
-        this.error = "Sai thong tin";
+        this.error = "Tài khoản đã tồn tại";
+        this.toastr.error('Đăng kí thất bại');
         this.form.reset();
       }
     })

@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar *ngIf="routes.url !== '/login' && routes.url !== '/sign-up'">
   <button
     mat-icon-button
     class="example-icon"
