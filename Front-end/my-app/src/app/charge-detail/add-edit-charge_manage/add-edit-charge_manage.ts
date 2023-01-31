@@ -39,7 +39,7 @@ export class AddEditCharge_manageComponent implements OnInit {
   ngOnInit() {
     this.http.get<any>('http://localhost:8080/family-register').subscribe((data: any) => {
       data.forEach((element: any) => {
-        this.familyValues.push(element.number);
+        this.familyValues.push(element);
       })
     })
 

@@ -24,9 +24,14 @@
 
   <div class="birthday" id="div-form" fxLayout="row">
     <h4>Birthday</h4>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="mat-birthday">
       <mat-label>Birthday</mat-label>
-      <input matInput name="birthday" formControlName="birthday"/>
+      <input matInput [matDatepicker]="picker" name="birthday" formControlName="birthday" [(ngModel)]="startDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle matSuffix (click)="clearStartDate()">
+        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
     </mat-form-field>
   </div>
 
@@ -137,8 +142,8 @@
     <mat-form-field appearance="outline">
       <mat-label>Family Number</mat-label>
       <mat-select name="family_number" formControlName="family_number">
-        <mat-option *ngFor="let family of familyValues" [value]="family">
-          {{ family }}
+        <mat-option *ngFor="let family of familyValues" [value]="family.number">
+          {{ family.owner }}
         </mat-option>
       </mat-select>
     </mat-form-field>

@@ -26,6 +26,7 @@ export class PeopleComponent implements OnInit {
   isShowing: boolean;
   isEdit: boolean;
   isAdvancedSearch: boolean;
+  startDate: Date | null;
 
   people: any;
   afterFilter: any;
@@ -115,6 +116,10 @@ export class PeopleComponent implements OnInit {
       relationshipWithOwner: '',
       note: '',
     });
+  }
+
+  clearStartDate() {
+    this.startDate = null;
   }
 
   provinceChange(event: any) {
