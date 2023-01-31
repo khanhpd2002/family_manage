@@ -40,4 +40,7 @@ public interface PeopleRepository extends JpaRepository<People, Integer> {
     public List<People> find(String name, String otherName, String birthday, String province, String district, String ward,
                              String address, String placeOfBirth, String ethnic, String placeOfJob, String identityCard,
                              String relationshipWithOwner, String note);
+    
+    @Query(value = "SELECT * FROM people pp WHERE pp.family_number=:family_number", nativeQuery = true)
+    public List<People> findByFamily_number(Long family_number);
 }
