@@ -23,6 +23,7 @@ export class AddEditPeopleComponent implements OnInit {
 
   tempDistrictValues: any[] = [];
   isView = false;
+  startDate: Date | null;
   searchForm: FormGroup = new FormGroup({});
 
   constructor(
@@ -65,7 +66,7 @@ export class AddEditPeopleComponent implements OnInit {
     console.log(JSON.stringify(this.people));
     this.http.get<any>('http://localhost:8080/family-register').subscribe((data: any) => {
       data.forEach((element: any) => {
-        this.familyValues.push(element.number);
+        this.familyValues.push(element);
       })
     })
 
@@ -140,11 +141,12 @@ export class AddEditPeopleComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.getValidDate(this.addEditForm.controls['birthday'].value));
     const data = {
       id: this.id,
       name: this.addEditForm.controls['name'].value,
       otherName: this.addEditForm.controls['otherName'].value,
-      birthday: this.addEditForm.controls['birthday'].value,
+      birthday: this.getValidDate(this.addEditForm.controls['birthday'].value),
       province: this.addEditForm.controls['province'].value,
       district: this.addEditForm.controls['district'].value,
       ward: this.addEditForm.controls['ward'].value,
@@ -180,6 +182,19 @@ export class AddEditPeopleComponent implements OnInit {
       }
 
     this.dialogRef.close({data: data});
+  }
+
+  clearStartDate() {
+    this.startDate = null;
+  }
+
+  getValidDate(selectedDate: any) {
+    const date = new Date(selectedDate);
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const yyyy = date.getFullYear();
+
+    return yyyy + '-' + mm + '-' + dd;
   }
 
   provinceChange(event: any) {

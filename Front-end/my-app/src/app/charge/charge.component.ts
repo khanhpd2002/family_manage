@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog} from "@angular/material/dialog";
@@ -11,6 +11,7 @@ import {ToastrService} from "ngx-toastr";
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
+import {People} from "../models/people.model";
 
 @Component({
   selector: 'app-charge',
@@ -45,20 +46,20 @@ export class ChargeComponent implements OnInit {
       this.searchForm = this.formBuilder.group({
         name: [''],
         amount: [''],
-        charge_type: [' ']
+        charge_type: ['']
       });
     }
 
     ngOnInit(): void {
-
-      this.activatedRoute.data.subscribe(({charge}) => {
-        this.chargeList = charge;
-        // console.log(JSON.stringify(charge));
-        this.charge = new MatTableDataSource<Charge>();
-        this.charge.data = charge;
-        this.charge.paginator = this.paginator;
-        this.afterFilter = this.charge.data;
-      });
+      this.onSearch();
+      // this.activatedRoute.data.subscribe(({charge}) => {
+      //   this.chargeList = charge;
+      //   // console.log(JSON.stringify(charge));
+      //   this.charge = new MatTableDataSource<Charge>();
+      //   this.charge.data = charge;
+      //   this.charge.paginator = this.paginator;
+      //   this.afterFilter = this.charge.data;
+      // });
     }
 
     openMenu() {
@@ -66,11 +67,30 @@ export class ChargeComponent implements OnInit {
     }
 
     onSearch() {
-      const formValue = `${this.searchForm.get('name')?.value}${this.searchForm.get('amount')?.value}${this.searchForm.get('charge_type')?.value}`;
-      this.charge.filter = formValue.trim().toLowerCase();
-      this.afterFilter = this.charge.filteredData;
-      console.log(this.afterFilter);
+      const map = Object.fromEntries(
+        ['name', 'amount', 'charge_type'].map(s => [s, s]));
+      let params = this._collectParams(this.searchForm, map);
+      console.log(params);
+      this.http.get<any>('http://localhost:8080/charge/params', {params: params}).subscribe((data) => {
+        this.charge = new MatTableDataSource<Charge>(data);
+        this.charge.paginator = this.paginator;
+        this.afterFilter = this.charge.data;
+      });
     }
+
+  _collectParams(searchForm: FormGroup, map: { [key: string]: string }): HttpParams {
+    let params = new HttpParams();
+    for (const key of Object.keys(map)) {
+      const value = map[key];
+      if (value) {
+        const control = searchForm.get(value);
+        if (control) {
+          params = params.set(key, control.value ? control.value : '');
+        }
+      }
+    }
+    return params;
+  }
 
     onResetForm() {
       this.searchForm.patchValue({

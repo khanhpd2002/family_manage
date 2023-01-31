@@ -23,6 +23,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ToastrModule} from "ngx-toastr";
 import { MatMenuModule} from '@angular/material/menu';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatNativeDateModule } from '@angular/material/core';
 // import { MenuModule } from '@syncfusion/ej2-angular-navigations';
 
 import {AppComponent} from './app.component';
@@ -34,10 +36,10 @@ import {PeopleComponent} from './people/people.component';
 import {ChargeComponent} from './charge/charge.component';
 import {AddEditPeopleComponent} from "./people/add-edit-people/add-edit-people.component";
 import {AddEditChargeComponent} from "./charge/add-edit-charge/add-edit-charge.component";
-// import {AddEditFamilyComponent } from './charge-detail/add-edit-family/add-edit-family.component';
 import { AddEditCharge_manageComponent } from './charge-detail/add-edit-charge_manage/add-edit-charge_manage';
 import {Interceptor} from "./_helpers/interceptor";
 import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -76,6 +78,8 @@ import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
     FlexLayoutModule,
     MatCardModule,
     FontAwesomeModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ToastrModule.forRoot({
       timeOut: 1000,
       positionClass: 'toast-bottom-right',

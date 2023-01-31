@@ -30,9 +30,9 @@ public class ChargeApi {
 
     @GetMapping("/params")
     public List<Charge> find(@RequestParam(name = "name", required = false) String name, @RequestParam(name = "amount", required = false) String amount,
-                             @RequestParam(name = "chargeType", required = false) String chargeType) {
+                             @RequestParam(name = "charge_type", required = false) String charge_type) {
         List<Charge> c = new ArrayList<>();
-        c = this.chargeRepository.find(name, amount, chargeType);
+        c = this.chargeRepository.find(name, amount, charge_type);
         return c;
     }
 

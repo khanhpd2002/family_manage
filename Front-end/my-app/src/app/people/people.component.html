@@ -17,7 +17,12 @@
         <h4>Birthday</h4>
         <mat-form-field appearance="fill">
           <mat-label>Birthday</mat-label>
-          <input matInput name="birthday" formControlName="birthday"/>
+          <input matInput [matDatepicker]="picker" name="birthday" formControlName="birthday" [(ngModel)]="startDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix (click)="clearStartDate()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker ></mat-datepicker>
         </mat-form-field>
       </div>
 

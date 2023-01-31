@@ -27,7 +27,7 @@
           <h4>Type of Charge</h4>
           <mat-form-field appearance="fill">
             <mat-label>Type of Charge</mat-label>
-            <mat-select #matRef name="charge_type">
+            <mat-select #matRef name="charge_type" formControlName="charge_type">
               <mat-option
                 *ngFor="let charge_type of charge_typeValues"
                 [value]="charge_type"
@@ -58,7 +58,8 @@
         </button>
       </div>
 
-      <div>
+      <div fxLayout="row">
+        <h1>{{this.paginator.length}} Kết quả</h1>
         <button
           mat-button
           type="submit"

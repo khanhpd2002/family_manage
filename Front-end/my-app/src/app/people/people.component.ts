@@ -26,6 +26,7 @@ export class PeopleComponent implements OnInit {
   isShowing: boolean;
   isEdit: boolean;
   isAdvancedSearch: boolean;
+  startDate: Date | null;
 
   people: any;
   afterFilter: any;
@@ -117,6 +118,10 @@ export class PeopleComponent implements OnInit {
     });
   }
 
+  clearStartDate() {
+    this.startDate = null;
+  }
+
   provinceChange(event: any) {
     this.districtValues = [];
     this.wardValues = [];
@@ -141,7 +146,7 @@ export class PeopleComponent implements OnInit {
     this.dialog.open(AddEditPeopleComponent,
       {
         width: '500px',
-        height: '1000px',
+        // height: '1000px',
         disableClose: false,
         panelClass: 'app-add-edit-people',
         data:  null,
