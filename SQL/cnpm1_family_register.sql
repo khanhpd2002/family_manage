@@ -39,7 +39,7 @@ CREATE TABLE `family_register` (
 
 LOCK TABLES `family_register` WRITE;
 /*!40000 ALTER TABLE `family_register` DISABLE KEYS */;
-INSERT INTO `family_register` VALUES (23,'Hoang','Thành phố Hà Nội','Quận Ba Đình','Phường Phúc Xá','abcd'),(27,'Giang','Thành phố Hà Nội','Quận Ba Đình','Phường Vĩnh Phúc','hmmm'),(30,'hoa','Tỉnh Hà Giang','Huyện Đồng Văn','Xã Lũng Cú','hmmm'),(54,'hu','Tỉnh Tuyên Quang','Huyện Yên Sơn','Xã Trung Minh','awww');
+INSERT INTO `family_register` VALUES (1,'Nguyễn Nam','Thành phố Hà Nội','Quận Cầu Giấy','Phường Quan Hoa','số 2'),(3,'Tiến Quang','Tỉnh Tuyên Quang','Huyện Lâm Bình','Xã Phúc Yên','số4'),(5,'Tiến Hoàng','Tỉnh Tuyên Quang','Huyện Lâm Bình','Xã Phúc Yên','số 4'),(10,'Tiến Dương','Thành phố Hà Nội','Quận Cầu Giấy','Phường Dịch Vọng','số 4'),(13,'Dương Tiến','Thành phố Hà Nội','Quận Hoàn Kiếm','Phường Hàng Buồm','số 22'),(23,'Hoang','Thành phố Hà Nội','Quận Ba Đình','Phường Phúc Xá',''),(24,'Dương Hoa','Thành phố Hà Nội','Quận Đống Đa','Phường Ô Chợ Dừa',''),(25,'Dương Giang','Tỉnh Hà Giang','Thành phố Hà Giang','Phường Trần Phú',''),(30,'hoa','Tỉnh Hà Giang','Huyện Đồng Văn','Xã Lũng Cú',''),(54,'hu','Tỉnh Tuyên Quang','Huyện Yên Sơn','Xã Trung Minh','');
 /*!40000 ALTER TABLE `family_register` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-30 11:46:50
+-- Dump completed on 2023-01-31  8:29:10

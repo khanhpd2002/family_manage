@@ -22,6 +22,10 @@ import { People } from 'src/app/models/people.model';
 export class AddEditFamilyRegisterComponent implements OnInit {
   isAdding: boolean = false;
   isEditting: boolean = false;
+  owner: any;
+  ownerValues: any[] = [];
+  owner_old: People;
+  owner_new: People;
   addressValues: any[] = [];
   provinceValues: String[] = [];
   districtValues: String[] = [];
@@ -47,7 +51,8 @@ export class AddEditFamilyRegisterComponent implements OnInit {
   }
 
   addEditForm = this.formBuilder.group({
-    number: '',
+    number: null,
+    owner_name:'',
     owner: this.formBuilder.group({
       name: '',
       othername: '',
@@ -75,6 +80,7 @@ export class AddEditFamilyRegisterComponent implements OnInit {
   })
 
   ngOnInit() {
+
     // if (this.dialogRef.id === '-1') {
     //   this.isView = true;
     //   this.addEditForm.controls['number'].disable();
@@ -84,10 +90,35 @@ export class AddEditFamilyRegisterComponent implements OnInit {
     //   this.addEditForm.controls['ward'].disable();
     //   this.addEditForm.controls['address'].disable();
     // }
-    // console.log(this.dialogRef.id);
     // Check neu ton tai familyRegister thi patch Value vao form
     if (this.familyRegister.number) {
       this.isEditting = true;
+      // console.log("name" + JSON.stringify(this.familyRegister.owner));
+
+      this.addEditForm.patchValue({
+        owner_name: this.familyRegister.owner
+      });
+      // console.log("daynua"+this.addEditForm.controls['owner_name'].value);
+      this.addEditForm.patchValue({
+        ward: this.familyRegister.ward
+      });
+      this.addEditForm.patchValue({
+        number: this.familyRegister.number
+      });
+      this.addEditForm.patchValue({
+        province: this.familyRegister.province
+      });
+      this.addEditForm.patchValue({
+        district: this.familyRegister.district
+      });
+      // console.log(JSON.stringify("hihi"+this.owner_old));
+      this.http.get<any>(`http://localhost:8080/people/family/${this.familyRegister.number}`).subscribe((data: any) => {
+        // console.log("here"+JSON.stringify(this.familyRegister));
+        data.forEach((element: any) => {
+          this.ownerValues.push(element);
+        })
+      })
+
       this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
         this.addressValues = data;
         data.forEach((element: any) => {
@@ -98,27 +129,26 @@ export class AddEditFamilyRegisterComponent implements OnInit {
         this.tempDistrictValues[0].districts.forEach((element: any) => {
           this.districtValues.push(element.name);
         })
-        this.addEditForm.patchValue({
-          district: this.familyRegister.district
-        });
         const temp = this.tempDistrictValues[0].districts;
         const tempWardValues = temp
           .filter((a: any) => a.name === this.familyRegister.district);
         tempWardValues[0].wards.forEach((element: any) => {
           this.wardValues.push(element.name);
         })
-        this.addEditForm.patchValue({
-          ward: this.familyRegister.ward
-        });
       })
     }
     else this.isAdding = true;
+    console.log("daynua"+this.addEditForm.controls['owner_name'].value);
   }
 
   onSubmit() {
+    if (this.addEditForm.controls['owner'].controls['name'].value)
+      this.owner = this.addEditForm.controls['owner'].controls['name'].value;
+    else this.owner = this.addEditForm.controls['owner_name'].value;
+
     const data= {
       number: this.addEditForm.controls['number'].value,
-      owner: this.addEditForm.controls['owner'].controls['name'].value ,
+      owner: this.owner ,
       province: this.addEditForm.controls['province'].value,
       district: this.addEditForm.controls['district'].value,
       ward: this.addEditForm.controls['ward'].value,
@@ -142,10 +172,32 @@ export class AddEditFamilyRegisterComponent implements OnInit {
       note: this.addEditForm.controls['owner'].controls['note'].value,
     }
     // Tuy trang thai se goi method post/patch tuong ung
-    if (this.familyRegister.number) {
+    if (this.isEditting) {
+      console.log("hi1"+JSON.stringify(this.ownerValues));
+      this.owner_old = this.ownerValues.filter(owner => {
+        // console.log("choose"+JSON.stringify(owner));
+        if(owner.name == this.familyRegister.owner) return true;
+        return false;
+      })[0];
+
+      this.owner_new = this.ownerValues.filter(owner => {
+        if(owner.name == this.addEditForm.controls['owner_name'].value) return true;
+        return false;
+      })[0];
+
+      console.log("new"+JSON.stringify(this.owner_new));
+      console.log("old"+JSON.stringify(this.owner_old));
+
       this.http.patch(`http://localhost:8080/family-register/${this.familyRegister.number}`, data).subscribe(data => {
-        this.toastr.success('Sửa thành công');
+        if (this.owner_new.name != this.owner_old.name){
+          this.owner_old.relationshipWithOwner = 'WIFE';
+          console.log("old" + JSON.stringify(this.owner_old));
+          this.owner_new.relationshipWithOwner = 'OWNER';
+          this.http.patch(`http://localhost:8080/people/${this.owner_old.id}`, this.owner_old);
+          this.http.patch(`http://localhost:8080/people/${this.owner_new.id}`, this.owner_new);
+        }
       });
+      this.toastr.success('Sửa thành công');
     } else {
       this.http.post<any>('http://localhost:8080/family-register', data).subscribe(data => {
         if (data) {

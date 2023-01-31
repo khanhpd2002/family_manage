@@ -174,6 +174,17 @@
   </div>
 
 </div>
+<div class="owner" id="div-form" fxLayout="row" *ngIf = "isEditting">
+    <h4>Owner</h4>
+    <mat-form-field appearance="outline">
+      <mat-label>Owner</mat-label>
+      <mat-select name="owner" formControlName="owner_name">
+        <mat-option *ngFor="let owner of ownerValues" [value]="owner.name">
+          {{ owner.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <!--  <br />-->
   <!--  <span *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger">Name is Required</span>-->
   <!--  <br />-->
