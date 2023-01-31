@@ -40,12 +40,6 @@ public class PeopleApi {
         return pp;
     }
 
-    @GetMapping("/family/{family_number}")
-    public List<People> findByFamily_number(@PathVariable(name = "family_number", required = true) Long family_number) {
-//    	Systemm.out.println(family_number);
-        return peopleRepository.findByFamily_number(family_number == null ? 0 : family_number);
-    }
-    
     @GetMapping("/{id}")
     public People findById(@PathVariable(name = "id", required = true) Long id) {
         return peopleRepository.findById(id == null ? 0 : id);
@@ -57,7 +51,7 @@ public class PeopleApi {
         return peopleRepository.saveAndFlush(newPeople);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("{id}")
     public People update(@PathVariable(name = "id", required = true) Long id,
                          @RequestBody People newPeople) {
         return peopleService.update(id, newPeople);
