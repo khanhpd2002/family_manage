@@ -193,7 +193,7 @@
           <mat-form-field appearance="outline" *ngFor="let member of memberExceptOwner; let i = index" [formGroupName]="i">
             <!-- <div [formGroupName]="i"> -->
               <mat-label>{{member.name}}</mat-label>
-              <mat-select formControlName="name">
+              <mat-select formControlName="name" required="true">
                 <mat-option *ngFor="let relationship of relationshipValues" [value]="relationship">
                   {{ relationship }}
                 </mat-option>
