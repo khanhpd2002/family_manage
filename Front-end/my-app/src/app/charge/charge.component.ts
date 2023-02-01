@@ -114,7 +114,6 @@ export class ChargeComponent implements OnInit {
           this.chargeList.push(charge.data);
           this.charge.data = this.chargeList;
         })
-        this.toastr.success('Thêm mới thành công');
     }
 
     onDelete(id: Int16Array) {

@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import { Charge } from 'src/app/models/charge.models';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-add-edit-charge',
@@ -22,7 +23,9 @@ export class AddEditChargeComponent implements OnInit {
     public router: Router,
     protected http: HttpClient,
     public dialogRef: MatDialogRef<AddEditChargeComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
+    public toastr: ToastrService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   addEditForm = this.formBuilder.group({
     // id: [this.charge.id],
@@ -63,12 +66,15 @@ export class AddEditChargeComponent implements OnInit {
     // Tuy trang thai se goi method post/patch tuong ung
     if (this.isEdit) {
       this.http.patch(`http://localhost:8080/charge/${this.data.id}`, newCharge).subscribe(data => {
+        this.toastr.success('Sửa thành công');
       });
     }
     else {
       console.log(JSON.stringify(newCharge));
-      this.http.post<any>('http://localhost:8080/charge', newCharge).subscribe(
-        charge => {newCharge = charge}
+      this.http.post<any>('http://localhost:8080/charge', newCharge).subscribe(charge => {
+          newCharge = charge;
+          this.toastr.success('Thêm mới thành công');
+        }
       );
     }
     this.dialogRef.close({data: newCharge});

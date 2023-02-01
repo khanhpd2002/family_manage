@@ -1,17 +1,10 @@
-import {AfterViewInit, Component, Inject, ViewChild, Input, Output, EventEmitter, OnInit} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTable, MatTableDataSource} from '@angular/material/table';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MatTableModule} from '@angular/material/table';
-import {SelectionModel} from '@angular/cdk/collections';
-import {Route, Router} from '@angular/router';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
-import { FamilyRegister } from 'src/app/models/family-register.models';
-import { People } from 'src/app/models/people.model';
+import {People} from 'src/app/models/people.model';
 
 @Component({
   selector: 'app-add-edit-family-register',
@@ -36,6 +29,7 @@ export class AddEditFamilyRegisterComponent implements OnInit {
   relationshipValues: String[] = ['WIFE', 'SON', 'DAUGHTER'];
   tempDistrictValues: any[] = [];
   isView = false;
+  startDate: Date | null;
   searchForm: FormGroup = new FormGroup({});
 
   constructor(
@@ -76,7 +70,7 @@ export class AddEditFamilyRegisterComponent implements OnInit {
     owner_name:'',
     owner: this.formBuilder.group({
       name: '',
-      othername: '',
+      otherName: '',
       birthday: '',
       province:  '',
       district:  '',
@@ -86,18 +80,12 @@ export class AddEditFamilyRegisterComponent implements OnInit {
       ethnic: '',
       placeOfJob:'',
       identityCard: '',
-      // family_number: '',
-      // relationshipWithOwner: '',
       note: '',
     }),
     province: '',
     district: '',
     ward: '',
     address: '',
-    // name: new FormControl(null, [Validators.required]),
-    // address: new FormControl (null, [Validators.required]),
-    // phone: new FormControl (null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
-    // email: new FormControl (null, [Validators.required, Validators.email])
   })
 
   ngOnInit() {
@@ -117,12 +105,10 @@ export class AddEditFamilyRegisterComponent implements OnInit {
       this.buildForm();
 
       this.isEditting = true;
-      console.log("name" + JSON.stringify(this.familyRegister.owner));
 
       this.addEditForm.patchValue({
         owner_name: this.familyRegister.owner
       });
-      // console.log("daynua"+this.addEditForm.controls['owner_name'].value);
       this.addEditForm.patchValue({
         ward: this.familyRegister.ward
       });
@@ -135,7 +121,6 @@ export class AddEditFamilyRegisterComponent implements OnInit {
       this.addEditForm.patchValue({
         district: this.familyRegister.district
       });
-      // console.log(JSON.stringify("hihi"+this.owner_old));
       this.http.get<any>(`http://localhost:8080/people/family/${this.familyRegister.number}`).subscribe((data: any) => {
         console.log("here"+JSON.stringify(this.familyRegister));
         data.forEach((element: any) => {
@@ -180,10 +165,9 @@ export class AddEditFamilyRegisterComponent implements OnInit {
       address: this.addEditForm.controls['address'].value
     };
     const data_owner ={
-      id: null,
       name: this.addEditForm.controls['owner'].controls['name'].value,
-      otherName: this.addEditForm.controls['owner'].controls['othername'].value,
-      birthday: this.addEditForm.controls['owner'].controls['birthday'].value,
+      otherName: this.addEditForm.controls['owner'].controls['otherName'].value,
+      birthday: this.getValidDate(this.addEditForm.controls['owner'].controls['birthday'].value),
       province: this.addEditForm.controls['owner'].controls['province'].value,
       district: this.addEditForm.controls['owner'].controls['district'].value,
       ward: this.addEditForm.controls['ward'].value,
@@ -198,18 +182,11 @@ export class AddEditFamilyRegisterComponent implements OnInit {
     }
     // Tuy trang thai se goi method post/patch tuong ung
     if (this.isEditting) {
-      console.log("hi1"+JSON.stringify(this.ownerValues));
       var relation:any = this.thisIsMyForm.value.formArrayName;
-      console.log(JSON.stringify(relation));
       for (let i = 0; i < this.memberExceptOwner.length; i++){
         this.memberExceptOwner[i].relationshipWithOwner = relation[i].name;
-        console.log(this.memberExceptOwner[i].relationshipWithOwner);
-        console.log(relation[i].name);
       }
-      console.log("re"+JSON.stringify(this.memberExceptOwner));
-      this.memberExceptOwner
       this.owner_old = this.ownerValues.filter(owner => {
-        // console.log("choose"+JSON.stringify(owner));
         if(owner.name == this.familyRegister.owner) return true;
         return false;
       })[0];
@@ -220,14 +197,10 @@ export class AddEditFamilyRegisterComponent implements OnInit {
       })[0];
 
       this.http.patch(`http://localhost:8080/family-register/${this.familyRegister.number}`, data).subscribe(data => {});
-
-      console.log("old"+JSON.stringify(this.owner_old));
       if (this.owner_new.name != this.owner_old.name){
-
         this.owner_new.relationshipWithOwner = "OWNER";
         this.http.patch(`http://localhost:8080/people/${this.owner_new.id}`, this.owner_new).subscribe(
           (data:any) =>  {console.log("new"+JSON.stringify(data))}
-
         );
 
         for (let i=0; i < this.memberExceptOwner.length; i++){
@@ -255,6 +228,19 @@ export class AddEditFamilyRegisterComponent implements OnInit {
       });
     }
     this.dialogRef.close({data:data});
+  }
+
+  clearStartDate() {
+    this.startDate = null;
+  }
+
+  getValidDate(selectedDate: any) {
+    const date = new Date(selectedDate);
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const yyyy = date.getFullYear();
+
+    return yyyy + '-' + mm + '-' + dd;
   }
 
   ownerChange(event: any) {

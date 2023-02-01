@@ -21,31 +21,27 @@
           <input matInput name="name" formControlName="name"/>
         </mat-form-field>
       </div>
-      <!--  <br />-->
-      <!--  <span *ngIf="form.get('address')?.invalid && form.get('address')?.touched" class="text-danger">Address is Required</span>-->
-      <!--  <br />-->
 
       <div class="otherName" id="div-form" fxLayout="row">
-        <!-- <h4>Other Name</h4> -->
         <mat-form-field appearance="outline">
           <mat-label>Other Name</mat-label>
           <input matInput name="otherName" formControlName="otherName"/>
         </mat-form-field>
       </div>
-      <!--  <br />-->
-      <!--  <span *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger">Name is Required</span>-->
-      <!--  <br />-->
 
       <div class="birthday" id="div-form" fxLayout="row">
-        <!-- <h4>Birthday</h4> -->
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="mat-birthday">
           <mat-label>Birthday</mat-label>
-          <input matInput name="birthday" formControlName="birthday"/>
+          <input matInput [matDatepicker]="picker" name="birthday" formControlName="birthday" [(ngModel)]="startDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle matSuffix (click)="clearStartDate()">
+            <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker ></mat-datepicker>
         </mat-form-field>
       </div>
 
       <div class="province" id="div-form" fxLayout="row">
-        <!-- <h4>Province</h4> -->
         <mat-form-field appearance="outline">
           <mat-label>Province</mat-label>
           <mat-select
