@@ -26,7 +26,7 @@ CREATE TABLE `people` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `other_name` varchar(50) DEFAULT NULL,
-  `birthday` datetime NOT NULL,
+  `birthday` date NOT NULL,
   `family_number` int NOT NULL,
   `province` varchar(50) NOT NULL,
   `district` varchar(50) NOT NULL,
@@ -37,11 +37,12 @@ CREATE TABLE `people` (
   `place_of_job` varchar(50) DEFAULT NULL,
   `identity_card` varchar(50) NOT NULL,
   `relationship_with_owner` enum('OWNER','WIFE','SON','DAUGHTER') NOT NULL,
+  `status` enum('TEMPORARY','PERMANENT','ABSENT','DIED') DEFAULT NULL,
   `note` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `abc_idx` (`family_number`),
   CONSTRAINT `FK9iuy5kyo79hhgr5rk2rpnd6px` FOREIGN KEY (`family_number`) REFERENCES `family_register` (`number`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +51,7 @@ CREATE TABLE `people` (
 
 LOCK TABLES `people` WRITE;
 /*!40000 ALTER TABLE `people` DISABLE KEYS */;
-INSERT INTO `people` VALUES (12,'Hoang','','2022-05-25 00:00:00',23,'Thành phố Hà Nội','Quận Ba Đình','Phường Phúc Xá','abcd','fff','Kinh','sdfsf','026202000158','OWNER',''),(14,'hoa','','2022-05-25 00:00:00',30,'Tỉnh Bắc Kạn','Thành Phố Bắc Kạn','Xã Lũng Cú','h,mm','fff','Kinh','','026202000158','OWNER',''),(15,'hu','','2022-05-25 00:00:00',54,'Tỉnh Tuyên Quang','Thành phố Tuyên Quang','Xã Trung Minh','hmmm','hhh','Kinh','sdfsf','026202000158','OWNER',''),(16,'Khnh','','2022-05-25 00:00:00',23,'Thành phố Hà Nội','Quận Tây Hồ','Phường Phú Thượng','hmmm','fff','Kinh','sdfsf','026202000158','SON','');
+INSERT INTO `people` VALUES (12,'Hoang','','2022-05-25',23,'Thành phố Hà Nội','Quận Ba Đình','Phường Phúc Xá','abcd','fff','Kinh','sdfsf','026202000158','OWNER','PERMANENT',''),(14,'hoa','','2022-05-10',30,'Tỉnh Bắc Kạn','Thành Phố Bắc Kạn','Xã Lũng Cú','h,mm','fff','Kinh','','026202000158','OWNER','PERMANENT',''),(15,'hu','','2022-05-25',54,'Tỉnh Tuyên Quang','Thành phố Tuyên Quang','Xã Trung Minh','hmmm','hhh','Kinh','sdfsf','026202000158','OWNER','PERMANENT',''),(16,'Khnh','','2022-05-25',23,'Thành phố Hà Nội','Quận Tây Hồ','Phường Phú Thượng','hmmm','fff','Kinh','sdfsf','026202000158','SON','PERMANENT',''),(17,'Dương Giang','','2022-05-25',25,'Tỉnh Cao Bằng','Huyện Bảo Lâm','Phường Trần Phú','hmmm','hhh','Kinh','sdfsf','026202000158','OWNER','PERMANENT',''),(18,'Nguyễn Nam','','2002-05-25',1,'Tỉnh Tuyên Quang','Huyện Na Hang','Phường Quan Hoa','số 22','Bệnh viện đa khoa Tỉnh','Kinh','Sinh Viên','026202000159','SON','PERMANENT',''),(19,'Tiến Quang','','1999-05-25',3,'Tỉnh Cao Bằng','Huyện Bảo Lâm','Xã Phúc Yên','số3','Bệnh viện đa khoa Huyện','Kinh','Sinh Viên','026202000186','OWNER','PERMANENT',''),(20,'Tiến Dương','','2000-05-25',10,'Tỉnh Cao Bằng','Huyện Bảo Lạc','Phường Dịch Vọng','số 4','Bệnh viện đa khoa Tỉnh','Kinh','Sinh Viên','026202000155','OWNER','PERMANENT',''),(21,'Dương Tiến','','1991-05-25',13,'Tỉnh Tuyên Quang','Huyện Chiêm Hóa','Phường Hàng Buồm','số 4','Bệnh viện đa khoa Tỉnh','Kinh','Giáo Viên','026202000188','OWNER','PERMANENT',''),(22,'Nguyễn Hòa','','2010-05-25',3,'Thành phố Hà Nội','Quận Tây Hồ','Phường Phú Thượng','số 2','Bệnh viện đa khoa Huyện','Kinh','Học Sinh','026202000154','DAUGHTER','PERMANENT',''),(24,'Tiến Khánh','','2010-05-25',10,'Tỉnh Hà Giang','Huyện Đồng Văn','Thị trấn Phó Bảng','số 4','Bệnh viện đa khoa Tỉnh','Kinh','Khong','','SON','PERMANENT',''),(25,'Nguyễn Hòa','','2022-05-01',13,'Tỉnh Hà Giang','Thành phố Hà Giang','Phường Quang Trung','số 2','Bệnh viện đa khoa Huyện','Kinh','Khong','','SON','PERMANENT',''),(26,'Phạm Hòa','','2022-05-20',10,'Thành phố Hà Nội','Quận Hoàn Kiếm','Phường Phúc Tân','số 3','Bệnh viện đa khoa Tỉnh','Kinh','Khong','026202000188','OWNER','PERMANENT',''),(27,'Tiến Dương','','2002-05-01',13,'Tỉnh Hà Giang','Thành phố Hà Giang','Phường Trần Phú','số 2','Bệnh Viện Trung Ương','Kinh','Sinh Viên','026202000196','SON','PERMANENT',''),(28,'Duc Hiep','','2005-02-02',1,'Thành phố Hà Nội','Quận Cầu Giấy','Phường Nghĩa Đô','hmmm','Bệnh viện đa khoa Tỉnh','Kinh','Sinh Viên','026202000188','SON','PERMANENT',''),(29,'Shizuka','','2002-05-25',1,'Thành phố Hà Nội','Quận Ba Đình','Phường Phúc Xá','','Bệnh viện đa khoa Huyện','Kinh','Sinh Viên','026202000188','OWNER','PERMANENT',''),(30,'Nobita','','2023-03-10',1,'Thành phố Hà Nội','Quận Ba Đình','Phường Vĩnh Phúc','','Bệnh viện đa khoa Huyện','Kinh','Bác sĩ','','SON','PERMANENT','');
 /*!40000 ALTER TABLE `people` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -63,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-30 11:46:50
+-- Dump completed on 2023-02-01 22:44:03
