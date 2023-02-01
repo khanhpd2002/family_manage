@@ -29,29 +29,16 @@
 
   <div class="pay_date" id="div-form" fxLayout="row">
     <h4>Pay Date</h4>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="mat-birthday">
       <mat-label>Pay Date</mat-label>
-      <input required matInput name="pay_date" formControlName="pay_date"/>
+      <input matInput [matDatepicker]="picker" name="payDate" formControlName="payDate" [(ngModel)]="startDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle matSuffix (click)="clearStartDate()">
+        <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
     </mat-form-field>
   </div>
-  <!-- <div class="charge_type" id="div-form" fxLayout="row">
-    <h4>Type</h4>
-    <mat-form-field appearance="outline">
-      <mat-label>Type</mat-label>
-      <mat-select
-        required
-        name="charge_type"
-        formControlName="charge_type"
-      >
-        <mat-option
-          *ngFor="let charge_type of charge_typeValues"
-          [value]="charge_type"
-        >
-          {{ charge_type }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div> -->
 
   <button mat-button type="submit" [disabled]="!addEditForm.valid">Submit</button>
 

@@ -19,6 +19,7 @@ export class AddEditCharge_manageComponent implements OnInit {
   charge: Charge;
   charge_id: any;
   familyValues: any[] = [];
+  startDate: Date | null;
 
   constructor(
     private router: ActivatedRoute,
@@ -67,6 +68,10 @@ export class AddEditCharge_manageComponent implements OnInit {
       this.addEditForm.controls['number'].disable();
     }
   }
+
+  clearStartDate() {
+    this.startDate = null;
+}
 
   onSubmit() {
     const newCharge_manage = {
