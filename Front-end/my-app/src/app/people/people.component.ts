@@ -8,6 +8,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {AddEditPeopleComponent} from "./add-edit-people/add-edit-people.component";
 import {People} from "../models/people.model";
 import {FamilyRegister} from "../models/family-register.models";
+import {RelationshipEnums} from "../models/relationship.enums";
 
 @Component({
   selector: 'app-people',
@@ -67,6 +68,9 @@ export class PeopleComponent implements OnInit {
       });
     });
     this.http.get<any>('http://localhost:8080/people').subscribe((people) => {
+      people.forEach((element: any) => {
+        element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner)
+      });
       this.peopleList = people;
       this.people = new MatTableDataSource<People>();
       this.people.data = this.peopleList;
@@ -81,6 +85,9 @@ export class PeopleComponent implements OnInit {
     let params = this._collectParams(this.searchForm, map);
     console.log(params);
     this.http.get<any>('http://localhost:8080/people/params', {params: params}).subscribe((data) => {
+      data.forEach((element: any) => {
+        element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner)
+      });
       this.people = new MatTableDataSource<People>(data);
       this.people.paginator = this.paginator;
       this.afterFilter = this.people.data;
@@ -153,8 +160,10 @@ export class PeopleComponent implements OnInit {
       })
       .afterClosed().subscribe(people => {
         this.peopleList.push(people.data);
+        this.peopleList.forEach((element: any) => {
+          element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner)
+        });
         this.people.data = this.peopleList;
-
     });
   }
 
@@ -221,6 +230,19 @@ export class PeopleComponent implements OnInit {
 
   goCharge() {
     this.routes.navigate(['charge']);
+  }
+
+  translateEnumToString (relation: string) {
+    if (relation === 'OWNER')
+      return RelationshipEnums.OWNER;
+    else if (relation === 'WIFE')
+      return RelationshipEnums.WIFE;
+    else if (relation === 'SON')
+      return RelationshipEnums.SON;
+    else if (relation === 'DAUGHTER')
+      return RelationshipEnums.DAUGHTER;
+    else
+      return '';
   }
 
 }

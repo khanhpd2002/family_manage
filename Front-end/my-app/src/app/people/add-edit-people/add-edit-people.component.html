@@ -154,8 +154,8 @@
     <mat-form-field appearance="outline">
       <mat-label>Quan hệ với chủ hộ</mat-label>
       <mat-select name="relationshipWithOwner" formControlName="relationshipWithOwner">
-        <mat-option *ngFor="let relationship of relationshipValues" [value]="relationship">
-          {{ relationship }}
+        <mat-option *ngFor="let relationship of relationshipValues" [value]="relationship.eng">
+          {{ relationship.vie }}
         </mat-option>
       </mat-select>
     </mat-form-field>

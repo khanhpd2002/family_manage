@@ -187,30 +187,16 @@
       <form id="myForm" [formGroup]="thisIsMyForm">
         <div [formArrayName]="'formArrayName'">
           <mat-form-field appearance="outline" *ngFor="let member of memberExceptOwner; let i = index" [formGroupName]="i">
-            <!-- <div [formGroupName]="i"> -->
               <mat-label>{{member.name}}</mat-label>
               <mat-select formControlName="name" required="true">
-                <mat-option *ngFor="let relationship of relationshipValues" [value]="relationship">
-                  {{ relationship }}
+                <mat-option *ngFor="let relationship of relationshipValues" [value]="relationship.eng">
+                  {{ relationship.vie }}
                 </mat-option>
               </mat-select>
-            <!-- </div> -->
           </mat-form-field>
         </div>
       </form>
-
-      <!-- <mat-form-field appearance="outline" *ngFor="let member of memberExceptOwner;">
-        <mat-label>{{member.name}}</mat-label>
-        <mat-select name="owner" formControlName="owner_name" (selectionChange)="ownerChange($event)">
-          <mat-option *ngFor="let owner of ownerValues" [value]="owner.name">
-            {{ owner.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field> -->
     </div>
-    <!--  <br />-->
-    <!--  <span *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger">Name is Required</span>-->
-    <!--  <br />-->
 
     <div class="province" id="div-form" fxLayout="row">
       <h4>Tỉnh/TP</h4>
