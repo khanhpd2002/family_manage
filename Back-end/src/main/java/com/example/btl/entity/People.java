@@ -1,6 +1,7 @@
 package com.example.btl.entity;
 
 import com.example.btl.entity.enums.RelationWithOwnerType;
+import com.example.btl.entity.enums.StatusType;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import javax.persistence.*;
@@ -52,6 +53,10 @@ public class People {
     @Enumerated(EnumType.STRING)
     private RelationWithOwnerType relationshipWithOwner;
  
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private StatusType status;
+    
     @Column(name = "note")
     private String note;
 
@@ -171,14 +176,13 @@ public class People {
         this.family_number = family_number;
     }
 
+    public StatusType getStatus() {
+        return status;
+    }
 
-//    public Long getFamily_number() {
-//        return getFamily_number();
-//    }
-//
-//    public void setFamily_number(Long family_number) {
-//        this.family_number = family_number;
-//    }
+    public void setStatus(StatusType status) {
+        this.status = status;
+    }
 
     public String getNote() {
         return note;

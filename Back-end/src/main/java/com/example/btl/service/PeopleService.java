@@ -32,6 +32,7 @@ public class PeopleService {
         people.setRelationshipWithOwner(source.getRelationshipWithOwner());
         people.setFamily_number(source.getFamily_number());
         people.setNote(source.getNote());
+        people.setStatus(source.getStatus());
         return this.peopleRepository.save(people);
     }
 }
