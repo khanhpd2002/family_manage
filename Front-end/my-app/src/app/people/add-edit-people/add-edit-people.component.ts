@@ -89,7 +89,6 @@ export class AddEditPeopleComponent implements OnInit {
       this.addEditForm.controls['family_number'].disable();
       this.addEditForm.controls['note'].disable();
     }
-    console.log(this.dialogRef.id);
     // Check neu ton tai people thi patch Value vao form
     if (this.people) {
       this.id = this.people.id;
@@ -110,7 +109,6 @@ export class AddEditPeopleComponent implements OnInit {
           relationshipWithOwner: this.people.relationshipWithOwner,
           note: this.people.note,
         });
-
         this.addressValues = data;
         data.forEach((element: any) => {
           this.provinceValues.push(element.name);
@@ -120,18 +118,12 @@ export class AddEditPeopleComponent implements OnInit {
         this.tempDistrictValues[0].districts.forEach((element: any) => {
           this.districtValues.push(element.name);
         })
-        // this.addEditForm.patchValue({
-        //   district: this.people.district
-        // });
         const temp = this.tempDistrictValues[0].districts;
         const tempWardValues = temp
           .filter((a: any) => a.name === this.people.district);
         tempWardValues[0].wards.forEach((element: any) => {
           this.wardValues.push(element.name);
         })
-        // this.addEditForm.patchValue({
-        //   ward: this.people.ward
-        // });
       })
     }
     else{

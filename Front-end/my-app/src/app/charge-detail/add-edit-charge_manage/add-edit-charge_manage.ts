@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {People} from "../../models/people.model";
 import { Charge } from 'src/app/models/charge.models';
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-add-edit-charge_mmanage',
@@ -24,9 +25,9 @@ export class AddEditCharge_manageComponent implements OnInit {
   constructor(
     private router: ActivatedRoute,
     protected formBuilder: FormBuilder,
-    // public router: Router,
     protected http: HttpClient,
     public dialogRef: MatDialogRef<AddEditCharge_manageComponent>,
+    public toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   addEditForm = this.formBuilder.group({
@@ -56,22 +57,16 @@ export class AddEditCharge_manageComponent implements OnInit {
 
     this.charge_id = this.data.charge_id;
     if (this.data.family_number) {
-      // console.log("hii");
       this.isEdit = true;
-      console.log(JSON.stringify(this.data));
       this.addEditForm.patchValue({
         number: this.data.family_number,
         amount: this.data.amount,
         payer: this.data.payer,
-        pay_date: this.data.pay_date,
+        pay_date: this.data.pay_date
       })
       this.addEditForm.controls['number'].disable();
     }
   }
-
-  clearStartDate() {
-    this.startDate = null;
-}
 
   onSubmit() {
     const newCharge_manage = {
@@ -79,19 +74,36 @@ export class AddEditCharge_manageComponent implements OnInit {
       family_number: this.addEditForm.controls['number'].value,
       amount: this.addEditForm.controls['amount'].value,
       payer: this.addEditForm.controls['payer'].value,
-      pay_date: this.addEditForm.controls['pay_date'].value,
+      pay_date: this.getValidDate(this.addEditForm.controls['pay_date'].value),
     };
+    console.log(newCharge_manage);
     // Tuy trang thai se goi method post/patch tuong ung
     if (this.isEdit) {
       this.http.patch(`http://localhost:8080/charge_manage/params?charge_id=${this.charge_id}&family_number=${this.data.family_number}`, newCharge_manage)
-      .subscribe(data => {});
+        .subscribe(data => {
+          this.toastr.success('Sửa thành công');
+        });
     }
     else {
-      console.log(JSON.stringify(newCharge_manage));
       this.http.post<any>(`http://localhost:8080/charge_manage`, newCharge_manage).subscribe(
-        charge_manage => console.log(JSON.stringify(charge_manage))
+        charge_manage => {
+          this.toastr.success('Thêm mới thành công');
+        }
       );
     }
     this.dialogRef.close({data: newCharge_manage});
+  }
+
+  clearStartDate() {
+    this.startDate = null;
+  }
+
+  getValidDate(selectedDate: any) {
+    const date = new Date(selectedDate);
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const yyyy = date.getFullYear();
+
+    return yyyy + '-' + mm + '-' + dd;
   }
 }
