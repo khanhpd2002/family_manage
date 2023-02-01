@@ -219,19 +219,22 @@ export class AddEditFamilyRegisterComponent implements OnInit {
         return false;
       })[0];
 
-      console.log("new"+JSON.stringify(this.owner_new));
+      this.http.patch(`http://localhost:8080/family-register/${this.familyRegister.number}`, data).subscribe(data => {});
+
       console.log("old"+JSON.stringify(this.owner_old));
+      if (this.owner_new.name != this.owner_old.name){
 
-      this.http.patch(`http://localhost:8080/family-register/${this.familyRegister.number}`, data).subscribe(data => {
-        if (this.owner_new.name != this.owner_old.name){
-          this.owner_new.relationshipWithOwner = "OWNER";
-          this.http.patch(`http://localhost:8080/people/${this.owner_new.id}`, this.owner_new);
+        this.owner_new.relationshipWithOwner = "OWNER";
+        this.http.patch(`http://localhost:8080/people/${this.owner_new.id}`, this.owner_new).subscribe(
+          (data:any) =>  {console.log("new"+JSON.stringify(data))}
 
-          for (let i=0; i < this.memberExceptOwner.length; i++){
-            this.http.patch(`http://localhost:8080/people/${this.memberExceptOwner[i]}`, this.memberExceptOwner[i]);
-          }
+        );
+
+        for (let i=0; i < this.memberExceptOwner.length; i++){
+          this.http.patch(`http://localhost:8080/people/${this.memberExceptOwner[i].id}`, this.memberExceptOwner[i]).subscribe(data=>{});
         }
-      });
+      }
+
       this.toastr.success('Sửa thành công');
     } else {
       this.http.post<any>('http://localhost:8080/family-register', data).subscribe(data => {

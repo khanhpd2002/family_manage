@@ -60,6 +60,7 @@ public class PeopleApi {
     @PatchMapping("/{id}")
     public People update(@PathVariable(name = "id", required = true) Long id,
                          @RequestBody People newPeople) {
+    	System.out.println(id);
         return peopleService.update(id, newPeople);
     }
 

@@ -3,6 +3,8 @@ package com.example.btl.service;
 import com.example.btl.entity.FamilyRegister;
 import com.example.btl.entity.People;
 import com.example.btl.repository.PeopleRepository;
+
+import org.hibernate.annotations.SourceType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,9 @@ public class PeopleService {
         people.setEthnic(source.getEthnic());
         people.setIdentityCard(source.getIdentityCard());
         people.setPlaceOfJob(source.getPlaceOfJob());
-
+        people.setRelationshipWithOwner(source.getRelationshipWithOwner());
+        people.setFamily_number(source.getFamily_number());
+        people.setNote(source.getNote());
         return this.peopleRepository.save(people);
     }
 }

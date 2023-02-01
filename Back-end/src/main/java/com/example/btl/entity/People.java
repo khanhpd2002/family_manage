@@ -167,7 +167,7 @@ public class People {
         return family_number;
     }
 
-    public void setFamilyI_number(Long family_number) {
+    public void setFamily_number(Long family_number) {
         this.family_number = family_number;
     }
 
