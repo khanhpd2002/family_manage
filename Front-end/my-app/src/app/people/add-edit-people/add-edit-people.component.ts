@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {People} from "../../models/people.model";
+import {Relation} from "../../models/relation.models";
 
 @Component({
   selector: 'app-add-edit-people',
@@ -18,7 +19,10 @@ export class AddEditPeopleComponent implements OnInit {
   districtValues: String[] = [];
   wardValues: String[] = [];
 
-  relationshipValues = ['OWNER', 'WIFE', 'SON', 'DAUGHTER'];
+  relationshipValues: Relation[] = [{eng: 'OWNER', vie: 'Chủ hộ'},
+                                    {eng: 'WIFE', vie: 'Vợ'},
+                                    {eng: 'SON', vie: 'Con trai'},
+                                    {eng: 'DAUGHTER', vie: 'Con gái'}];
   familyValues: any[] = [];
 
   tempDistrictValues: any[] = [];

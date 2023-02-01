@@ -23,7 +23,7 @@ export class ChargeComponent implements OnInit {
     charge : any;
     nameValues: String[] = [];
     amountValues: Int16Array[] = [];
-    charge_typeValues = ['Voluntary', 'Mandatory'];
+    charge_typeValues = ['Bắt buộc', 'Tự nguyện'];
     searchForm: FormGroup = new FormGroup({});
     isShowing: boolean = false;
     isEdit: boolean = false;

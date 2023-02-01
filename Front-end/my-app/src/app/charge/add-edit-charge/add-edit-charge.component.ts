@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
 })
 
 export class AddEditChargeComponent implements OnInit {
-  charge_typeValues = ['Voluntary', 'Mandatory'];
+  charge_typeValues = ['Bắt buộc', 'Tự nguyện'];
   isEdit : boolean = false;
   searchForm: FormGroup = new FormGroup({});
   charge: Charge;

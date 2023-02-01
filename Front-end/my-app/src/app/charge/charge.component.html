@@ -4,9 +4,9 @@
         <div class="name" id="div-form-name"
              fxLayout='column' fxFlex='15%'
              fxFlex.xs='100%' fxFlex.sm='50%' fxFlex.md='50%' fxFlex.lg='15%'>
-          <h4>Name</h4>
+          <h4>Tên khoản phí</h4>
           <mat-form-field appearance="fill">
-            <mat-label>Name</mat-label>
+            <mat-label>Tên khoản phí</mat-label>
             <input matInput name="name" formControlName="name"/>
           </mat-form-field>
         </div>
@@ -14,9 +14,9 @@
         <div class="amount" id="div-form-amount"
              fxLayout='column' fxFlex='15%'
              fxFlex.xs='100%' fxFlex.sm='50%' fxFlex.md='50%' fxFlex.lg='15%'>
-          <h4>Amount</h4>
+          <h4>Khoản phí</h4>
           <mat-form-field appearance="fill">
-            <mat-label>Amount</mat-label>
+            <mat-label>Khoản phí</mat-label>
             <input matInput name="amount" formControlName="amount"/>
           </mat-form-field>
         </div>
@@ -24,9 +24,9 @@
         <div class="charge_type" id="div-form-charge_type"
               fxLayout='column' fxFlex='15%'
               fxFlex.xs='100%' fxFlex.sm='50%' fxFlex.md='50%' fxFlex.lg='15%'>
-          <h4>Type of Charge</h4>
+          <h4>Loại phí</h4>
           <mat-form-field appearance="fill">
-            <mat-label>Type of Charge</mat-label>
+            <mat-label>Loại phí</mat-label>
             <mat-select #matRef name="charge_type" formControlName="charge_type">
               <mat-option
                 *ngFor="let charge_type of charge_typeValues"
@@ -45,7 +45,7 @@
           class="primary Update-btn"
           (click)="onSearch()"
         >
-          <i class="fa fa-search"></i> Search
+          <i class="fa fa-search"></i> Tìm kiếm
         </button>
         <button
           mat-button
@@ -54,7 +54,7 @@
           id="clear"
           (click)="onResetForm()"
         >
-          <i class="fa fa-times"></i> Clear
+          <i class="fa fa-times"></i> Xóa
         </button>
       </div>
 
@@ -66,7 +66,7 @@
           class="add-edit"
           (click)="addEditCharge()"
         >
-          <i class="fa fa-plus"></i> Add
+          <i class="fa fa-plus"></i> Thêm
         </button>
       </div>
 
@@ -74,19 +74,19 @@
         <table mat-table [dataSource]="charge">
           <!-- Name Column -->
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <th mat-header-cell *matHeaderCellDef>Tên loại phí</th>
             <td mat-cell *matCellDef="let element"><a routerLink="/charge/{{element.id}}"> {{element.name }}</a></td>
           </ng-container>
 
           <!-- Birthday Column -->
           <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <th mat-header-cell *matHeaderCellDef>Khoản phí</th>
             <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
           </ng-container>
 
           <!-- Province Column -->
           <ng-container matColumnDef="charge_type">
-            <th mat-header-cell *matHeaderCellDef>Type of Charge</th>
+            <th mat-header-cell *matHeaderCellDef>Loại phí</th>
             <td mat-cell *matCellDef="let element">{{ element.charge_type }}</td>
           </ng-container>
 

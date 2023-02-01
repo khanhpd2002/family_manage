@@ -1,24 +1,24 @@
 <form class="center" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <div class="name" id="div-form" fxLayout="row">
-    <h4>Name</h4>
+    <h4>Tên loại phí</h4>
     <mat-form-field appearance="outline" class="no-line">
-      <mat-label>Name</mat-label>
+      <mat-label>Tên loại phí</mat-label>
       <input required matInput name="name" formControlName="name"/>
     </mat-form-field>
   </div>
 
   <div class="amount" id="div-form" fxLayout="row">
-    <h4>Amount</h4>
+    <h4>Khoản phí</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Amount</mat-label>
+      <mat-label>Khoản phí</mat-label>
       <input required matInput name="amount" formControlName="amount"/>
     </mat-form-field>
   </div>
 
   <div class="charge_type" id="div-form" fxLayout="row">
-    <h4>Type</h4>
+    <h4>Loại phí</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Type</mat-label>
+      <mat-label>Loại phí</mat-label>
       <mat-select
         required
         name="charge_type"
@@ -34,6 +34,6 @@
     </mat-form-field>
   </div>
 
-  <button mat-button type="submit" [disabled]="!addEditForm.valid">Submit</button>
+  <button mat-button type="submit" [disabled]="!addEditForm.valid">Xác nhận</button>
 
 </form>

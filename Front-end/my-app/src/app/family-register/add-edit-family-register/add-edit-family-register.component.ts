@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {People} from 'src/app/models/people.model';
+import {Relation} from "../../models/relation.models";
 
 @Component({
   selector: 'app-add-edit-family-register',
@@ -26,7 +27,10 @@ export class AddEditFamilyRegisterComponent implements OnInit {
   provinceValues: String[] = [];
   districtValues: String[] = [];
   wardValues: String[] = [];
-  relationshipValues: String[] = ['WIFE', 'SON', 'DAUGHTER'];
+  relationshipValues: Relation[] = [{eng: 'OWNER', vie: 'Chủ hộ'},
+                                    {eng: 'WIFE', vie: 'Vợ'},
+                                    {eng: 'SON', vie: 'Con trai'},
+                                    {eng: 'DAUGHTER', vie: 'Con gái'}];
   tempDistrictValues: any[] = [];
   isView = false;
   startDate: Date | null;

@@ -1,9 +1,9 @@
 <mat-dialog-content>
 <form class="center" [formGroup]="addEditForm" (ngSubmit)="onSubmit()">
   <div class="name" id="div-form" fxLayout="row">
-    <h4>Name</h4>
+    <h4>Họ và tên</h4>
     <mat-form-field appearance="outline" class="no-line">
-      <mat-label>Name</mat-label>
+      <mat-label>Họ và tên</mat-label>
       <input matInput name="name" formControlName="name"/>
     </mat-form-field>
   </div>
@@ -12,9 +12,9 @@
   <!--  <br />-->
 
   <div class="otherName" id="div-form" fxLayout="row">
-    <h4>Other Name</h4>
+    <h4>Tên gọi khác</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Other Name</mat-label>
+      <mat-label>Tên gọi khác</mat-label>
       <input matInput name="otherName" formControlName="otherName"/>
     </mat-form-field>
   </div>
@@ -23,9 +23,9 @@
   <!--  <br />-->
 
     <div class="birthday" id="div-form" fxLayout="row">
-      <h4>Birthday</h4>
+      <h4>Ngày sinh</h4>
       <mat-form-field appearance="outline" class="mat-birthday">
-        <mat-label>Birthday</mat-label>
+        <mat-label>Ngày sinh</mat-label>
         <input matInput [matDatepicker]="picker" name="birthday" formControlName="birthday" [(ngModel)]="startDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker-toggle matSuffix (click)="clearStartDate()">
@@ -36,9 +36,9 @@
     </div>
 
   <div class="province" id="div-form" fxLayout="row">
-    <h4>Province</h4>
+    <h4>Tỉnh/TP</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Province</mat-label>
+      <mat-label>Tỉnh/TP</mat-label>
       <mat-select
         (selectionChange)="provinceChange($event)"
         name="province"
@@ -58,9 +58,9 @@
   <!--  <br />-->
 
   <div class="district" id="div-form" fxLayout="row">
-    <h4>District</h4>
+    <h4>Quận/Huyện</h4>
     <mat-form-field appearance="outline">
-      <mat-label>District</mat-label>
+      <mat-label>Quận/Huyện</mat-label>
       <mat-select
         (selectionChange)="districtChange($event)"
         name="district"
@@ -80,9 +80,9 @@
   <!--  <br />-->
 
   <div class="ward" id="div-form" fxLayout="row">
-    <h4>Ward</h4>
+    <h4>Xã/Phường</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Ward</mat-label>
+      <mat-label>Xã/Phường</mat-label>
       <mat-select name="ward" formControlName="ward">
         <mat-option *ngFor="let ward of wardValues" [value]="ward">
           {{ ward }}
@@ -95,9 +95,9 @@
   <!--  <br />-->
 
   <div class="address" id="div-form" fxLayout="row">
-    <h4>Address</h4>
+    <h4>Địa chỉ</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Address</mat-label>
+      <mat-label>Địa chỉ</mat-label>
       <input matInput name="address" formControlName="address"/>
     </mat-form-field>
   </div>
@@ -105,42 +105,42 @@
   <!--  <span *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-danger">Name is Required</span>-->
   <!--  <br />-->
   <div class="place-of-birth" id="div-form" fxLayout="row">
-    <h4>Place Of Birth</h4>
+    <h4>Nơi sinh</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Place Of Birth</mat-label>
+      <mat-label>Nơi sinh</mat-label>
       <input matInput name="placeOfBirth" formControlName="placeOfBirth"/>
     </mat-form-field>
   </div>
 
   <div class="ethnic" id="div-form" fxLayout="row">
-    <h4>Ethnic</h4>
+    <h4>Dân tộc</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Ethnic</mat-label>
+      <mat-label>Dân tộc</mat-label>
       <input matInput name="ethnic" formControlName="ethnic"/>
     </mat-form-field>
   </div>
 
   <div class="place-of-job" id="div-form" fxLayout="row">
-    <h4>Place Of Job</h4>
+    <h4>Nơi làm việc</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Place Of Job</mat-label>
+      <mat-label>Nơi làm việc</mat-label>
       <input matInput name="placeOfJob" formControlName="placeOfJob"/>
     </mat-form-field>
   </div>
 
   <div class="identity-card" id="div-form" fxLayout="row">
-    <h4>Identity Card</h4>
+    <h4>Số CMND</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Identity Card</mat-label>
+      <mat-label>Số CMND</mat-label>
       <input matInput name="identityCard" formControlName="identityCard" [required]="false"/>
     </mat-form-field>
   </div>
 
 
   <div class="familyId" id="div-form" fxLayout="row">
-    <h4>Family Number</h4>
+    <h4>Hộ gia đình</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Family Number</mat-label>
+      <mat-label>Hộ gia đình</mat-label>
       <mat-select name="family_number" formControlName="family_number">
         <mat-option *ngFor="let family of familyValues" [value]="family.number">
           {{family.owner}} - {{family.number}}
@@ -150,26 +150,26 @@
   </div>
 
   <div class="relationship-with-owner" id="div-form" fxLayout="row">
-    <h4>Relationship With Owner</h4>
+    <h4>Quan hệ với chủ hộ</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Relationship With Owner</mat-label>
+      <mat-label>Quan hệ với chủ hộ</mat-label>
       <mat-select name="relationshipWithOwner" formControlName="relationshipWithOwner">
-        <mat-option *ngFor="let relationship of relationshipValues" [value]="relationship">
-          {{ relationship }}
+        <mat-option *ngFor="let relationship of relationshipValues" [value]="relationship.eng">
+          {{ relationship.vie }}
         </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
   <div class="note" id="div-form" fxLayout="row">
-    <h4>Note</h4>
+    <h4>Ghi chú</h4>
     <mat-form-field appearance="outline">
-      <mat-label>Note</mat-label>
+      <mat-label>Ghi chú</mat-label>
       <input matInput name="note" formControlName="note"/>
     </mat-form-field>
   </div>
 
-  <button mat-button type="submit" [disabled]="!addEditForm.valid">Submit</button>
+  <button mat-button type="submit" [disabled]="!addEditForm.valid">Xác nhận</button>
 
 </form>
 </mat-dialog-content>
