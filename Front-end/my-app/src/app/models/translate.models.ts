@@ -1,4 +1,4 @@
-export class Relation {
+export class TranslateModels {
   eng: String;
   vie: String;
 }

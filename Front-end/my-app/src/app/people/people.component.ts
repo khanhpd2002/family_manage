@@ -9,6 +9,7 @@ import {AddEditPeopleComponent} from "./add-edit-people/add-edit-people.componen
 import {People} from "../models/people.model";
 import {FamilyRegister} from "../models/family-register.models";
 import {RelationshipEnums} from "../models/relationship.enums";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-people',
@@ -32,7 +33,7 @@ export class PeopleComponent implements OnInit {
   people: any;
   afterFilter: any;
   displayedColumns: string[] = ['name', 'birthday', 'province', 'district', 'ward',
-    'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationshipWithOwner', 'note', ' '];
+    'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationshipWithOwner', 'status', 'note', ' '];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -41,7 +42,8 @@ export class PeopleComponent implements OnInit {
     public routes: Router,
     public http: HttpClient,
     protected formBuilder: FormBuilder,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    public toastr: ToastrService) {
     this.searchForm = this.formBuilder.group({
       name: [''],
       otherName: [''],
@@ -57,6 +59,7 @@ export class PeopleComponent implements OnInit {
       family_number: [''],
       relationshipWithOwner: [''],
       note: [''],
+      status: [''],
     });
   }
 
@@ -69,7 +72,8 @@ export class PeopleComponent implements OnInit {
     });
     this.http.get<any>('http://localhost:8080/people').subscribe((people) => {
       people.forEach((element: any) => {
-        element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner)
+        element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner);
+        element.status = this.translateEnumToString(element.status);
       });
       this.peopleList = people;
       this.people = new MatTableDataSource<People>();
@@ -83,10 +87,10 @@ export class PeopleComponent implements OnInit {
     const map = Object.fromEntries(
       ['name', 'otherName', 'birthday', 'province', 'district', 'ward', 'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationshipWithOwner'].map(s => [s, s]));
     let params = this._collectParams(this.searchForm, map);
-    console.log(params);
     this.http.get<any>('http://localhost:8080/people/params', {params: params}).subscribe((data) => {
       data.forEach((element: any) => {
-        element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner)
+        element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner);
+        element.status = this.translateEnumToString(element.status);
       });
       this.people = new MatTableDataSource<People>(data);
       this.people.paginator = this.paginator;
@@ -164,6 +168,7 @@ export class PeopleComponent implements OnInit {
           element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner)
         });
         this.people.data = this.peopleList;
+        this.onSearch();
     });
   }
 
@@ -175,6 +180,7 @@ export class PeopleComponent implements OnInit {
     this.http.delete<any>(`http://localhost:8080/people/${deleteId}`).subscribe(
       () => this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
         this.people.data = data;
+        this.toastr.success('Xóa thành công');
       })
     );
 
@@ -241,6 +247,14 @@ export class PeopleComponent implements OnInit {
       return RelationshipEnums.SON;
     else if (relation === 'DAUGHTER')
       return RelationshipEnums.DAUGHTER;
+    else if (relation === 'PERMANENT')
+      return 'Thường trú';
+    else if (relation === 'TEMPORARY')
+      return 'Tạm trú';
+    else if (relation === 'ABSENT')
+      return 'Tạm vắng';
+    else if (relation === 'DIED')
+      return 'Đã mất';
     else
       return '';
   }

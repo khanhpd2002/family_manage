@@ -13,5 +13,6 @@ export class People {
   identityCard: string;
   family_number: string;
   relationshipWithOwner: 'OWNER' | 'WIFE' | 'SON' | 'DAUGHTER';
+  status: "PERMANENT" | "TEMPORARY" | "ABSENT" | "DIED";
   note: string;
 }
