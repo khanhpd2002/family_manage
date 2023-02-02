@@ -60,7 +60,6 @@ export class PeopleComponent implements OnInit {
       relationshipWithOwner: [''],
       status: [''],
       note: [''],
-      status: [''],
     });
   }
 
