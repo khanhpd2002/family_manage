@@ -17,13 +17,13 @@ public class AdministrativeService {
         Optional<Administrative> opt = administrativeRepository.findByCode(code == null ? 0 : code);
         Administrative administrative = opt.get();
 
-        administrative.setAdministrativeType(source.getAdministrativeType());
-        administrative.setFrom(source.getFrom());
+        administrative.setType(source.getType());
+        administrative.setDateFrom(source.getDateFrom());
         administrative.setCode(source.getCode());
         administrative.setPeople_id(source.getPeople_id());
         administrative.setReason(source.getReason());
         administrative.setRegister_phone(source.getRegister_phone());
-        administrative.setTo(source.getTo());
+        administrative.setDateTo(source.getDateTo());
         
         return administrativeRepository.saveAndFlush(administrative);
     }

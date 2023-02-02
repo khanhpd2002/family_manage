@@ -19,7 +19,7 @@ public class Administrative {
     
     @Column(name = "type")
 	@Enumerated(EnumType.STRING)
-    private AdministrativeType administrativeType;
+    private AdministrativeType type;
     
     @Column(name = "register_phone")
     private String register_phone;
