@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {ToastrService} from "ngx-toastr";
 import {People} from 'src/app/models/people.model';
-import {Relation} from "../../models/relation.models";
+import {TranslateModels} from "../../models/translate.models";
 
 @Component({
   selector: 'app-add-edit-family-register',
@@ -27,7 +27,7 @@ export class AddEditFamilyRegisterComponent implements OnInit {
   provinceValues: String[] = [];
   districtValues: String[] = [];
   wardValues: String[] = [];
-  relationshipValues: Relation[] = [{eng: 'OWNER', vie: 'Chủ hộ'},
+  relationshipValues: TranslateModels[] = [{eng: 'OWNER', vie: 'Chủ hộ'},
                                     {eng: 'WIFE', vie: 'Vợ'},
                                     {eng: 'SON', vie: 'Con trai'},
                                     {eng: 'DAUGHTER', vie: 'Con gái'}];

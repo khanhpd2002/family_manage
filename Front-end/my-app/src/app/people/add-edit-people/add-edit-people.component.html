@@ -161,6 +161,18 @@
     </mat-form-field>
   </div>
 
+  <div class="status" id="div-form" fxLayout="row">
+    <h4>Trạng thái</h4>
+    <mat-form-field appearance="outline">
+      <mat-label>Trạng thái</mat-label>
+      <mat-select name="status" formControlName="status">
+        <mat-option *ngFor="let status of statusValues" [value]="status.eng">
+          {{ status.vie }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <div class="note" id="div-form" fxLayout="row">
     <h4>Ghi chú</h4>
     <mat-form-field appearance="outline">

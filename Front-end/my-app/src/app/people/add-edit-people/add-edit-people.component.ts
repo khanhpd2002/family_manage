@@ -4,7 +4,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 import {HttpClient} from "@angular/common/http";
 import {People} from "../../models/people.model";
-import {Relation} from "../../models/relation.models";
+import {TranslateModels} from "../../models/translate.models";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-add-edit-people',
@@ -19,10 +20,14 @@ export class AddEditPeopleComponent implements OnInit {
   districtValues: String[] = [];
   wardValues: String[] = [];
 
-  relationshipValues: Relation[] = [{eng: 'OWNER', vie: 'Chủ hộ'},
+  relationshipValues: TranslateModels[] = [{eng: 'OWNER', vie: 'Chủ hộ'},
                                     {eng: 'WIFE', vie: 'Vợ'},
                                     {eng: 'SON', vie: 'Con trai'},
                                     {eng: 'DAUGHTER', vie: 'Con gái'}];
+  statusValues: TranslateModels[] = [{eng: 'PERMANENT', vie: 'Thường trú'},
+                                    {eng: 'TEMPORARY', vie: 'Tạm trú'},
+                                    {eng: 'ABSENT', vie: 'Tạm vắng'},
+                                    {eng: 'DIED', vie: 'Đã mất'}];
   familyValues: any[] = [];
 
   tempDistrictValues: any[] = [];
@@ -35,6 +40,7 @@ export class AddEditPeopleComponent implements OnInit {
     public router: Router,
     protected http: HttpClient,
     public dialogRef: MatDialogRef<AddEditPeopleComponent>,
+    public toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public people: People) {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
@@ -58,6 +64,7 @@ export class AddEditPeopleComponent implements OnInit {
     family_number: '',
     identityCard: '',
     relationshipWithOwner: '',
+    status: '',
     note: ''
 
     // name: new FormControl(null, [Validators.required]),
@@ -91,11 +98,13 @@ export class AddEditPeopleComponent implements OnInit {
       this.addEditForm.controls['identityCard'].disable();
       this.addEditForm.controls['relationshipWithOwner'].disable();
       this.addEditForm.controls['family_number'].disable();
+      this.addEditForm.controls['status'].disable();
       this.addEditForm.controls['note'].disable();
     }
     // Check neu ton tai people thi patch Value vao form
     if (this.people) {
       this.id = this.people.id;
+      console.log(this.people.relationshipWithOwner);
       this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
         this.addEditForm.patchValue({
           name: this.people.name,
@@ -111,6 +120,7 @@ export class AddEditPeopleComponent implements OnInit {
           family_number: this.people.family_number,
           identityCard: this.people.identityCard,
           relationshipWithOwner: this.people.relationshipWithOwner,
+          status: this.people.status,
           note: this.people.note,
         });
         this.addressValues = data;
@@ -153,11 +163,13 @@ export class AddEditPeopleComponent implements OnInit {
       identityCard: this.addEditForm.controls['identityCard'].value,
       family_number: this.addEditForm.controls['family_number'].value,
       relationshipWithOwner: this.addEditForm.controls['relationshipWithOwner'].value,
+      status: this.addEditForm.controls['status'].value,
       note: this.addEditForm.controls['note'].value
     };
     // Tuy trang thai se goi method post/patch tuong ung
     if (this.people) {
       this.http.patch(`http://localhost:8080/people/${this.people.id}`, data).subscribe(data => {
+        this.toastr.success('Sửa thành công');
       });
     }
     // else {
@@ -172,8 +184,8 @@ export class AddEditPeopleComponent implements OnInit {
     //     this.http.post<any>('http://localhost:8080/people', data);
     //   }
       else {
-        console.log(JSON.stringify(data));
         this.http.post<any>('http://localhost:8080/people', data).subscribe(data => {
+          this.toastr.success('Thêm mới thành công');
         });
       }
 
