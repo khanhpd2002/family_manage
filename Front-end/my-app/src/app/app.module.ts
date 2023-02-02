@@ -40,6 +40,8 @@ import { AddEditCharge_manageComponent } from './charge-detail/add-edit-charge_m
 import {Interceptor} from "./_helpers/interceptor";
 import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
 import { FamilyMemberComponent } from './family-register/family-member/family-member.component';
+import { ChangeStatusPeopleComponent } from "./people/change-status-people/change-status-people.component";
+import { AdministrativeComponent } from "./administrative/administrative.component";
 
 
 @NgModule({
@@ -56,6 +58,8 @@ import { FamilyMemberComponent } from './family-register/family-member/family-me
     AddEditCharge_manageComponent,
     ChargeDetailComponent,
     FamilyMemberComponent,
+    ChangeStatusPeopleComponent,
+    AdministrativeComponent,
   ],
   imports: [
     BrowserModule,

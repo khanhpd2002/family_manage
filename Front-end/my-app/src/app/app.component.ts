@@ -34,4 +34,8 @@ export class AppComponent {
   goCharge() {
     this.routes.navigate(['charge']);
   }
+
+  goAdministrative() {
+    this.routes.navigate(['administrative']);
+  }
 }

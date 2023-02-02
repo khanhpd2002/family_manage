@@ -30,8 +30,6 @@ CREATE TABLE `administrative` (
   `dateFrom` datetime DEFAULT NULL,
   `dateTo` datetime DEFAULT NULL,
   `reason` varchar(200) DEFAULT NULL,
-  `date_from` varchar(255) DEFAULT NULL,
-  `date_to` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`code`),
   KEY `hmm_idx` (`people_id`),
   CONSTRAINT `hmm` FOREIGN KEY (`people_id`) REFERENCES `people` (`id`)

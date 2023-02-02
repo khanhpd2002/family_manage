@@ -18,10 +18,11 @@ public class Administrative {
     private Long people_id;
     
     @Column(name = "type")
-    private AdministrativeType type;
+	@Enumerated(EnumType.STRING)
+    private AdministrativeType administrativeType;
     
     @Column(name = "register_phone")
-    private Long register_phone;
+    private String register_phone;
     
     @Column(name = "dateFrom")
     private String dateFrom;
@@ -56,11 +57,11 @@ public class Administrative {
 		this.code = code;
 	}
 
-	public Long getRegister_phone() {
+	public String getRegister_phone() {
 		return register_phone;
 	}
 
-	public void setRegister_phone(Long register_phone) {
+	public void setRegister_phone(String register_phone) {
 		this.register_phone = register_phone;
 	}
 

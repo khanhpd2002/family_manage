@@ -10,6 +10,7 @@ import {People} from "../models/people.model";
 import {FamilyRegister} from "../models/family-register.models";
 import {RelationshipEnums} from "../models/relationship.enums";
 import {ToastrService} from "ngx-toastr";
+import {ChangeStatusPeopleComponent} from "./change-status-people/change-status-people.component";
 
 @Component({
   selector: 'app-people',
@@ -224,6 +225,21 @@ export class PeopleComponent implements OnInit {
         this.people.data = people;
         // this.toastr.success('Sửa thành công');
       });
+    });
+  }
+
+  onChangeStatus(id: number): void {
+    this.dialog.open(ChangeStatusPeopleComponent,
+      {
+        width: '500px',
+        disableClose: false,
+        panelClass: 'app-change-status-people',
+        data: this.peopleList.filter(people => people.id == id)[0],
+      }).afterClosed().subscribe(result => {
+      // this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
+      //   this.people = new MatTableDataSource<People>(data);
+      //   this.people.paginator = this.paginator;
+      // })
     });
   }
 
