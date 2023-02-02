@@ -103,4 +103,6 @@ h1 {
   margin-left: 20px;
   font-weight: bold;
 }
-
+td {
+  text-align: center;
+}

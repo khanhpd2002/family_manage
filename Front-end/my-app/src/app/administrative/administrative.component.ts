@@ -44,8 +44,10 @@ export class AdministrativeComponent implements OnInit {
 
   ngOnInit() {
     this.http.get<any>('http://localhost:8080/administrative').subscribe((administrative) => {
+      administrative.forEach((e: any) => {
+        e.type = this.translateEnumToString(e.type);
+      })
       this.listAdministrative = administrative;
-      console.log(administrative);
       this.administrative = new MatTableDataSource<AdministrativeModels>();
       this.administrative.data = this.listAdministrative;
       this.administrative.paginator = this.paginator;
@@ -63,5 +65,26 @@ export class AdministrativeComponent implements OnInit {
 
   goList(id: number) {
 
+  }
+
+  translateEnumToString (relation: string) {
+    if (relation === 'OWNER')
+      return RelationshipEnums.OWNER;
+    else if (relation === 'WIFE')
+      return RelationshipEnums.WIFE;
+    else if (relation === 'SON')
+      return RelationshipEnums.SON;
+    else if (relation === 'DAUGHTER')
+      return RelationshipEnums.DAUGHTER;
+    else if (relation === 'PERMANENT')
+      return 'Thường trú';
+    else if (relation === 'TEMPORARY')
+      return 'Tạm trú';
+    else if (relation === 'ABSENT')
+      return 'Tạm vắng';
+    else if (relation === 'DIED')
+      return 'Đã mất';
+    else
+      return '';
   }
 }
