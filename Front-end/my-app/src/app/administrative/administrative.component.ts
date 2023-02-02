@@ -23,7 +23,7 @@ export class AdministrativeComponent implements OnInit {
   listAdministrative: AdministrativeModels[];
   searchForm: FormGroup = new FormGroup({});
 
-  displayedColumns: string[] = ['peopleId', 'registerPhone', 'from', 'to', 'reason', ' '];
+  displayedColumns: string[] = ['peopleId', 'registerPhone', 'type', 'from', 'to', 'reason', ' '];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
@@ -44,11 +44,8 @@ export class AdministrativeComponent implements OnInit {
 
   ngOnInit() {
     this.http.get<any>('http://localhost:8080/administrative').subscribe((administrative) => {
-      // administrative.forEach((element: any) => {
-      //   element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner);
-      //   element.status = this.translateEnumToString(element.status);
-      // });
-      // this.peopleList = people;
+      this.listAdministrative = administrative;
+      console.log(administrative);
       this.administrative = new MatTableDataSource<AdministrativeModels>();
       this.administrative.data = this.listAdministrative;
       this.administrative.paginator = this.paginator;

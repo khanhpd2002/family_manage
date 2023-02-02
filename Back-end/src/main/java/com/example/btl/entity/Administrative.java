@@ -24,10 +24,10 @@ public class Administrative {
     @Column(name = "register_phone")
     private String register_phone;
     
-    @Column(name = "dateFrom")
+    @Column(name = "date_from")
     private String dateFrom;
     
-    @Column(name = "dateTo")
+    @Column(name = "date_to")
     private String dateTo;
     
     @Column(name = "reason")

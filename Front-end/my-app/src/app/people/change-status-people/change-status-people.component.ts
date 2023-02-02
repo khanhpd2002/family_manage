@@ -46,14 +46,28 @@ export class ChangeStatusPeopleComponent implements OnInit {
       people_id: this.people.id,
       type: this.changeStatusForm.controls['type'].value,
       register_phone: this.changeStatusForm.controls['registerPhone'].value,
-      from: this.getValidDate(this.changeStatusForm.controls['from'].value),
-      to: this.getValidDate(this.changeStatusForm.controls['to'].value),
+      dateFrom: this.getValidDate(this.changeStatusForm.controls['from'].value),
+      dateTo: this.getValidDate(this.changeStatusForm.controls['to'].value),
       reason: this.changeStatusForm.controls['reason'].value,
     }
     console.log(people);
     this.http.post(`http://localhost:8080/administrative`, people).subscribe(data => {
       this.toastr.success('Thay đổi thủ tục thành công');
     })
+    const changedPeople = this.people;
+    if (changedPeople.relationshipWithOwner === 'Con trai')
+      changedPeople.relationshipWithOwner = 'SON';
+    if (changedPeople.relationshipWithOwner === 'Con gái')
+      changedPeople.relationshipWithOwner = 'DAUGHTER';
+    if (changedPeople.relationshipWithOwner === 'Vợ')
+      changedPeople.relationshipWithOwner = 'WIFE';
+    if (changedPeople.relationshipWithOwner === 'Chủ hộ')
+      changedPeople.relationshipWithOwner = 'OWNER';
+
+    changedPeople.status = this.changeStatusForm.controls['type'].value;
+    this.http.patch(`http://localhost:8080/people/${this.people.id}`, changedPeople).subscribe(data => {
+    })
+    this.dialogRef.close({data: people});
   }
 
   clearStartDate() {

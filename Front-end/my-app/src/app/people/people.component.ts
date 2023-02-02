@@ -33,8 +33,8 @@ export class PeopleComponent implements OnInit {
 
   people: any;
   afterFilter: any;
-  displayedColumns: string[] = ['name', 'birthday', 'province', 'district', 'ward',
-    'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationshipWithOwner', 'status', 'note', ' '];
+  displayedColumns: string[] = ['name', 'province', 'district', 'ward',
+    'address', 'placeOfBirth', 'ethnic', 'identityCard', 'relationshipWithOwner', 'status', 'note', ' '];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -218,11 +218,12 @@ export class PeopleComponent implements OnInit {
         data: this.peopleList.filter(people => people.id == id)[0],
       }).afterClosed().subscribe(result => {
       this.http.get<any>('http://localhost:8080/people').subscribe((people) => {
-        people.forEach((element: any) => {
-          element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner);
-          element.status = this.translateEnumToString(element.status);
-        });
-        this.people.data = people;
+        this.onSearch();
+        // people.forEach((element: any) => {
+        //   element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner);
+        //   element.status = this.translateEnumToString(element.status);
+        // });
+        // this.people.data = people;
         // this.toastr.success('Sửa thành công');
       });
     });
@@ -236,10 +237,7 @@ export class PeopleComponent implements OnInit {
         panelClass: 'app-change-status-people',
         data: this.peopleList.filter(people => people.id == id)[0],
       }).afterClosed().subscribe(result => {
-      // this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
-      //   this.people = new MatTableDataSource<People>(data);
-      //   this.people.paginator = this.paginator;
-      // })
+        this.onSearch();
     });
   }
 

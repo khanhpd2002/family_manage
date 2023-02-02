@@ -17,7 +17,7 @@
         <h4>SĐT người làm</h4>
         <mat-form-field appearance="fill">
           <mat-label>SĐT người làm</mat-label>
-          <input matInput name="register-phone" formControlName="register-phone"/>
+          <input matInput name="registerPhone" formControlName="registerPhone"/>
         </mat-form-field>
       </div>
 
@@ -51,24 +51,30 @@
         <!-- Name Column -->
         <ng-container matColumnDef="peopleId">
           <th mat-header-cell *matHeaderCellDef>Họ và tên</th>
-          <td mat-cell *matCellDef="let element"> {{element.peopleId }}</td>
+          <td mat-cell *matCellDef="let element"> {{element.people_id }}</td>
         </ng-container>
 
         <!-- Birthday Column -->
         <ng-container matColumnDef="registerPhone">
           <th mat-header-cell *matHeaderCellDef>SĐT người đăng kí</th>
-          <td mat-cell *matCellDef="let element">{{ element.registerPhone }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.register_phone }}</td>
+        </ng-container>
+
+        <!-- Birthday Column -->
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Loại thủ tục</th>
+          <td mat-cell *matCellDef="let element">{{ element.type }}</td>
         </ng-container>
 
         <!-- Province Column -->
         <ng-container matColumnDef="from">
           <th mat-header-cell *matHeaderCellDef>Từ ngày</th>
-          <td mat-cell *matCellDef="let element">{{ element.from }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.dateFrom }}</td>
         </ng-container>
 
         <ng-container matColumnDef="to">
           <th mat-header-cell *matHeaderCellDef>Đến ngày</th>
-          <td mat-cell *matCellDef="let element">{{ element.to }}</td>
+          <td mat-cell *matCellDef="let element">{{ element.dateTo }}</td>
         </ng-container>
 
         <ng-container matColumnDef="reason">

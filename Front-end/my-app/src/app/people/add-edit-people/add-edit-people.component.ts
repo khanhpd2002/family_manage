@@ -71,11 +71,6 @@ export class AddEditPeopleComponent implements OnInit {
     relationshipWithOwner: '',
     status: '',
     note: ''
-
-    // name: new FormControl(null, [Validators.required]),
-    // address: new FormControl (null, [Validators.required]),
-    // phone: new FormControl (null, [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
-    // email: new FormControl (null, [Validators.required, Validators.email])
   })
 
   ngOnInit() {
@@ -112,10 +107,11 @@ export class AddEditPeopleComponent implements OnInit {
       console.log(this.people);
       this.people.relationshipWithOwner = this.translateEnumToString(this.people.relationshipWithOwner);
       this.people.status = this.translateEnumToString(this.people.status);
+      console.log(this.formatDate(this.people.birthday));
       this.addEditForm.patchValue({
         name: this.people.name,
         otherName: this.people.otherName,
-        birthday: this.people.birthday,
+        birthday: this.formatDate(this.people.birthday),
         province: this.people.province,
         district: this.people.district,
         ward: this.people.ward,
@@ -251,5 +247,10 @@ export class AddEditPeopleComponent implements OnInit {
       return 'Đã mất';
     else
       return '';
+  }
+
+  formatDate(date: string) {
+    const arr = date.split('-');
+    return arr[1] + '/' + arr[2] + '/' + arr[0];
   }
 }

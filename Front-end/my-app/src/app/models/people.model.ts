@@ -12,7 +12,7 @@ export class People {
   placeOfJob: string;
   identityCard: string;
   family_number: string;
-  relationshipWithOwner: 'OWNER' | 'WIFE' | 'SON' | 'DAUGHTER';
-  status: "PERMANENT" | "TEMPORARY" | "ABSENT" | "DIED";
+  relationshipWithOwner: 'OWNER' | 'WIFE' | 'SON' | 'DAUGHTER' | null | string;
+  status: "PERMANENT" | "TEMPORARY" | "ABSENT" | "DIED" | null | string;
   note: string;
 }

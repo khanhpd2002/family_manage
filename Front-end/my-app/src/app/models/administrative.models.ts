@@ -1,7 +1,9 @@
 export class AdministrativeModels {
-  peopleId: number;
-  registerPhone: string | null;
-  from: string | null;
-  to: string | null;
+  code: number;
+  people_id: number;
+  register_phone: string | null;
+  dateFrom: string | null;
+  dateTo: string | null;
   reason: string | null;
+  type: 'TEMPORARY' | 'ABSENT' | '';
 }

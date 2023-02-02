@@ -52,14 +52,11 @@ export class ChargeComponent implements OnInit {
 
     ngOnInit(): void {
       this.onSearch();
-      // this.activatedRoute.data.subscribe(({charge}) => {
-      //   this.chargeList = charge;
-      //   // console.log(JSON.stringify(charge));
-      //   this.charge = new MatTableDataSource<Charge>();
-      //   this.charge.data = charge;
-      //   this.charge.paginator = this.paginator;
-      //   this.afterFilter = this.charge.data;
-      // });
+      this.http.get<any>('http://localhost:8080/charge/params').subscribe((data) => {
+        this.charge = new MatTableDataSource<Charge>(data);
+        this.charge.paginator = this.paginator;
+        this.afterFilter = this.charge.data;
+      });
     }
 
     openMenu() {
