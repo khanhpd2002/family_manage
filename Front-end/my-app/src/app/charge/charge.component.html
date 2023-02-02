@@ -1,3 +1,23 @@
+<div class="charge_type" id="div-form1" fxLayout="row">
+  <h4>Loại phí</h4>
+  <mat-form-field appearance="outline">
+    <mat-label>Loại phí</mat-label>
+    <mat-select
+      required
+      name="charge_type"
+      formControlName="charge_type"
+    >
+      <mat-option
+        *ngFor="let charge_type of charge_typeValues"
+        [value]="charge_type"
+      >
+        {{ charge_type }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div *ngIf="charge">
   <mat-sidenav-content fxLayout="column">
     <form [formGroup]="searchForm">
       <div fxLayout="row" class="default-search">
@@ -101,7 +121,7 @@
               <span>&nbsp;&nbsp;&nbsp;</span>
               <span>&nbsp;&nbsp;&nbsp;</span>
 
-              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onDelete(element.id)">
+              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="clickMethod(element.name, element.id)">
                 <mat-icon>delete</mat-icon>
               </button>
               <span>&nbsp;&nbsp;&nbsp;</span>
@@ -129,5 +149,5 @@
       </div>
     </form>
   </mat-sidenav-content>
-
+</div>
 

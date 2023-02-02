@@ -27,13 +27,15 @@ CREATE TABLE `administrative` (
   `type` enum('TEMPORARY','ABSENT') DEFAULT NULL,
   `code` bigint NOT NULL AUTO_INCREMENT,
   `register_phone` int DEFAULT NULL,
-  `from` datetime DEFAULT NULL,
-  `to` datetime DEFAULT NULL,
+  `dateFrom` datetime DEFAULT NULL,
+  `dateTo` datetime DEFAULT NULL,
   `reason` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`paper_code`),
+  `date_from` varchar(255) DEFAULT NULL,
+  `date_to` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`code`),
   KEY `hmm_idx` (`people_id`),
   CONSTRAINT `hmm` FOREIGN KEY (`people_id`) REFERENCES `people` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +44,7 @@ CREATE TABLE `administrative` (
 
 LOCK TABLES `administrative` WRITE;
 /*!40000 ALTER TABLE `administrative` DISABLE KEYS */;
+INSERT INTO `administrative` VALUES (12,NULL,1,123456789,NULL,NULL,'nothing','2022-10-1','2022-10-2'),(12,NULL,2,123456789,NULL,NULL,'nothing','2022-10-1','2022-10-2'),(12,'TEMPORARY',3,123456789,NULL,NULL,'nothing','2022-10-1','2022-10-2');
 /*!40000 ALTER TABLE `administrative` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-01 23:47:21
+-- Dump completed on 2023-02-02 16:35:40

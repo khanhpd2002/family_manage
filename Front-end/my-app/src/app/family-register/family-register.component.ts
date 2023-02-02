@@ -141,6 +141,12 @@ export class FamilyRegisterComponent implements OnInit {
     });
   }
 
+  clickMethod(deleteId: number) {
+    if(confirm("Bạn có chắc muốn xóa hộ khẩu số "+deleteId)) {
+      this.onDelete(deleteId);
+    }
+  }
+
   async onDelete(number: number) {
     console.log(number);
     // console.log(this.paginator.pageSize, this.paginator.pageIndex);

@@ -102,6 +102,12 @@ export class ChargeDetailComponent implements OnInit {
       });
     }
 
+    clickMethod(  charge_id: Int16Array, family_number: Int16Array) {
+      if(confirm("Bạn có chắc muốn xóa không?")) {
+        this.onDelete(charge_id, family_number);
+      }
+    }
+
     onDelete(charge_id: Int16Array, family_number: Int16Array) {
       // console.log(id);
       console.log(`http://localhost:8080/charge_manage?charge_id=${charge_id}&family_number=${family_number}`);

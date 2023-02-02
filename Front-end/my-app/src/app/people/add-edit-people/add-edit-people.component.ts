@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {People} from "../../models/people.model";
 import {TranslateModels} from "../../models/translate.models";
 import {ToastrService} from "ngx-toastr";
+import { RelationshipEnums } from 'src/app/models/relationship.enums';
 
 @Component({
   selector: 'app-add-edit-people',
@@ -41,13 +42,17 @@ export class AddEditPeopleComponent implements OnInit {
     protected http: HttpClient,
     public dialogRef: MatDialogRef<AddEditPeopleComponent>,
     public toastr: ToastrService,
-    @Inject(MAT_DIALOG_DATA) public people: People) {
+    @Inject(MAT_DIALOG_DATA) public people: any) {
     this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
       this.addressValues = data;
       data.forEach((element: any) => {
         this.provinceValues.push(element.name);
       });
     })
+    // if (this.people) {
+    //   this.people.relationshipWithOwner = this.translateEnumToString(this.people.relationshipWithOwner);
+    //   this.people.status = this.translateEnumToString(this.people.status);
+    // }
   }
 
   addEditForm = this.formBuilder.group({
@@ -104,25 +109,28 @@ export class AddEditPeopleComponent implements OnInit {
     // Check neu ton tai people thi patch Value vao form
     if (this.people) {
       this.id = this.people.id;
-      console.log(this.people.relationshipWithOwner);
+      console.log(this.people);
+      this.people.relationshipWithOwner = this.translateEnumToString(this.people.relationshipWithOwner);
+      this.people.status = this.translateEnumToString(this.people.status);
+      this.addEditForm.patchValue({
+        name: this.people.name,
+        otherName: this.people.otherName,
+        birthday: this.people.birthday,
+        province: this.people.province,
+        district: this.people.district,
+        ward: this.people.ward,
+        address: this.people.address,
+        placeOfBirth: this.people.placeOfBirth,
+        ethnic: this.people.ethnic,
+        placeOfJob: this.people.placeOfJob,
+        family_number: this.people.family_number,
+        identityCard: this.people.identityCard,
+        relationshipWithOwner: this.people.relationshipWithOwner,
+        status: this.people.status,
+        note: this.people.note,
+      });
       this.http.get<any>('https://provinces.open-api.vn/api/?depth=3').subscribe((data) => {
-        this.addEditForm.patchValue({
-          name: this.people.name,
-          otherName: this.people.otherName,
-          birthday: this.people.birthday,
-          province: this.people.province,
-          district: this.people.district,
-          ward: this.people.ward,
-          address: this.people.address,
-          placeOfBirth: this.people.placeOfBirth,
-          ethnic: this.people.ethnic,
-          placeOfJob: this.people.placeOfJob,
-          family_number: this.people.family_number,
-          identityCard: this.people.identityCard,
-          relationshipWithOwner: this.people.relationshipWithOwner,
-          status: this.people.status,
-          note: this.people.note,
-        });
+
         this.addressValues = data;
         data.forEach((element: any) => {
           this.provinceValues.push(element.name);
@@ -223,5 +231,25 @@ export class AddEditPeopleComponent implements OnInit {
     tempWardValues[0].wards.forEach((element: any) => {
       this.wardValues.push(element.name);
     })
+  }
+  translateEnumToString (relation: string) {
+    if (relation === 'OWNER')
+      return RelationshipEnums.OWNER;
+    else if (relation === 'WIFE')
+      return RelationshipEnums.WIFE;
+    else if (relation === 'SON')
+      return RelationshipEnums.SON;
+    else if (relation === 'DAUGHTER')
+      return RelationshipEnums.DAUGHTER;
+    else if (relation === 'PERMANENT')
+      return 'Thường trú';
+    else if (relation === 'TEMPORARY')
+      return 'Tạm trú';
+    else if (relation === 'ABSENT')
+      return 'Tạm vắng';
+    else if (relation === 'DIED')
+      return 'Đã mất';
+    else
+      return '';
   }
 }

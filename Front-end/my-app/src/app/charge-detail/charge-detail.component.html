@@ -101,7 +101,7 @@
           <ng-container matColumnDef=" ">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="onDelete(element.charge_id, element.family_number)">
+              <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="clickMethod(element.charge_id, element.family_number)">
                 <mat-icon>delete</mat-icon>
               </button>
 

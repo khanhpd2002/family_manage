@@ -18,16 +18,16 @@ public class Administrative {
     private Long people_id;
     
     @Column(name = "type")
-    private AdministrativeType administrativeType;
+    private AdministrativeType type;
     
     @Column(name = "register_phone")
     private Long register_phone;
     
-    @Column(name = "from")
-    private Date from;
+    @Column(name = "dateFrom")
+    private String dateFrom;
     
-    @Column(name = "to")
-    private Date to;
+    @Column(name = "dateTo")
+    private String dateTo;
     
     @Column(name = "reason")
     private String reason;
@@ -40,12 +40,12 @@ public class Administrative {
 		this.people_id = people_id;
 	}
 
-	public AdministrativeType getAdministrativeType() {
-		return administrativeType;
+	public AdministrativeType getType() {
+		return type;
 	}
 
-	public void setAdministrativeType(AdministrativeType administrativeType) {
-		this.administrativeType = administrativeType;
+	public void setType(AdministrativeType administrativeType) {
+		this.type = administrativeType;
 	}
 
 	public Long getCode() {
@@ -64,20 +64,20 @@ public class Administrative {
 		this.register_phone = register_phone;
 	}
 
-	public Date getFrom() {
-		return from;
+	public String getDateFrom() {
+		return dateFrom;
 	}
 
-	public void setFrom(Date from) {
-		this.from = from;
+	public void setDateFrom(String dateFrom) {
+		this.dateFrom = dateFrom;
 	}
 
-	public Date getTo() {
-		return to;
+	public String getDateTo() {
+		return dateTo;
 	}
 
-	public void setTo(Date to) {
-		this.to = to;
+	public void setDateTo(String dateTo) {
+		this.dateTo = dateTo;
 	}
 
 	public String getReason() {

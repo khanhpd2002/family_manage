@@ -41,6 +41,15 @@ button {
   font-size: 5px;
   text-align: center;
 }
+#div-form1 {
+  width: 60px;
+  height: 50px;
+  font-size: 15px;
+  text-align: center;
+  margin: 5px;
+  width: 100%;
+  margin-bottom: 15px;
+}
 
 form {
   margin: 5px;

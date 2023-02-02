@@ -147,6 +147,11 @@ export class ChargeComponent implements OnInit {
         })
     }
 
+    clickMethod(name: string, deleteId: Int16Array) {
+      if(confirm("Bạn có chắc muốn xóa khoản phí: "+name)) {
+        this.onDelete(deleteId);
+      }
+    }
     goList(id: any) {
       this.routes.navigate([`charge/${id}`]);
     }

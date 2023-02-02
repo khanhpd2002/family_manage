@@ -172,14 +172,24 @@ export class PeopleComponent implements OnInit {
     });
   }
 
+  clickMethod(name: string, deleteId: number) {
+    if(confirm("Bạn có chắc muốn xóa "+name)) {
+      this.onDelete(deleteId);
+    }
+  }
+
   onDelete(deleteId: number) {
     console.log(deleteId + "hihi");
     console.log(this.paginator.pageSize, this.paginator.pageIndex);
     // const deleteId = this.people[(this.paginator?.pageSize ?? 0) * (this.paginator?.pageIndex ?? 0) + index].id;
     console.log(deleteId);
     this.http.delete<any>(`http://localhost:8080/people/${deleteId}`).subscribe(
-      () => this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
-        this.people.data = data;
+      () => this.http.get<any>('http://localhost:8080/people').subscribe((people) => {
+        people.forEach((element: any) => {
+          element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner);
+          element.status = this.translateEnumToString(element.status);
+        });
+        this.people.data = people;
         this.toastr.success('Xóa thành công');
       })
     );
@@ -206,10 +216,14 @@ export class PeopleComponent implements OnInit {
         panelClass: 'app-add-edit-people',
         data: this.peopleList.filter(people => people.id == id)[0],
       }).afterClosed().subscribe(result => {
-      this.http.get<any>('http://localhost:8080/people').subscribe((data) => {
-        this.people = new MatTableDataSource<People>(data);
-        this.people.paginator = this.paginator;
-      })
+      this.http.get<any>('http://localhost:8080/people').subscribe((people) => {
+        people.forEach((element: any) => {
+          element.relationshipWithOwner = this.translateEnumToString(element.relationshipWithOwner);
+          element.status = this.translateEnumToString(element.status);
+        });
+        this.people.data = people;
+        // this.toastr.success('Sửa thành công');
+      });
     });
   }
 

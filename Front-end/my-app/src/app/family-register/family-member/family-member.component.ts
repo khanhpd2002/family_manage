@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { People } from 'src/app/models/people.model';
+import { RelationshipEnums } from 'src/app/models/relationship.enums';
 
 @Component({
   selector: 'app-family-member',
@@ -45,12 +46,14 @@ export class FamilyMemberComponent implements OnInit {
   ngOnInit(): void {
     this.number = this.route.snapshot.paramMap.get('number');
     var url = 'http://localhost:8080/people/family/' + String(this.number);
-    this.http.get<People[]>(url).subscribe(
+    this.http.get<any[]>(url).subscribe(
       {
         next: (members) => {
           let i = 0, j= 0;
           members.forEach(member => {
-            if (member.relationshipWithOwner == 'OWNER'){
+            member.relationshipWithOwner = this.translateEnumToString(member.relationshipWithOwner);
+            member.status = this.translateEnumToString(member.status);
+            if (member.relationshipWithOwner == 'Chủ hộ'){
               if (i != 0){
                 let temp: People;
                 temp = member;
@@ -58,7 +61,7 @@ export class FamilyMemberComponent implements OnInit {
                 members[0] = temp;
               }
             }
-            if (member.relationshipWithOwner == 'WIFE'){
+            if (member.relationshipWithOwner == 'Vợ'){
               if (j != 1){
                 let temp: People;
                 temp = member;
@@ -72,5 +75,26 @@ export class FamilyMemberComponent implements OnInit {
       }
     });
     console.log(JSON.stringify(this.memberList))
+  }
+
+  translateEnumToString (relation: string) {
+    if (relation === 'OWNER')
+      return RelationshipEnums.OWNER;
+    else if (relation === 'WIFE')
+      return RelationshipEnums.WIFE;
+    else if (relation === 'SON')
+      return RelationshipEnums.SON;
+    else if (relation === 'DAUGHTER')
+      return RelationshipEnums.DAUGHTER;
+    else if (relation === 'PERMANENT')
+      return 'Thường trú';
+    else if (relation === 'TEMPORARY')
+      return 'Tạm trú';
+    else if (relation === 'ABSENT')
+      return 'Tạm vắng';
+    else if (relation === 'DIED')
+      return 'Đã mất';
+    else
+      return '';
   }
 }

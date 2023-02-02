@@ -32,7 +32,8 @@ public class AdministrativeApi {
 	
 	@PostMapping()
     public Administrative create(@RequestBody Administrative administrative) {
-        return administrativeRepository.saveAndFlush(administrative);
+		System.out.println("hehe");
+        return administrativeRepository.save(administrative);
     }
 	
 	@GetMapping("/{code}")
