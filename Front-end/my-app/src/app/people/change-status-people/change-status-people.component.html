@@ -1,0 +1,61 @@
+<mat-dialog-content>
+  <form class="center" [formGroup]="changeStatusForm" (ngSubmit)="onSubmit()">
+    <div class="type" id="div-form" fxLayout="row">
+      <h4>Loại thủ tục</h4>
+      <mat-form-field appearance="outline" class="no-line">
+        <mat-label>Loại thủ tục</mat-label>
+        <mat-select name="type" formControlName="type">
+          <mat-option *ngFor="let type of typeValues" [value]="type.eng">
+            {{type.vie}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="register-phone" id="div-form" fxLayout="row">
+      <h4>SĐT người đăng kí</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>SĐT người đăng kí</mat-label>
+        <input matInput name="registerPhone" formControlName="registerPhone"/>
+      </mat-form-field>
+    </div>
+
+    <div class="from-date" id="div-form" fxLayout="row">
+      <h4>Từ ngày</h4>
+      <mat-form-field appearance="outline" class="mat-date">
+        <mat-label>Từ ngày</mat-label>
+        <input matInput [matDatepicker]="fromPicker" name="from" formControlName="from" [(ngModel)]="startDate">
+        <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix (click)="clearStartDate()">
+          <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #fromPicker ></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="to-date" id="div-form" fxLayout="row">
+      <h4>Đến ngày</h4>
+      <mat-form-field appearance="outline" class="mat-date">
+        <mat-label>Đến ngày</mat-label>
+        <input matInput [matDatepicker]="toPicker" name="to" formControlName="to" [(ngModel)]="endDate">
+        <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix (click)="clearEndDate()">
+          <mat-icon matDatepickerToggleIcon>clear</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #toPicker ></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="reason" id="div-form" fxLayout="row">
+      <h4>Lý do</h4>
+      <mat-form-field appearance="outline">
+        <mat-label>Lý do</mat-label>
+        <input matInput name="reason" formControlName="reason"/>
+      </mat-form-field>
+    </div>
+
+
+    <button mat-button type="submit" [disabled]="!changeStatusForm.valid">Xác nhận</button>
+
+  </form>
+</mat-dialog-content>

@@ -1,0 +1,107 @@
+<mat-sidenav-content fxLayout="column">
+  <form [formGroup]="searchForm">
+    <div fxLayout="row" class="default-search">
+      <div class="people-id" id="div-form-people-id"
+           fxLayout='column' fxFlex='30%'
+           fxFlex.xs='100%' fxFlex.sm='50%' fxFlex.md='50%' fxFlex.lg='30%'>
+        <h4>Họ và tên</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>Họ và tên</mat-label>
+          <input matInput name="peopleId" formControlName="peopleId"/>
+        </mat-form-field>
+      </div>
+
+      <div class="register-phone" id="div-form-register-phone"
+           fxLayout='column' fxFlex='30%'
+           fxFlex.xs='100%' fxFlex.sm='50%' fxFlex.md='50%' fxFlex.lg='30%'>
+        <h4>SĐT người làm</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>SĐT người làm</mat-label>
+          <input matInput name="register-phone" formControlName="register-phone"/>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div fxLayout="row" class="search-button">
+      <button
+        mat-button
+        type="submit"
+        class="primary Update-btn"
+        (click)="onSearch()"
+      >
+        <i class="fa fa-search"></i> Tìm kiếm
+      </button>
+      <button
+        mat-button
+        type="submit"
+        class="primary Update-btn"
+        id="clear"
+        (click)="onResetForm()"
+      >
+        <i class="fa fa-times"></i> Xóa
+      </button>
+    </div>
+
+    <div fxLayout="row">
+      <h1>{{this.paginator.length}} Kết quả</h1>
+    </div>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="administrative">
+        <!-- Name Column -->
+        <ng-container matColumnDef="peopleId">
+          <th mat-header-cell *matHeaderCellDef>Họ và tên</th>
+          <td mat-cell *matCellDef="let element"> {{element.peopleId }}</td>
+        </ng-container>
+
+        <!-- Birthday Column -->
+        <ng-container matColumnDef="registerPhone">
+          <th mat-header-cell *matHeaderCellDef>SĐT người đăng kí</th>
+          <td mat-cell *matCellDef="let element">{{ element.registerPhone }}</td>
+        </ng-container>
+
+        <!-- Province Column -->
+        <ng-container matColumnDef="from">
+          <th mat-header-cell *matHeaderCellDef>Từ ngày</th>
+          <td mat-cell *matCellDef="let element">{{ element.from }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="to">
+          <th mat-header-cell *matHeaderCellDef>Đến ngày</th>
+          <td mat-cell *matCellDef="let element">{{ element.to }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="reason">
+          <th mat-header-cell *matHeaderCellDef>Lý do</th>
+          <td mat-cell *matCellDef="let element">{{ element.reason }}</td>
+        </ng-container>
+
+        <!-- Action Column-->
+        <ng-container matColumnDef=" ">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-fab color="primary" aria-label="Example icon button with a delete icon" (click)="goList(element.id)">
+              <mat-icon>list</mat-icon>
+            </button>
+            <span>&nbsp;&nbsp;&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;</span>
+          </mat-cell>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        #paginator
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements"
+      >
+      </mat-paginator>
+    </div>
+  </form>
+</mat-sidenav-content>
+
+

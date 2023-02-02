@@ -30,7 +30,7 @@ CREATE TABLE `administrative` (
   `from` datetime DEFAULT NULL,
   `to` datetime DEFAULT NULL,
   `reason` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`paper_code`),
+  PRIMARY KEY (`code`),
   KEY `hmm_idx` (`people_id`),
   CONSTRAINT `hmm` FOREIGN KEY (`people_id`) REFERENCES `people` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

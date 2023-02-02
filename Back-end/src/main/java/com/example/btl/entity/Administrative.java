@@ -18,16 +18,17 @@ public class Administrative {
     private Long people_id;
     
     @Column(name = "type")
+	@Enumerated(EnumType.STRING)
     private AdministrativeType administrativeType;
     
     @Column(name = "register_phone")
-    private Long register_phone;
+    private String register_phone;
     
     @Column(name = "from")
-    private Date from;
+    private String from;
     
     @Column(name = "to")
-    private Date to;
+    private String to;
     
     @Column(name = "reason")
     private String reason;
@@ -56,27 +57,27 @@ public class Administrative {
 		this.code = code;
 	}
 
-	public Long getRegister_phone() {
+	public String getRegister_phone() {
 		return register_phone;
 	}
 
-	public void setRegister_phone(Long register_phone) {
+	public void setRegister_phone(String register_phone) {
 		this.register_phone = register_phone;
 	}
 
-	public Date getFrom() {
+	public String getFrom() {
 		return from;
 	}
 
-	public void setFrom(Date from) {
+	public void setFrom(String from) {
 		this.from = from;
 	}
 
-	public Date getTo() {
+	public String getTo() {
 		return to;
 	}
 
-	public void setTo(Date to) {
+	public void setTo(String to) {
 		this.to = to;
 	}
 
