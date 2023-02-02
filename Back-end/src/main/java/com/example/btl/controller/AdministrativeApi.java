@@ -35,19 +35,19 @@ public class AdministrativeApi {
         return administrativeRepository.saveAndFlush(administrative);
     }
 	
-	@GetMapping("/{id}")
-	public Administrative findById(@PathVariable(name = "id", required = true) Long id) {
+	@GetMapping("/{code}")
+	public Administrative findBycode(@PathVariable(name = "code", required = true) Long code) {
 		Administrative administrative = null;
-		Optional<Administrative> opt = administrativeRepository.findById(id == null ? 0 : id);
+		Optional<Administrative> opt = administrativeRepository.findByCode(code == null ? 0 : code);
 		if (opt.isPresent()) {
 			administrative = opt.get();
 		}
 		return administrative;
     }
 	
-	@PatchMapping("/{id}")
-    public Administrative update(@PathVariable(name = "id", required = true) Long id,
+	@PatchMapping("/{code}")
+    public Administrative update(@PathVariable(name = "code", required = true) Long code,
                          @RequestBody Administrative administrative) {
-        return administrativeService.update(id, administrative);
+        return administrativeService.update(code, administrative);
     }
 }

@@ -32,7 +32,7 @@ export class PeopleComponent implements OnInit {
   people: any;
   afterFilter: any;
   displayedColumns: string[] = ['name', 'birthday', 'province', 'district', 'ward',
-    'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationshipWithOwner', 'note', ' '];
+    'address', 'placeOfBirth', 'ethnic', 'placeOfJob', 'identityCard', 'relationshipWithOwner','status', 'note', ' '];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -56,6 +56,7 @@ export class PeopleComponent implements OnInit {
       identityCard: [''],
       family_number: [''],
       relationshipWithOwner: [''],
+      status: [''],
       note: [''],
     });
   }

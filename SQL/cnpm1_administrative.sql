@@ -23,15 +23,14 @@ DROP TABLE IF EXISTS `administrative`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `administrative` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
   `people_id` bigint DEFAULT NULL,
   `type` enum('TEMPORARY','ABSENT') DEFAULT NULL,
-  `paper_code` varchar(45) DEFAULT NULL,
+  `code` bigint NOT NULL AUTO_INCREMENT,
   `register_phone` int DEFAULT NULL,
   `from` datetime DEFAULT NULL,
   `to` datetime DEFAULT NULL,
   `reason` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`paper_code`),
   KEY `hmm_idx` (`people_id`),
   CONSTRAINT `hmm` FOREIGN KEY (`people_id`) REFERENCES `people` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -55,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-01 22:44:02
+-- Dump completed on 2023-02-01 23:47:21

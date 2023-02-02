@@ -147,6 +147,10 @@ export class ChargeComponent implements OnInit {
         })
     }
 
+    goList(id: any) {
+      this.routes.navigate([`charge/${id}`]);
+    }
+
     // toggleSidenav() {
     //   this.isShowing = !this.isShowing;
     // }

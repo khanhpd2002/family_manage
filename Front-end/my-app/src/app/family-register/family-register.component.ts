@@ -185,21 +185,8 @@ export class FamilyRegisterComponent implements OnInit {
     this.isShowing = !this.isShowing;
   }
 
-  goLogout() {
-    this.routes.navigate(['login']);
-    localStorage.removeItem('token');
-  }
-
-  goFamilyRegisters() {
-    this.routes.navigate(['family-register']);
-  }
-
-  goPeople() {
-    this.routes.navigate(['people']);
-  }
-
-  goCharge() {
-    this.routes.navigate(['charge']);
+  goList(number: any) {
+    this.routes.navigate([`family-register/${number}`]);
   }
 
 }

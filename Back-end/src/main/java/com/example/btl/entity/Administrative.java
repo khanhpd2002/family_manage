@@ -11,16 +11,14 @@ import com.example.btl.entity.enums.AdministrativeType;
 public class Administrative {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Column(name = "code")
+    private Long code;
 
     @Column(name = "people_id")
     private Long people_id;
     
     @Column(name = "type")
     private AdministrativeType administrativeType;
-    
-    @Column(name = "paper_code")
-    private String paper_code;
     
     @Column(name = "register_phone")
     private Long register_phone;
@@ -33,14 +31,6 @@ public class Administrative {
     
     @Column(name = "reason")
     private String reason;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Long getPeople_id() {
 		return people_id;
@@ -58,12 +48,12 @@ public class Administrative {
 		this.administrativeType = administrativeType;
 	}
 
-	public String getPaper_code() {
-		return paper_code;
+	public Long getCode() {
+		return code;
 	}
 
-	public void setPaper_code(String paper_code) {
-		this.paper_code = paper_code;
+	public void setCode(Long code) {
+		this.code = code;
 	}
 
 	public Long getRegister_phone() {

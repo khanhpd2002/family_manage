@@ -13,13 +13,13 @@ import com.example.btl.repository.AdministrativeRepository;
 public class AdministrativeService {
 	@Autowired AdministrativeRepository administrativeRepository;
 	
-    public Administrative update(Long id, Administrative source) {
-        Optional<Administrative> opt = administrativeRepository.findById(id == null ? 0 : id);
+    public Administrative update(Long code, Administrative source) {
+        Optional<Administrative> opt = administrativeRepository.findByCode(code == null ? 0 : code);
         Administrative administrative = opt.get();
 
         administrative.setAdministrativeType(source.getAdministrativeType());
         administrative.setFrom(source.getFrom());
-        administrative.setPaper_code(source.getPaper_code());
+        administrative.setCode(source.getCode());
         administrative.setPeople_id(source.getPeople_id());
         administrative.setReason(source.getReason());
         administrative.setRegister_phone(source.getRegister_phone());

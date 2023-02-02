@@ -10,6 +10,7 @@ import { FamilyRegister } from './models/family-register.models';
 import { FamilyResolver } from './_resolve/FamilyResolver';
 import { PeopleResolver } from './_resolve/PeopleResolver';
 import { ChargeResolver } from './_resolve/ChargeResolver';
+import { FamilyMemberComponent } from './family-register/family-member/family-member.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,10 @@ const routes: Routes = [
     resolve: {
       charge: ChargeResolver,
     }
+  },
+  {
+    path: 'family-register/:number',
+    component: FamilyMemberComponent
   },
   {
     path: 'charge/:id',
